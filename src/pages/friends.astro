@@ -1,16 +1,32 @@
 ---
+import { Icon } from 'astro-icon/components'
+
 import MainLayout from '@/layouts/MainLayout.astro'
 import Comment from '@/components/Comment.astro'
 
+import { analyzeReading } from '@/utils/readingStat'
+
 import friends from '@/content/friends.json'
 import FriendsDoc from '@/content/friends.md'
+import friendsRaw from '@/content/friends.md?raw'
+
+const stats = analyzeReading(friendsRaw)
 ---
 
 <MainLayout title="友人帐 - 云萧的咕咕屋" description="朋友们的主页链接">
     <div class="r-content">
         <div class="r-header">
             <div class="r-title">友人帐</div>
-            <div class="r-subtitle">收录了一些可爱的朋友与站点</div>
+            <div class="r-info">
+                <span>
+                    <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
+                    {stats.minutes} 分钟
+                </span>
+                <span>
+                    <Icon name="mdi:pencil-outline" width={20} height={20} />
+                    {stats.estimatedChars} 字
+                </span>
+            </div>
         </div>
 
         <div class="r-grid">
@@ -33,6 +49,11 @@ import FriendsDoc from '@/content/friends.md'
 
 <style lang="less">
     @import url('@/styles/variables.less');
+
+    .r-info {
+        margin-top: 6px;
+        color: @color-secondary;
+    }
 
     .r-grid {
         display: grid;

@@ -153,10 +153,18 @@ p code {
             font-weight: 700;
             margin-bottom: 0;
         }
-        .r-subtitle {
-            margin: 16px 0 0;
-            font-size: 18px;
+        .r-info {
+            display: flex;
+            flex-direction: row;
+            gap: 3.5em;
+            margin: 6px 0 0;
             color: @color-secondary;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
         }
     }
 }

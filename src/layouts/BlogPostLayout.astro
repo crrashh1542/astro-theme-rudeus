@@ -41,8 +41,8 @@ const formatDate = (date: Date) => {
                 </span>
                 <span>
                     <Icon name="mdi:pencil-outline" width={20} height={20} />
-                    {stats.estimatedChars} 字</span
-                >
+                    {stats.estimatedChars} 字
+                </span>
             </div>
             {
                 tags && tags.length > 0 && (
@@ -90,24 +90,11 @@ const formatDate = (date: Date) => {
 <style lang="less">
     @import url('@/styles/variables.less');
 
-    .r-info {
-        display: flex;
-        flex-direction: row;
-        gap: 3.5em;
-        margin: 16px 0;
-        color: @color-secondary;
-
-        span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-    }
-
     .r-tags {
         display: flex;
         gap: 6px;
         flex-wrap: wrap;
+        margin-top: 12px;
 
         .r-tag {
             background-color: @color-theme-light;
