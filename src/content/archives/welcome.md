@@ -2,7 +2,6 @@
 title: 'Hello, world!'
 description: '这是第一篇博客文章，介绍了这个简洁的Astro博客'
 pubDate: 2025-12-20
-author: 'Admin'
 tags: ['欢迎', 'Astro', '博客']
 ---
 

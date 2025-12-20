@@ -2,7 +2,6 @@
 title: 测试一下
 description: 基于Astro的全新主题！
 pubDate: 2025-12-10
-author: 'Admin'
 tags: ['欢迎', 'Astro', '博客']
 ---
 

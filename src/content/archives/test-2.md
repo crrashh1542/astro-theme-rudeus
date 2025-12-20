@@ -2,7 +2,6 @@
 title: 测试两下
 description: Yet another theme powered by astro
 pubDate: 2025-12-15
-author: 'Admin'
 tags: ['欢迎', 'Astro', '博客']
 ---
 
