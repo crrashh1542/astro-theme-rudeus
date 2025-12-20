@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets'
+import avatar from '@/assets/avatar.jpg';
+---
+
+<div class="card">
+    <Image src={avatar} alt="博主头像" />
+    <div class="title">云萧是个咕咕怪</div>
+    <div class="description">大一狗，在前端路上奋斗的废物一个</div>
+</div>
+
+<style lang="less">
+    @import url('@/styles/variables.less');
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: auto;
+        width: 280px;
+        background-color: #fff;
+        border-radius: @layout-content-border-radius;
+        padding: @layout-content-padding;
+
+        img {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+        }
+
+        .title {
+            margin: 12px 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+    }
+</style>

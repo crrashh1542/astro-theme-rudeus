@@ -1,0 +1,164 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { Icon } from 'astro-icon/components'
+
+import MainLayout from '@/layouts/MainLayout.astro'
+import Comment from '@/components/Comment.astro'
+import { analyzeReading } from '@/utils/readingStat'
+
+interface Props {
+    post: CollectionEntry<'archives'>
+    prev?: CollectionEntry<'archives'> | null
+    next?: CollectionEntry<'archives'> | null
+}
+
+const { post, prev = null, next = null } = Astro.props
+const { title, description, pubDate, tags } = post.data
+
+const stats = analyzeReading(post.body)
+
+const formatDate = (date: Date) => {
+    return new Date(date).toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    })
+}
+---
+
+<MainLayout title={title + ' - 云萧的咕咕屋'} description={description}>
+    <div class="r-content">
+        <div class="r-header">
+            <div class="r-title">{title}</div>
+            <div class="r-info">
+                <span>
+                    <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
+                    {formatDate(pubDate)}
+                </span>
+                <span>
+                    <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
+                    {stats.minutes} 分钟
+                </span>
+                <span>
+                    <Icon name="mdi:pencil-outline" width={20} height={20} />
+                    {stats.estimatedChars} 字</span
+                >
+            </div>
+            {
+                tags && tags.length > 0 && (
+                    <div class="r-tags">
+                        {tags.map((tag) => (
+                            <span class="r-tag">#{tag}</span>
+                        ))}
+                    </div>
+                )
+            }
+        </div>
+        <div class="r-prose">
+            <slot />
+        </div>
+    </div>
+
+    <div class="r-nav">
+        {
+            prev && (
+                <a class="r-nav-item prev" href={`/archives/${prev.slug}.html`}>
+                    <Icon name="mdi:arrow-left" width={28} height={28} class="r-icon" />
+                    <div>
+                        <div class="label">上一篇</div>
+                        <div class="text">{prev.data.title}</div>
+                    </div>
+                </a>
+            )
+        }
+        {
+            next && (
+                <a class="r-nav-item next" href={`/archives/${next.slug}.html`}>
+                    <div>
+                        <div class="label">下一篇</div>
+                        <div class="text">{next.data.title}</div>
+                    </div>
+                    <Icon name="mdi:arrow-right" width={28} height={28} class="r-icon" />
+                </a>
+            )
+        }
+    </div>
+
+    <Comment />
+</MainLayout>
+
+<style lang="less">
+    @import url('@/styles/variables.less');
+
+    .r-info {
+        display: flex;
+        flex-direction: row;
+        gap: 3.5em;
+        margin: 16px 0;
+        color: @color-secondary;
+
+        span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+
+    .r-tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+
+        .r-tag {
+            background-color: @color-theme-light;
+            color: @color-theme-dark;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    }
+
+    .r-prose {
+        line-height: 1.8;
+    }
+
+    .r-prose :global(img) {
+        display: block;
+        border-radius: 8px;
+        margin: 16px auto 24px;
+        max-width: 90%;
+    }
+
+    .r-nav {
+        margin-top: @layout-content-spacing;
+        display: flex;
+        gap: 12px;
+
+        .r-nav-item {
+            display: flex;
+            flex: 1;
+            gap: 6px;
+            line-height: 2;
+            padding: 16px;
+            border-radius: @layout-content-border-radius;
+            background: #fff;
+            transition: all 0.2s ease;
+            min-width: 0;
+
+            .label { font-size: 14px; }
+            .text { font-weight: 600; }
+        }
+        .r-nav-item.next {
+            text-align: right;
+            justify-content: flex-end;
+        }
+        .r-nav-item:hover {
+            background-color: lighten(@color-theme-light, 5%);
+            color: @color-theme-dark;
+        }
+
+        .r-icon {
+            color: @color-theme-dark;
+        }
+    }
+</style>

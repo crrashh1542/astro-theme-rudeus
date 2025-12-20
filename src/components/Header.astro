@@ -1,0 +1,58 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<header>
+    <div class="r-container">
+        <a href="/" class="r-index">云萧的咕咕屋</a>
+        <span class="r-links">
+            <a href="/friends">友人帐</a>
+            <a href="/about">关于</a>
+            <a href="/archives">归档</a>
+        </span>
+        <span class="r-search">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Icon name="mdi:search" width={24} height={24} />
+        </span>
+    </div>
+</header>
+
+<style lang="less">
+    @import url('@/styles/variables.less');
+    header {
+        background-color: rgba(255, 255, 255, .8);
+        backdrop-filter: blur(5px);
+        padding: 16px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+
+        a {
+            transition: all 0.2s ease;
+        }
+        a:hover {
+            color: @color-theme;
+        }
+    }
+    .r-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .r-index {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .r-links {
+            display: flex;
+            gap: 2.5em;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .r-search {
+            display: flex;
+            align-items: center;
+        }
+    }
+</style>

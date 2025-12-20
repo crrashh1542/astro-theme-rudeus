@@ -1,0 +1,20 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro'
+import Comment from '@/components/Comment.astro'
+import AboutContent from '@/content/about.md'
+
+const pageTitle = '关于本站'
+---
+
+<MainLayout title={`${pageTitle} - 云萧的咕咕屋`} description="关于这个博客和作者">
+    <div class="r-content">
+        <div class="r-header">
+            <div class="r-title">{pageTitle}</div>
+        </div>
+
+        <AboutContent />
+    </div>
+
+    <Comment />
+</MainLayout>
+

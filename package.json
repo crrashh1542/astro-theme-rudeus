@@ -1,0 +1,25 @@
+{
+    "name": "astro-theme-rudeus",
+    "type": "module",
+    "version": "0.1.0",
+    "scripts": {
+        "dev": "astro dev",
+        "start": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro",
+        "p:check": "prettier --check src/",
+        "p:write": "prettier --write src/"
+    },
+    "dependencies": {
+        "@iconify-json/mdi": "^1.2.3",
+        "astro": "^5.16.6",
+        "modern-normalize": "^3.0.1",
+        "sharp": "^0.34.5"
+    },
+    "devDependencies": {
+        "astro-icon": "^1.1.5",
+        "less": "^4.5.1",
+        "prettier": "^3.7.4"
+    }
+}

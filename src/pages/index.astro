@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content'
+import { analyzeReading } from '@/utils/readingStat'
+
+import MainLayout from '@/layouts/MainLayout.astro'
+import CardArticle from '@/components/CardArticle.astro'
+
+const posts = (await getCollection('archives')).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)
+---
+
+<MainLayout title="云萧的咕咕屋 - 可能有好东西哦 (*σ´∀`)σ" description="以万象之不息，致不息之万象">
+    <div class="r-content">
+        {
+            posts.map((post) => {
+                const stats = analyzeReading(post.body)
+                return (
+                    <CardArticle
+                        title={post.data.title}
+                        description={post.data.description}
+                        pubDate={post.data.pubDate}
+                        url={`/archives/${post.slug}.html`}
+                        tags={post.data.tags}
+                        readingTime={stats.minutes}
+                        readingChars={stats.estimatedChars}
+                    />
+                )
+            })
+        }
+    </div>
+</MainLayout>

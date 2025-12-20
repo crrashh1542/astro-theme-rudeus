@@ -1,0 +1,89 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro'
+import Comment from '@/components/Comment.astro'
+
+import friends from '@/content/friends.json'
+import FriendsDoc from '@/content/friends.md'
+---
+
+<MainLayout title="友人帐 - 云萧的咕咕屋" description="朋友们的主页链接">
+    <div class="r-content">
+        <div class="r-header">
+            <div class="r-title">友人帐</div>
+            <div class="r-subtitle">收录了一些可爱的朋友与站点</div>
+        </div>
+
+        <div class="r-grid">
+            {friends.map((f) => (
+                <a class="r-friend-card" href={f.link} target="_blank" rel="noreferrer">
+                    <img class="r-avatar" src={f.avatar} alt={f.name} loading="lazy" />
+                    <div class="r-meta">
+                        <div class="r-name">{f.name}</div>
+                        <div class="r-desc">{f.description}</div>
+                    </div>
+                </a>
+            ))}
+        </div>
+
+        <FriendsDoc />
+    </div>
+
+    <Comment />
+</MainLayout>
+
+<style lang="less">
+    @import url('@/styles/variables.less');
+
+    .r-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 8px;
+    }
+
+    .r-friend-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 1px solid @color-border;
+        border-radius: @layout-content-border-radius;
+        text-decoration: none;
+        color: inherit;
+        transition: all .15s ease;
+
+        .r-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .r-name {
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 6px;
+        }
+
+        .r-desc {
+            color: @color-secondary;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    .r-friend-card:hover {
+        background-color: @color-theme-light;
+        transform: translateY(-1px);
+        * {
+            color: @color-theme-dark;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .r-grid {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+    }
+</style>

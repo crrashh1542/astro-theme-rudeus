@@ -1,0 +1,167 @@
+/* 此样式表用于全局初始化 */
+
+@import url('./fonts.less');
+@import url('./variables.less');
+
+html {
+    font-family: @font-base;
+    line-height: 1.6;
+    color: @color-text;
+    background-color: @color-bg;
+    view-transition-name: none;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// 换页动画效果
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+}
+
+::view-transition-old(main) {
+    animation: main-fade-out 0.3s ease both;
+}
+
+::view-transition-new(main) {
+    animation: main-fade-in 0.3s ease both;
+}
+
+@keyframes main-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    33% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes main-fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    66% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(main),
+    ::view-transition-new(main) {
+        animation: none;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 16px 0;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+// 基本段落
+a {
+    color: @color-text;
+    text-decoration: none;
+}
+p,
+ul,
+ol,
+blockquote {
+    line-height: @layout-line-height;
+    margin: @layout-p-margin;
+    a {
+        color: @color-theme;
+    }
+    a:hover {
+        color: @color-hover;
+    }
+    p {
+        margin: 0;
+    }
+}
+
+// 引用
+blockquote {
+    border-left: 4px solid @color-theme;
+    padding-left: 16px;
+    color: darken(@color-theme-dark, 25%);
+}
+// 图标
+svg {
+    color: inherit;
+}
+
+// 代码块
+pre {
+    padding: 16px 24px;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+code {
+    font-family: @font-code;
+    font-size: 14px;
+}
+p code {
+    background-color: @color-theme-light;
+    color: @color-theme-dark;
+    padding: 2px 4px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+// 自定义类，需以r-开头，防止冲突
+.r-container { // 需要左右间距的容器
+    max-width: 1200px;
+    margin: 0 17.5%;
+}
+.r-content { // 屏幕右侧主内容区
+    width: 100%;
+    min-height: 50vh;
+    background-color: #fff;
+    border-radius: @layout-content-border-radius;
+    padding: 8px @layout-content-padding;
+
+    .r-header { // 内容区标题
+        margin: 24px 0 16px;
+        padding-bottom: 24px;
+        border-bottom: 2px solid @color-theme;
+
+        .r-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+        .r-subtitle {
+            margin: 16px 0 0;
+            font-size: 18px;
+            color: @color-secondary;
+        }
+    }
+}
+@media screen and (max-width: 600px) {
+    .r-container {
+        padding: 0 16px;
+    }
+}

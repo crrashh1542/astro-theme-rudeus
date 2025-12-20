@@ -1,0 +1,77 @@
+---
+import BaseLayout from './BaseLayout.astro'
+
+import Header from '@/components/Header.astro'
+import Footer from '@/components/Footer.astro'
+import CardBlogger from '@/components/CardBlogger.astro'
+
+interface Props {
+    title: string
+    description: string
+}
+
+const { title, description } = Astro.props
+---
+
+<BaseLayout title={title} description={description}>
+    <Header transition:persist />
+    <main class="r-container">
+        <!-- banner -->
+        <div class="r-banner" transition:persist>
+            <p class="r-title">云萧的咕咕屋</p>
+            <p class="r-subtitle">以万象之不息，致不息之万象</p>
+        </div>
+
+        <div class="r-main-wrapper">
+            <!-- 左侧博主栏 -->
+            <div transition:persist>
+                <CardBlogger />
+            </div>
+
+            <!-- 右侧内容区 -->
+            <div class="r-content-wrapper" transition:name="main">
+                <slot />
+            </div>
+        </div>
+    </main>
+    <Footer transition:persist />
+</BaseLayout>
+
+<style lang="less">
+    @import url('@/styles/variables.less');
+    main {
+        flex: 1;
+    }
+
+    .r-banner {
+        text-align: center;
+        padding: 5rem 0;
+        margin-bottom: 1rem;
+
+        .r-title {
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, @color-theme, @color-hover);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .r-subtitle {
+            font-size: 20px;
+            color: @color-secondary;
+        }
+    }
+
+    .r-main-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        margin-bottom: 2em;
+    }
+    .r-content-wrapper {
+        // display: flex;
+        flex: 1;
+    }
+</style>
