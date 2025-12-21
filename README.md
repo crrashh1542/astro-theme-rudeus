@@ -1,117 +1,34 @@
-# Six Side World
+# Theme Rudeus
 
-一个基于 Astro 构建的简洁博客框架。
+![版本](https://img.shields.io/github/package-json/v/crrashh1542/astro-theme-rudeus)
+![上次提交](https://badgen.net/github/last-commit/crrashh1542/astro-theme-rudeus)
+![开源协议](https://img.shields.io/github/license/crrashh1542/astro-theme-rudeus)
 
-## ✨ 特点
+> 学习 Astro 也要拿出真本事！
 
-- 🚀 **快速**: 使用 Astro 构建，零 JS 默认配置
-- 📝 **Markdown 支持**: 使用 Markdown 编写博客文章
-- 🎨 **简洁设计**: 不使用 Tailwind，采用自定义 CSS 样式
-- 📱 **响应式**: 适配各种屏幕尺寸
-- 🔍 **SEO 友好**: 优化的元数据和语义化 HTML
+## 关于
+如你所见，Rudeus 是一个简洁明亮的基于 Astro 博客主题。由于项目主要为自用的用途，所以烦请各位理解部分配置和其他主题不一样~
 
-## 📁 项目结构
+注：此主题处于开发初期，不建议用于生产环境。
 
-```
-six-side-world/
-├── public/              # 静态资源
-├── src/
-│   ├── components/      # Astro 组件
-│   │   ├── Header.astro
-│   │   ├── Footer.astro
-│   │   └── BlogCard.astro
-│   ├── content/         # 内容集合
-│   │   ├── config.ts    # 内容配置
-│   │   └── blog/        # 博客文章 (Markdown)
-│   ├── layouts/         # 页面布局
-│   │   ├── BaseLayout.astro
-│   │   ├── MainLayout.astro
-│   │   └── BlogPostLayout.astro
-│   ├── pages/           # 路由页面
-│   │   ├── index.astro  # 首页
-│   │   ├── about.astro  # 关于页
-│   │   └── blog/
-│   │       ├── index.astro    # 博客列表
-│   │       └── [slug].astro   # 博客文章详情
-│   └── styles/
-│       └── global.css   # 全局样式
-├── astro.config.mjs     # Astro 配置
-└── package.json
-```
+## 博客配置和写文章
+详见文档 <https://p0-rudeus-docs.crrashh.com>
 
-## 🚀 快速开始
-
-### 安装依赖
-
-```bash
+## 部署
+1. 安装 Node.js 18 及以上版本，再安装 PNPM。
+2. 拉取此项目，安装依赖，启动开发服务器，默认端口为 20480。
+```shell
 pnpm install
-```
-
-### 启动开发服务器
-
-```bash
 pnpm dev
 ```
-
-服务器将在 `http://localhost:4321` 启动。
-
-### 构建生产版本
-
-```bash
+3. 开发环境预览完成后，构建生产环境页面，在 `dist` 目录下即可查收和部署~
+```shell
 pnpm build
 ```
 
-### 预览生产版本
-
-```bash
-pnpm preview
-```
-
-## 📝 添加博客文章
-
-1. 在 `src/content/blog/` 目录下创建新的 `.md` 文件
-2. 添加 frontmatter 元数据：
-
-```markdown
----
-title: '文章标题'
-description: '文章描述'
-pubDate: 2025-12-15
-author: '作者名称'
-tags: ['标签1', '标签2']
----
-
-# 文章内容
-
-在这里编写你的文章内容...
-```
-
-3. 保存文件后，博客文章将自动显示在首页和博客列表中
-
-## 🎨 自定义样式
-
-全局样式定义在 `src/styles/global.css` 中，使用 CSS 变量方便定制：
-
-```css
-:root {
-  --color-text: #2c3e50;
-  --color-bg: #ffffff;
-  --color-primary: #3498db;
-  --color-secondary: #95a5a6;
-  /* 更多变量... */
-}
-```
-
-## 🛠️ 技术栈
-
-- [Astro](https://astro.build/) - 静态站点生成器
-- [pnpm](https://pnpm.io/) - 包管理器
-- 自定义 CSS - 样式系统
-
-## 📄 许可
-
-MIT License
-
-## 🤝 贡献
-
-欢迎提交 Issues 和 Pull Requests！
+## 主要 TODO List
+[ ] 适配移动端
+[ ] 添加类似 GitHub NOTE WARN 等内容代码块
+[ ] 支持文章封面
+[ ] 整理项目结构
+[ ] 增大定制化程度
