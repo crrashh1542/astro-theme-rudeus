@@ -1,26 +1,26 @@
 ---
 import { Image } from 'astro:assets'
-import avatar from '@/assets/avatar.jpg';
+import avatar from '@/assets/avatar.jpg'
 ---
 
-<div class="card">
+<div class="r-card">
     <Image src={avatar} alt="博主头像" />
-    <div class="title">云萧是个咕咕怪</div>
-    <div class="description">大一狗，在前端路上奋斗的废物一个</div>
+    <div class="r-title">云萧是个咕咕怪</div>
+    <div class="r-description">大一狗，在前端路上奋斗的废物一个</div>
 </div>
 
 <style lang="less">
     @import url('@/styles/variables.less');
-    .card {
+    .r-card {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
         height: auto;
-        width: 280px;
+        width: 240px;
         background-color: #fff;
         border-radius: @layout-content-border-radius;
-        padding: @layout-content-padding;
+        padding: (@layout-content-padding / 1.4);
 
         img {
             width: 96px;
@@ -28,10 +28,15 @@ import avatar from '@/assets/avatar.jpg';
             border-radius: 50%;
         }
 
-        .title {
+        .r-title {
             margin: 12px 0;
             font-size: 20px;
             font-weight: 600;
+        }
+
+        .r-description {
+            font-size: 15px;
+            color: @color-secondary;
         }
     }
 </style>

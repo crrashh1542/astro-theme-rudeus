@@ -24,7 +24,7 @@ const { title, description } = Astro.props
 
         <div class="r-main-wrapper">
             <!-- 左侧博主栏 -->
-            <div transition:persist>
+            <div class="r-sidebar" transition:persist>
                 <CardBlogger />
             </div>
 
@@ -64,14 +64,22 @@ const { title, description } = Astro.props
         }
     }
 
+    .r-sidebar {
+        position: sticky;
+        top: (64px + @layout-content-spacing);
+        align-self: flex-start;
+        height: fit-content;
+    }
+
     .r-main-wrapper {
         display: flex;
         flex-direction: row;
-        gap: 24px;
+        gap: @layout-content-spacing;
         margin-bottom: 2em;
-    }
-    .r-content-wrapper {
-        // display: flex;
-        flex: 1;
+
+        .r-content-wrapper {
+            // display: flex;
+            flex: 1;
+        }
     }
 </style>
