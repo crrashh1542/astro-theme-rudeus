@@ -9,22 +9,24 @@ import { Icon } from 'astro-icon/components'
 <script>
     const THRESHOLD = 240
 
-    function initBackToTop() {
+    const initBackToTop = () => {
         const btn = document.getElementById('back-to-top')
+        if (!btn) return
+        // 更新页面位置状态
         const update = () => {
             const visible = window.scrollY > THRESHOLD
-            btn.classList.toggle('is-visible', visible)
+            btn.classList.toggle('r-active', visible)
         }
 
         // 避免重复绑定
         if (!btn.dataset.bound) {
             btn.addEventListener('click', () => {
                 try {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
                 } catch {
                     window.scrollTo(0, 0)
                 }
-            });
+            })
             btn.dataset.bound = '1'
         }
 
@@ -58,7 +60,7 @@ import { Icon } from 'astro-icon/components'
         z-index: 200;
     }
 
-    .r-back-to-top.is-visible {
+    .r-back-to-top.r-active {
         opacity: 1;
         transform: translateY(0);
     }
