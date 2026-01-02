@@ -1,0 +1,83 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import MainLayout from '@/layouts/MainLayout.astro'
+import Comment from '@/components/Comment.astro'
+import FriendsList from '@/components/FriendsList.astro'
+
+import { analyzeReading } from '@/utils/readingStat'
+
+export async function getStaticPaths() {
+    const pageModules = import.meta.glob('../content/*.md')
+    const explicitPages = import.meta.glob('./*.astro')
+
+    const excluded = new Set(
+        Object.keys(explicitPages)
+            .map((p) => p.split('/').pop())
+            .filter(Boolean)
+            .map((name) => name!.replace(/\.astro$/, ''))
+            .filter((name) => name !== '[page]')
+    )
+
+    const pages = Object.keys(pageModules)
+        .map((p) => p.split('/').pop())
+        .filter(Boolean)
+        .map((name) => name!.replace(/\.md$/, ''))
+        .filter((page) => !excluded.has(page))
+
+    return pages.map((page) => ({ params: { page } }))
+}
+
+const { page } = Astro.params
+
+const pageModules = import.meta.glob('../content/*.md')
+const rawModules = import.meta.glob('../content/*.md', { query: '?raw', import: 'default' })
+
+const key = `../content/${page}.md`
+const importMd = pageModules[key]
+const importRaw = rawModules[key]
+
+if (!importMd || !importRaw) {
+    return new Response('Not found', { status: 404 })
+}
+
+const [md, raw] = await Promise.all([importMd(), importRaw()])
+const Content = (md as any).default
+const frontmatter = (md as any).frontmatter ?? {}
+
+if (!frontmatter.title || !frontmatter.description) {
+    throw new Error(
+        `页面 ${page}.md 必须在 frontmatter 中提供 title 与 description（例如：---\\ntitle: ...\\ndescription: ...\\n---）`
+    )
+}
+
+const pageTitle = String(frontmatter.title)
+const description = String(frontmatter.description)
+const stats = analyzeReading(raw as string)
+const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
+---
+
+<MainLayout title={`${pageTitle} - 云萧的咕咕屋`} description={description}>
+    <div class="r-content">
+        <div class="r-header">
+            <div class="r-title">{pageTitle}</div>
+            <div class="r-subtitle">{frontmatter.description}</div>
+            <div class="r-info">
+                <span>
+                    <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
+                    {stats.minutes} 分钟
+                </span>
+                <span>
+                    <Icon name="mdi:pencil-outline" width={20} height={20} />
+                    {stats.estimatedChars} 字
+                </span>
+            </div>
+        </div>
+
+        {pageType == 'friends' ? <FriendsList /> : ''}
+
+        <Content />
+    </div>
+
+    <Comment />
+</MainLayout>
