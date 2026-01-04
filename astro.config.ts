@@ -6,6 +6,7 @@ import { resolve } from 'path'
 
 // https://astro.build/config
 export default defineConfig({
+    site: 'https://rudeus-docs.crrashh.com',
     integrations: [icon()],
     vite: {
         build: {

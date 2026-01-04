@@ -16,6 +16,9 @@ const { post, prev = null, next = null } = Astro.props
 const { title, description, pubDate, tags } = post.data
 
 const stats = analyzeReading(post.body)
+const url = Astro.site
+    ? new URL(Astro.url.pathname, Astro.site).href
+    : Astro.url.href
 
 const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('zh-CN', {
@@ -28,6 +31,8 @@ const formatDate = (date: Date) => {
 
 <MainLayout title={title + ' - 云萧的咕咕屋'} description={description}>
     <div class="r-content">
+
+        <!-- 内容页头 -->
         <div class="r-header">
             <div class="r-title">{title}</div>
             <div class="r-info">
@@ -54,8 +59,25 @@ const formatDate = (date: Date) => {
                 )
             }
         </div>
+
+        <!-- 内容正文 -->
         <div class="r-prose">
             <slot />
+        </div>
+
+        <!-- 协议声明 -->
+        <div class="r-license">
+            <p class="r-title"><b>{title}</b></p>
+            <p class="r-url">
+                <a href={url}>{url}</a>
+            </p>
+            <p>
+                除特殊声明转载之外，本文由博主云萧原创且非 AI 生成内容，依据
+                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                    CC BY-NC-SA 4.0
+                </a>
+                许可协议授权，若需转载请注明出处及本声明。
+            </p>
         </div>
     </div>
 
@@ -86,6 +108,7 @@ const formatDate = (date: Date) => {
 
     <Comment />
 </MainLayout>
+
 
 <style lang="less">
     @import url('@/styles/variables.less');
@@ -146,6 +169,23 @@ const formatDate = (date: Date) => {
 
         .r-icon {
             color: @color-theme-dark;
+        }
+    }
+
+    .r-license {
+        margin-bottom: 16px;
+        padding: 18px 24px;
+        border-radius: @layout-border-radius;
+        background-color: lighten(@color-bg, 2.5%);
+        font-size: 16px;
+        // background-color: #f6f6f6;
+        p {
+            margin: 0;
+            line-height: 1.6;
+        }
+        .r-url {
+            font-size: 15px;
+            margin-bottom: 12px;
         }
     }
 </style>
