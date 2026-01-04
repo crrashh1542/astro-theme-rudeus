@@ -92,10 +92,26 @@ blockquote {
     line-height: @layout-line-height;
     margin: @layout-p-margin;
     a {
-        color: @color-theme;
+        position: relative;
+        padding: 2px;
+        z-index: 1;
+        color: @color-theme-dark;
+        border-bottom: 1px dotted @color-border;
     }
-    a:hover {
-        color: @color-hover;
+    a::before { // 悬停a标签的背景效果
+        content: '';
+        position: absolute;
+        background-color: @color-theme-light;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        height: 0;
+        transition: all .1s ease;
+        border-radius: 4px;
+    }
+    a:hover::before {
+        height: 100%;
     }
     p {
         margin: 0;
@@ -148,17 +164,17 @@ p code {
         padding-bottom: 24px;
         border-bottom: 2px solid @color-theme;
 
-        .r-title {
+        .r-title { // 黑色大标题
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 0;
         }
-        .r-subtitle {
+        .r-subtitle { // 小标题，可选
             font-size: 17px;
             color: @color-secondary;
             margin: 4px 0 10px;
         }
-        .r-info {
+        .r-info { // 小标题下面的信息栏
             display: flex;
             flex-direction: row;
             gap: 3.5em;
