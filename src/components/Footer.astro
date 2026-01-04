@@ -10,10 +10,10 @@
             <a href="https://icp.gov.moe/?keyword=20220551">萌ICP备20220551号</a>
         </p>
         <p>
+            Powered by Astro & 
             <a href="https://github.com/crrashh1542/astro-theme-rudeus" target="_blank" class="theme">
-                <b>Rudeus Theme</b>
+                Rudeus Theme
             </a>
-            by <a href="https://github.com/crrashh1542" target="_blank" class="theme">crrashh1542</a>
         </p>
     </div>
 </footer>
@@ -38,6 +38,9 @@
 
         a {
             color: @color-text;
+        }
+        a::before {
+            visibility: hidden;
         }
     }
 </style>

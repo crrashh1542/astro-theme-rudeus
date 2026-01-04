@@ -41,21 +41,18 @@ const formatDate = (date: Date | string) => {
                 years.map((year) => (
                     <div id={`y-${year}`}>
                         <h2 class="r-catalog">{year}</h2>
-                        <ol class="r-list">
+                        <div class="r-list">
                             {groups[year].map((post) => (
-                                <li class="r-item">
-                                    <time
-                                        class="r-date"
-                                        datetime={new Date(post.data.pubDate).toISOString()}
-                                    >
+                                <div class="r-item">
+                                    <div class="r-date">
                                         {formatDate(post.data.pubDate)}
-                                    </time>
+                                    </div>
                                     <a class="r-article" href={`/archives/${post.slug}.html`}>
                                         {post.data.title}
                                     </a>
-                                </li>
+                                </div>
                             ))}
-                        </ol>
+                        </div>
                     </div>
                 ))
             }
@@ -89,6 +86,7 @@ const formatDate = (date: Date | string) => {
                 align-items: center;
                 gap: 12px;
                 padding: 10px 0;
+                margin: 6px 0;
             }
 
             .r-date {
