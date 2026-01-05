@@ -16,7 +16,7 @@ const { Content } = await post.render()
 const ordered = (await getCollection('archives')).sort(
     (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 )
-const index = ordered.findIndex((p) => p.slug === post.slug)
+const index = ordered.findIndex((p) => p.slug == post.slug)
 const prev = index > 0 ? ordered[index - 1] : null
 const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : null
 ---

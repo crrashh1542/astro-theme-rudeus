@@ -7,10 +7,14 @@ import { resolve } from 'path'
 // https://astro.build/config
 export default defineConfig({
     site: 'https://rudeus-docs.crrashh.com',
+    trailingSlash: 'never',
+    build: {
+        format: 'file',
+    },
     integrations: [icon()],
     vite: {
         build: {
-            assetsInlineLimit: 6144,
+            assetsInlineLimit: 1024,
             rollupOptions: {
                 output: {
                     hashCharacters: 'hex',
