@@ -37,6 +37,10 @@ const { title, description } = Astro.props
     <Footer transition:persist />
 </BaseLayout>
 
+<script>
+    import '@/utils/displayInfo'
+</script>
+
 <style lang="less">
     @import url('@/styles/variables.less');
     main {
