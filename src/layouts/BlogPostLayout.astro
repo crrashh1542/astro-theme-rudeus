@@ -5,6 +5,7 @@ import { Icon } from 'astro-icon/components'
 import MainLayout from '@/layouts/MainLayout.astro'
 import Comment from '@/components/Comment.astro'
 import { analyzeReading } from '@/utils/readingStat'
+import { genDescription } from '@/utils/genDescription'
 
 interface Props {
     post: CollectionEntry<'archives'>
@@ -13,12 +14,11 @@ interface Props {
 }
 
 const { post, prev = null, next = null } = Astro.props
-const { title, description, pubDate, tags } = post.data
+const { title, pubDate, tags } = post.data
+const description = post.data.description?.trim() || genDescription(post.body)
 
 const stats = analyzeReading(post.body)
-const url = Astro.site
-    ? new URL(Astro.url.pathname, Astro.site).href
-    : Astro.url.href
+const url = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href
 
 const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('zh-CN', {
@@ -31,7 +31,6 @@ const formatDate = (date: Date) => {
 
 <MainLayout title={title + ' - 云萧的咕咕屋'} description={description}>
     <div class="r-content">
-
         <!-- 内容页头 -->
         <div class="r-header">
             <div class="r-title">{title}</div>
@@ -109,7 +108,6 @@ const formatDate = (date: Date) => {
     <Comment />
 </MainLayout>
 
-
 <style lang="less">
     @import url('@/styles/variables.less');
 
@@ -155,8 +153,12 @@ const formatDate = (date: Date) => {
             transition: all 0.2s ease;
             min-width: 0;
 
-            .label { font-size: 14px; }
-            .text { font-weight: 600; }
+            .label {
+                font-size: 14px;
+            }
+            .text {
+                font-weight: 600;
+            }
         }
         .r-nav-item.next {
             text-align: right;

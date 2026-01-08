@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import { analyzeReading } from '@/utils/readingStat'
+import { genDescription } from '@/utils/genDescription'
 
 import MainLayout from '@/layouts/MainLayout.astro'
 import CardArticle from '@/components/CardArticle.astro'
@@ -15,10 +16,11 @@ const posts = (await getCollection('archives')).sort(
         {
             posts.map((post) => {
                 const stats = analyzeReading(post.body)
+                const description = post.data.description?.trim() || genDescription(post.body)
                 return (
                     <CardArticle
                         title={post.data.title}
-                        description={post.data.description}
+                        description={description}
                         pubDate={post.data.pubDate}
                         url={`/archives/${post.slug}.html`}
                         tags={post.data.tags}

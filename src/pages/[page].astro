@@ -45,14 +45,14 @@ const [md, raw] = await Promise.all([importMd(), importRaw()])
 const Content = (md as any).default
 const frontmatter = (md as any).frontmatter ?? {}
 
-if (!frontmatter.title || !frontmatter.description) {
+if (!frontmatter.title) {
     throw new Error(
-        `页面 ${page}.md 必须在 frontmatter 中提供 title 与 description（例如：---\\ntitle: ...\\ndescription: ...\\n---）`
+        `页面 ${page}.md 必须在 frontmatter 中提供 title`
     )
 }
 
 const pageTitle = String(frontmatter.title)
-const description = String(frontmatter.description)
+const description = String(frontmatter.description) || ''
 const stats = analyzeReading(raw as string)
 const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
 ---
@@ -61,7 +61,7 @@ const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
     <div class="r-content">
         <div class="r-header">
             <div class="r-title">{pageTitle}</div>
-            <div class="r-subtitle">{frontmatter.description}</div>
+            { description && <div class="r-subtitle">{description}</div> }
             <div class="r-info">
                 <span>
                     <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
