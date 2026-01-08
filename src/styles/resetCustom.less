@@ -1,0 +1,49 @@
+@import url('./variables.less');
+
+// 自定义类，需以r-开头，防止冲突
+.r-container { // 需要左右间距的容器
+    max-width: 1200px;
+    margin: 0 15%;
+}
+.r-content { // 屏幕右侧主内容区
+    width: 100%;
+    min-height: 50vh;
+    background-color: #fff;
+    border-radius: @layout-content-border-radius;
+    padding: 8px @layout-content-padding;
+
+    .r-header { // 内容区标题
+        margin: 24px 0 16px;
+        padding-bottom: 24px;
+        border-bottom: 2px solid @color-theme;
+
+        .r-title { // 黑色大标题
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+        .r-subtitle { // 小标题，可选
+            font-size: 17px;
+            color: @color-secondary;
+            margin: 4px 0 10px;
+        }
+        .r-info { // 小标题下面的信息栏
+            display: flex;
+            flex-direction: row;
+            gap: 3.5em;
+            margin: 6px 0 0;
+            color: @color-secondary;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+        }
+    }
+}
+@media screen and (max-width: 600px) {
+    .r-container {
+        padding: 0 16px;
+    }
+}

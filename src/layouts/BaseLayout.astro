@@ -2,8 +2,10 @@
 import { ClientRouter } from 'astro:transitions'
 import 'modern-normalize/modern-normalize.css'
 
-import '@/styles/reset.less'
 import BackToTop from '@/components/BackToTop.astro'
+
+import '@/styles/resetPreset.less'
+import '@/styles/resetCustom.less'
 
 interface Props {
     title: string
