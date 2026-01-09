@@ -41,6 +41,28 @@
             }
         }
     }
+
+    // 正文内容
+    .r-copy-btn {
+        // 代码块复制按钮
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        display: inline-flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.3);
+        color: #eee;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .r-copy-btn:hover,
+    .r-copy-btn[data-state='copied'] {
+        background: darken(@color-theme, 15%);
+        color: #fff;
+    }
 }
 @media screen and (max-width: 600px) {
     .r-container {
