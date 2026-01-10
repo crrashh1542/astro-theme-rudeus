@@ -51,16 +51,15 @@ if (!frontmatter.title) {
     )
 }
 
-const pageTitle = String(frontmatter.title)
-const description = String(frontmatter.description) || ''
+const description = frontmatter.description || ''
 const stats = analyzeReading(raw as string)
 const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
 ---
 
-<MainLayout title={`${pageTitle} - 云萧的咕咕屋`} description={description}>
+<MainLayout title={`${frontmatter.title} - 云萧的咕咕屋`} description={description}>
     <div class="r-content">
         <div class="r-header">
-            <div class="r-title">{pageTitle}</div>
+            <div class="r-title">{frontmatter.title}</div>
             { description && <div class="r-subtitle">{description}</div> }
             <div class="r-info">
                 <span>
