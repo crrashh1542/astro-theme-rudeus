@@ -4,13 +4,13 @@ import MainLayout from '@/layouts/MainLayout.astro'
 
 // 读取博客集合，按时间倒序
 const posts = (await getCollection('archives')).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
 )
 
 // 按年份分组
 const groups = posts.reduce(
     (acc: Record<string, typeof posts>, post) => {
-        const year = new Date(post.data.pubDate).getFullYear().toString()
+        const year = new Date(post.data.published).getFullYear().toString()
         acc[year] ||= [] as any
         acc[year].push(post)
         return acc
@@ -45,7 +45,7 @@ const formatDate = (date: Date | string) => {
                             {groups[year].map((post) => (
                                 <div class="r-item">
                                     <div class="r-date">
-                                        {formatDate(post.data.pubDate)}
+                                        {formatDate(post.data.published)}
                                     </div>
                                     <a class="r-article" href={`/archives/${post.slug}.html`}>
                                         {post.data.title}

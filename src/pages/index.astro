@@ -7,7 +7,7 @@ import MainLayout from '@/layouts/MainLayout.astro'
 import CardArticle from '@/components/CardArticle.astro'
 
 const posts = (await getCollection('archives')).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
 )
 ---
 
@@ -21,7 +21,7 @@ const posts = (await getCollection('archives')).sort(
                     <CardArticle
                         title={post.data.title}
                         description={description}
-                        pubDate={post.data.pubDate}
+                        published={post.data.published}
                         url={`/archives/${post.slug}.html`}
                         tags={post.data.tags}
                         readingTime={stats.minutes}

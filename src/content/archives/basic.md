@@ -1,8 +1,8 @@
 ---
 title: Rudeus 主题样式预览
 description: 本页用于展示 Rudeus 主题的基本 Markdown 样式
-pubDate: 2026-01-07
-tags: ['主题', '预览']
+published: 2026-01-07
+tags: [主题, 预览]
 ---
 
 # Hello, world!

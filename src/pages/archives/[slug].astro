@@ -19,13 +19,13 @@ const { post } = Astro.props
 const { Content } = await post.render()
 
 const ordered = (await getCollection('archives')).sort(
-    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+    (a, b) => a.data.published.valueOf() - b.data.published.valueOf()
 )
 const index = ordered.findIndex((p) => p.slug == post.slug)
 const prev = index > 0 ? ordered[index - 1] : null
 const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : null
 
-const { title, pubDate, tags } = post.data
+const { title, published, tags } = post.data
 const description = post.data.description?.trim() || genDescription(post.body)
 
 const stats = analyzeReading(post.body)
@@ -47,7 +47,7 @@ const formatDate = (date: Date) => {
             <div class="r-info">
                 <span>
                     <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
-                    {formatDate(pubDate)}
+                    {formatDate(published)}
                 </span>
                 <span>
                     <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
