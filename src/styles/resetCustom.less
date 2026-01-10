@@ -43,8 +43,7 @@
     }
 
     // 正文内容
-    .r-copy-btn {
-        // 代码块复制按钮
+    .r-copy-btn { // 代码块复制按钮
         position: absolute;
         top: 8px;
         right: 8px;
@@ -62,6 +61,50 @@
     .r-copy-btn[data-state='copied'] {
         background: darken(@color-theme, 15%);
         color: #fff;
+    }
+
+    .r-admonition { // 提示框
+        margin: 16px 0;
+        padding: 0px 16px;
+        border-left: 4px solid @color-note;
+        .r-admonition-title {
+            font-weight: 600;
+            color: @color-note;
+        }
+        p {
+            line-height: 1.6;
+            margin: 9px 0;
+        }
+    }
+    .r-admonition-note {
+        border-left-color: @color-note;
+        .r-admonition-title {
+            color: @color-note;
+        }
+    }
+    .r-admonition-tip {
+        border-left-color: @color-tip;
+        .r-admonition-title {
+            color: @color-tip;
+        }
+    }
+    .r-admonition-important {
+        border-left-color: @color-important;
+        .r-admonition-title {
+            color: @color-important;
+        }
+    }
+    .r-admonition-warning {
+        border-left-color: @color-warning;
+        .r-admonition-title {
+            color: @color-warning;
+        }
+    }
+    .r-admonition-caution {
+        border-left-color: @color-caution;
+        .r-admonition-title {
+            color: @color-caution;
+        }
     }
 }
 @media screen and (max-width: 600px) {

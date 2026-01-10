@@ -1,8 +1,11 @@
-import icon from 'astro-icon'
-
-import { defineConfig } from 'astro/config'
 import { fileURLToPath } from 'url'
 import { resolve } from 'path'
+
+import { defineConfig } from 'astro/config'
+import icon from 'astro-icon'
+import remarkDirective from 'remark-directive'
+
+import admonitions from '@/plugins/admonitions'
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,9 +15,13 @@ export default defineConfig({
         format: 'file',
     },
     integrations: [icon()],
+    markdown: {
+        remarkPlugins: [remarkDirective, admonitions.remark],
+        rehypePlugins: [admonitions.rehype],
+    },
     vite: {
         build: {
-            assetsInlineLimit: 1024,
+            assetsInlineLimit: 2048,
             rollupOptions: {
                 output: {
                     hashCharacters: 'hex',

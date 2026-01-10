@@ -19,6 +19,8 @@
         "@iconify-json/mdi": "^1.2.3",
         "astro-icon": "^1.1.5",
         "less": "^4.5.1",
-        "prettier": "^3.7.4"
+        "prettier": "^3.7.4",
+        "remark-directive": "^3.0.1",
+        "unist-util-visit": "^5.0.0"
     }
 }
