@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config'
 import icon from 'astro-icon'
 import remarkDirective from 'remark-directive'
 
-import admonitions from '@/plugins/admonitions'
+import admonitions from './src/plugins/admonitions'
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,7 +21,7 @@ export default defineConfig({
     },
     vite: {
         build: {
-            assetsInlineLimit: 2048,
+            assetsInlineLimit: 1024,
             rollupOptions: {
                 output: {
                     hashCharacters: 'hex',
