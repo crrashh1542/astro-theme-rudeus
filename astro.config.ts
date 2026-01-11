@@ -6,10 +6,13 @@ import icon from 'astro-icon'
 import remarkDirective from 'remark-directive'
 
 import admonitions from './src/plugins/admonitions'
+import links from './src/plugins/links'
+
+const SITE = 'https://rudeus-docs.crrashh.com'
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://rudeus-docs.crrashh.com',
+    site: SITE,
     trailingSlash: 'never',
     build: {
         format: 'file',
@@ -17,7 +20,7 @@ export default defineConfig({
     integrations: [icon()],
     markdown: {
         remarkPlugins: [remarkDirective, admonitions.remark],
-        rehypePlugins: [admonitions.rehype],
+        rehypePlugins: [admonitions.rehype, links(SITE)],
     },
     vite: {
         build: {
