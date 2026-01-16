@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components'
 ---
 
 <div id="back-to-top" class="r-back-to-top">
-    <Icon name="mdi:arrow-up" width={28} height={28} />
+    <Icon name="mdi:arrow-up" width={32} height={32} />
 </div>
 
 <script>
@@ -15,7 +15,7 @@ import { Icon } from 'astro-icon/components'
         // 更新页面位置状态
         const update = () => {
             const visible = window.scrollY > THRESHOLD
-            btn.classList.toggle('r-active', visible)
+            btn.classList.toggle('active', visible)
         }
 
         // 避免重复绑定
@@ -44,25 +44,32 @@ import { Icon } from 'astro-icon/components'
     .r-back-to-top {
         position: fixed;
         right: 36px;
-        bottom: 96px;
+        bottom: 128px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        width: 60px;
-        height: 60px;
+        width: 64px;
+        height: 64px;
         border-radius: 50%;
-        background-color: @color-theme;
-        color: @color-bg;
+        background-color: #fff;
+        color: @color-theme-dark;
         opacity: 0;
         transform: translateY(8px);
         transition: all .2s ease;
         z-index: 200;
     }
-
-    .r-back-to-top.r-active {
+    .r-back-to-top.active {
         opacity: 1;
         transform: translateY(0);
+    }
+    .r-back-to-top:hover {
+        background-color: lighten(@color-theme-light, 3%);
+        // background-color: @color-theme;
+    }
+    .r-back-to-top:active {
+        transform: scale(.9);
+        background-color: darken(@color-bg, 10%);
     }
 
     @media (prefers-reduced-motion: reduce) {
