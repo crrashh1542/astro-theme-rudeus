@@ -156,15 +156,17 @@ pre {
     border-radius: 8px;
     line-height: 1.5;
     position: relative;
-    overflow-x: scroll;
     max-width: 100%;
-    word-break: break-all;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    code {
+        display: inline-block;
+        max-width: 0;
+    }
 }
 code {
     font-family: @font-code;
     font-size: 14px;
-    max-width: 1;
-    overflow-x: scroll;
 }
 p code, li code {
     background-color: @color-theme-light;

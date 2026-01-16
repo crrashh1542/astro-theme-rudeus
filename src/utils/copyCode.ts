@@ -50,6 +50,11 @@ const bindCopyButtons = () => {
         const code = block.querySelector('code')
         if (!code) return
 
+        const scrollWrap = document.createElement('div')
+        scrollWrap.className = 'r-code-scroll'
+        code.parentElement?.insertBefore(scrollWrap, code)
+        scrollWrap.appendChild(code)
+
         // 给复制按钮绑定事件
         const button = createCopyButton()
         button.addEventListener('click', async () => {
@@ -64,8 +69,8 @@ const bindCopyButtons = () => {
             }
         })
 
-        // 将按钮添加到代码块中
-        block.appendChild(button)
+        // 将按钮添加到代码块顶部
+        block.insertBefore(button, scrollWrap)
         block.classList.add('r-has-copy')
         block.dataset.copyBound = '1'
     })

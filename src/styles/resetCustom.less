@@ -43,23 +43,31 @@
     }
 
     // 正文内容
-    .r-copy-btn { // 代码块复制按钮
+    // 代码块复制按钮
+    .r-code-scroll {
+        overflow-x: auto;
+        margin: -16px -24px;
+        padding: 16px 24px;
+    }
+    .r-copy-btn {
         position: absolute;
         top: 8px;
         right: 8px;
+        z-index: 10;
         display: inline-flex;
         align-items: center;
         padding: 10px;
         border-radius: 6px;
-        background: rgba(255, 255, 255, 0.3);
+        background-color: rgba(72, 72, 72, .7);
         color: #eee;
+        border: 0;
         font-size: 12px;
         cursor: pointer;
         transition: all 0.3s ease;
     }
     .r-copy-btn:hover,
     .r-copy-btn[data-state='copied'] {
-        background: darken(@color-theme, 15%);
+        background-color: darken(@color-theme, 15%);
         color: #fff;
     }
 
