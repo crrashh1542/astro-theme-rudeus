@@ -1,0 +1,189 @@
+---
+const title = '本页内容'
+---
+
+<div class="r-page-nav" aria-label={title}>
+    <div class="r-title">{title}</div>
+    <div class="r-nav" aria-label={title}></div>
+</div>
+
+<script>
+    // 标题生成锚点的安全 ID
+    const slugify = (value: String) =>
+        value
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\u4e00-\u9fa5-]/g, '')
+            .replace(/-+/g, '-')
+
+    // 确保同页锚点唯一
+    const ensureUniqueId = (baseId: any, used: any) => {
+        let id = baseId || 'section'
+        let index = 1
+        while (used.has(id)) {
+            id = `${baseId || 'section'}-${index}`
+            index += 1
+        }
+        used.add(id)
+        return id
+    }
+
+    // 生成目录结构并绑定锚点
+    const buildPageNav = () => {
+        const container = document.querySelector('.r-page-nav')
+        if (!container) return
+
+        // 优先在正文区中查找标题
+        const contentRoot =
+            document.querySelector('.r-prose') || document.querySelector('.r-content')
+        if (!contentRoot) return
+
+        // 收集标题
+        const headings = Array.from(contentRoot.querySelectorAll('h1, h2, h3'))
+        const list = container.querySelector('.r-nav')
+        if (!list) return
+
+        // 重建列表，避免重复
+        list.innerHTML = ''
+
+        // 先清理空状态
+        container.classList.remove('r-empty')
+
+        // 没有标题时隐藏组件
+        if (headings.length === 0) {
+            container.classList.add('r-empty')
+            return
+        }
+
+        // 逐条生成目录项
+        const usedIds = new Set()
+        const items: { id: string; element: HTMLElement }[] = []
+        headings.forEach((heading) => {
+            const text = heading.textContent?.trim() || ''
+            if (!text) return
+
+            // 为标题设置唯一锚点
+            const baseId = heading.id || slugify(text)
+            heading.id = ensureUniqueId(baseId, usedIds)
+
+            // 目录链接
+            const link = document.createElement('a')
+            link.href = `#${heading.id}`
+            link.textContent = text
+            link.className = `r-item ${heading.tagName.toLowerCase()}`
+            list.appendChild(link)
+            items.push({ id: heading.id, element: link })
+        })
+
+        // 初始化当前高亮
+        const setActive = (activeId: string) => {
+            items.forEach(({ id, element }) => {
+                element.classList.toggle('active', id === activeId)
+            })
+        }
+
+        // 使用 IntersectionObserver 监听当前标题
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visible = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort(
+                        (a, b) =>
+                            (a.target as HTMLElement).offsetTop -
+                            (b.target as HTMLElement).offsetTop
+                    )
+
+                if (visible.length > 0) {
+                    const currentId = (visible[0].target as HTMLElement).id
+                    setActive(currentId)
+                }
+            },
+            {
+                root: null,
+                rootMargin: '-20% 0px -70% 0px',
+                threshold: 0.1,
+            }
+        )
+
+        // 开始观察标题
+        items.forEach(({ id }) => {
+            const target = document.getElementById(id)
+            if (target) observer.observe(target)
+        })
+    }
+
+    // 首次加载时初始化
+    const initPageNav = () => buildPageNav()
+
+    // DOM 就绪后初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPageNav)
+    } else {
+        initPageNav()
+    }
+
+    // 站内切换后刷新目录
+    document.addEventListener('astro:page-load', initPageNav)
+    document.addEventListener('astro:after-swap', initPageNav)
+</script>
+
+<style lang="less">
+    @import url('@/styles/variables.less');
+
+    .r-page-nav {
+        margin-top: @layout-content-spacing;
+        width: 240px;
+        background-color: #fff;
+        border-radius: @layout-content-border-radius;
+        padding: (@layout-content-padding / 1.4) 12px;
+        font-size: 14px;
+
+        &.r-empty {
+            display: none;
+        }
+
+        .r-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 10px 10px;
+        }
+
+        .r-nav {
+            max-height: 60vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            line-height: 1.6;
+        }
+    }
+
+    :global(.r-page-nav .r-item) {
+        display: block;
+        position: relative;
+        font-size: 15px;
+        text-decoration: none;
+        padding: 6px 0;
+        border-radius: @layout-border-radius;
+        transition: all ease .3s;
+    }
+    :global(.r-page-nav .r-item:hover) {
+        background-color: @color-bg;
+        color: @color-theme-dark;
+    }
+    :global(.r-page-nav .r-item.active) {
+        background-color: @color-theme-light;
+        color: @color-theme-dark;
+        font-weight: 600;
+    }
+    :global(.r-page-nav .r-item.h1) {
+        padding-left: 10px;
+    }
+    :global(.r-page-nav .r-item.h2) {
+        padding-left: 16px;
+    }
+    :global(.r-page-nav .r-item.h3) {
+        padding-left: 22px;
+    }
+</style>

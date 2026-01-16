@@ -9,6 +9,7 @@ html {
     color: @color-text;
     background-color: @color-bg;
     view-transition-name: none;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -16,6 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
 }
 ::selection {
     background-color: @color-theme-light;
@@ -81,6 +83,7 @@ h6 {
     margin: 16px 0;
     font-weight: 600;
     line-height: 1.5;
+    scroll-margin-top: 72px;
 }
 
 // 基本段落

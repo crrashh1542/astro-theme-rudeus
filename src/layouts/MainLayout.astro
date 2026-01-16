@@ -4,6 +4,7 @@ import BaseLayout from './BaseLayout.astro'
 import Header from '@/components/Header.astro'
 import Footer from '@/components/Footer.astro'
 import CardBlogger from '@/components/CardBlogger.astro'
+import CardNav from '@/components/CardNav.astro'
 
 interface Props {
     title: string
@@ -23,9 +24,10 @@ const { title, description } = Astro.props
         </div>
 
         <div class="r-main-wrapper">
-            <!-- 左侧博主栏 -->
-            <div class="r-sidebar" transition:persist>
-                <CardBlogger />
+            <!-- 左侧功能栏 -->
+            <div class="r-sidebar">
+                <CardBlogger transition:persist />
+                <CardNav transition:name="main" />
             </div>
 
             <!-- 右侧内容区 -->
