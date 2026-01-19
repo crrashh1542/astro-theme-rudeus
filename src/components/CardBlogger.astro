@@ -1,12 +1,27 @@
 ---
 import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
 import avatar from '@/assets/avatar.jpg'
+
+const articles = await getCollection('archives')
+const articleTotal = articles.length
+const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
 ---
 
 <div class="r-card">
     <Image src={avatar} alt="博主头像" />
     <div class="r-title">云萧是个咕咕怪</div>
     <div class="r-description">大一狗，在前端路上奋斗的废物一个</div>
+    <div class="r-stats">
+        <div class="r-stat-item">
+            <div class="r-stat-value">{articleTotal}</div>
+            <div class="r-stat-label">文章</div>
+        </div>
+        <div class="r-stat-item">
+            <div class="r-stat-value">{tagTotal}</div>
+            <div class="r-stat-label">标签</div>
+        </div>
+    </div>
 </div>
 
 <style lang="less">
@@ -37,6 +52,29 @@ import avatar from '@/assets/avatar.jpg'
         .r-description {
             font-size: 15px;
             color: @color-secondary;
+        }
+
+        .r-stats {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            gap: 12px;
+            width: 100%;
+            font-size: 14px;
+            margin-top: 14px;
+        }
+
+        .r-stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+
+        .r-stat-value {
+            font-size: 18px;
+            font-weight: 600;
         }
     }
 </style>
