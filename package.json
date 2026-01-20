@@ -11,7 +11,7 @@
         "p:write": "prettier --write src/"
     },
     "dependencies": {
-        "astro": "^5.16.6",
+        "astro": "^5.16.14",
         "modern-normalize": "^3.0.1",
         "sharp": "^0.34.5"
     },
@@ -19,8 +19,8 @@
         "@iconify-json/mdi": "^1.2.3",
         "astro-icon": "^1.1.5",
         "less": "^4.5.1",
-        "prettier": "^3.7.4",
-        "remark-directive": "^3.0.1",
-        "unist-util-visit": "^5.0.0"
+        "prettier": "^3.8.1",
+        "remark-directive": "^4.0.0",
+        "unist-util-visit": "^5.1.0"
     }
 }
