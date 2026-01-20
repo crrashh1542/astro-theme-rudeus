@@ -29,7 +29,9 @@ export default defineConfig({
                 output: {
                     hashCharacters: 'hex',
                     assetFileNames: '_rudeus/[name]-[hash].[ext]',
-                    entryFileNames: '_rudeus/[name]-[hash].js',
+                    entryFileNames(chunkInfo) {
+                        return '_rudeus/' + chunkInfo.name.split('.')[0] + '-[hash].js'
+                    },
                     minifyInternalExports: true,
                 },
             },
