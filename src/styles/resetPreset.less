@@ -3,6 +3,7 @@
 @import url('./fonts.less');
 @import url('./variables.less');
 
+/* 页面全局 ------ BEGIN */
 html {
     font-family: @font-base;
     line-height: 1.6;
@@ -73,7 +74,10 @@ body {
         animation: none;
     }
 }
+/* 页面全局 ------ END */
 
+/* 基本段落 ------ BEGIN */
+// 标题
 h1,
 h2,
 h3,
@@ -85,12 +89,12 @@ h6 {
     line-height: 1.5;
     scroll-margin-top: 72px;
 }
-
-// 基本段落
 a {
     color: @color-text;
     text-decoration: none;
 }
+
+// 段落
 p,
 ul,
 ol,
@@ -123,25 +127,13 @@ blockquote {
         margin: 0;
     }
 }
+// 列表
 ul {
     list-style-type: disc;
 }
-// 列表标记符颜色
-li::marker {
+li::marker { // 列表标记符颜色
     color: @color-theme-dark;
 }
-// 任务列表样式
-.contains-task-list {
-    list-style: none;
-    padding-left: 10px;
-    input {
-        margin-right: .25em;
-    }
-    input[type="checkbox"]:checked {
-        background-color: @color-theme;
-    }
-}
-
 // 引用
 blockquote {
     border-left: 4px solid @color-theme;
@@ -152,8 +144,40 @@ blockquote {
 svg {
     color: inherit;
 }
+/* 基本段落 ------ END */
 
-// 代码块
+/* 表格 ------ BEGIN */
+table {
+    width: 90%;
+    border-collapse: collapse;
+    thead {
+        border-bottom: 2px solid @color-border;
+    }
+    tbody tr {
+        border-bottom: 1px solid @color-border;
+    }
+    th, td {
+        padding: 8px 1em;
+        text-align: left;
+        vertical-align: middle;
+    }
+}
+/* 表格 ------ END */
+
+/* 任务列表样式 ------ BEGIN */
+.contains-task-list {
+    list-style: none;
+    padding-left: 10px;
+    input {
+        margin-right: .25em;
+    }
+    input[type="checkbox"]:checked {
+        background-color: @color-theme;
+    }
+}
+/* 任务列表样式 ------ END */
+
+/* 代码块 ------ BEGIN */
 pre {
     padding: 16px 24px;
     border-radius: 8px;
@@ -177,3 +201,4 @@ p code, li code {
     padding: 2px 4px;
     border-radius: 6px;
 }
+/* 代码块 ------ END */
