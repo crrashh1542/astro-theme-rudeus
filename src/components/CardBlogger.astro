@@ -13,10 +13,10 @@ const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
     <div class="r-title">云萧是个咕咕怪</div>
     <div class="r-description">大一狗，在前端路上奋斗的废物一个</div>
     <div class="r-stats">
-        <div class="r-stat-item">
+        <a class="r-stat-item" href="/archives">
             <div class="r-stat-value">{articleTotal}</div>
             <div class="r-stat-label">文章</div>
-        </div>
+        </a>
         <div class="r-stat-item">
             <div class="r-stat-value">{tagTotal}</div>
             <div class="r-stat-label">标签</div>
@@ -70,6 +70,9 @@ const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
             flex-direction: column;
             align-items: center;
             min-width: 80px;
+        }
+        a.r-stat-item:hover {
+            color: @color-theme;
         }
 
         .r-stat-value {
