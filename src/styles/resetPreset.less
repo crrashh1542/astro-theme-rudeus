@@ -31,11 +31,11 @@ body {
 }
 
 ::view-transition-old(main) {
-    animation: main-fade-out 0.3s ease both;
+    animation: main-fade-out @anim-duration ease both;
 }
 
 ::view-transition-new(main) {
-    animation: main-fade-in 0.3s ease both;
+    animation: main-fade-in @anim-duration ease both;
 }
 
 @keyframes main-fade-in {

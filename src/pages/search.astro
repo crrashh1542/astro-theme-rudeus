@@ -1,0 +1,130 @@
+---
+import { getCollection } from 'astro:content'
+import { analyzeReading } from '@/utils/readingStat'
+import { genDescription } from '@/utils/genDescription'
+
+import NotFound from '@/components/NotFound.astro'
+import MainLayout from '@/layouts/MainLayout.astro'
+import CardArticle from '@/components/CardArticle.astro'
+
+const posts = (await getCollection('archives')).sort(
+    (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
+)
+
+const items = posts.map((post) => {
+    const stats = analyzeReading(post.body)
+    const description = post.data.description?.trim() || genDescription(post.body)
+    return { post, stats, description }
+})
+
+---
+
+<MainLayout title="搜索 - 云萧的咕咕屋" description="搜索博客文章">
+    <div class="r-content">
+        <div class="r-header">
+            <div class="r-title">搜索</div>
+            <div class="r-subtitle" id="search-subtitle"></div>
+        </div>
+
+        <div class="r-search-list">
+            {
+                items.map(({ post, stats, description }) => (
+                    <div
+                        class="r-search-item"
+                        data-title={post.data.title}
+                        data-tags={(post.data.tags ?? []).join(' ')}
+                        data-desc={description}
+                    >
+                        <CardArticle
+                            title={post.data.title}
+                            description={description}
+                            published={post.data.published}
+                            url={`/archives/${post.slug}.html`}
+                            tags={post.data.tags}
+                            readingTime={stats.minutes}
+                            readingChars={stats.estimatedChars}
+                        />
+                    </div>
+                ))
+            }
+        </div>
+        <div class="r-empty" id="search-empty">
+            <br>
+            <NotFound />
+        </div>
+    </div>
+</MainLayout>
+
+<script>
+    const normalize = (value: String) => value.toLowerCase().trim()
+    const subtitle = document.getElementById('search-subtitle') as HTMLElement | null
+    const emptyState = document.getElementById('search-empty') as HTMLElement | null
+    const items = Array.from(document.querySelectorAll('.r-search-item'))
+
+    const applyFilter = (query: String) => {
+        const keyword = normalize(query || '')
+        let visibleCount = 0
+
+        items.forEach((item: any) => {
+            const title = item.getAttribute('data-title') || ''
+            const tags = item.getAttribute('data-tags') || ''
+            const desc = item.getAttribute('data-desc') || ''
+            const match =
+                !keyword ||
+                normalize(title).includes(keyword) ||
+                normalize(tags).includes(keyword) ||
+                normalize(desc).includes(keyword)
+
+            item.style.display = match ? '' : 'none'
+            if (match) visibleCount += 1
+        })
+
+        if (subtitle) {
+            subtitle.textContent = keyword
+                ? `搜索“${query}”，共 ${visibleCount} 篇文章`
+                : `共 ${visibleCount} 篇文章`
+        }
+
+        if (emptyState) {
+            emptyState.style.display = visibleCount === 0 ? 'flex' : 'none'
+        }
+    }
+
+    const initFromUrl = () => {
+        const params = new URLSearchParams(window.location.search)
+        const query = params.get('q') || ''
+        applyFilter(query)
+    }
+
+    window.addEventListener('r-search', (event: any) => {
+        applyFilter(event.detail?.query || '')
+    })
+
+    initFromUrl()
+</script>
+
+<style lang="less">
+    @import url('@/styles/variables.less');
+
+    .r-search-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .r-search-item {
+        display: block;
+        border-bottom: 1px solid @color-border;
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .r-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+    }
+
+</style>
