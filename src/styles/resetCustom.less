@@ -2,8 +2,13 @@
 
 // 自定义类，需以r-开头，防止冲突
 .r-container { // 需要左右间距的容器
-    max-width: 1200px;
+    max-width: @layout-container-max-width;
     margin: 0 15%;
+}
+@media screen and (min-width: calc(@layout-container-max-width + 30%)) {
+    .r-container {
+        margin: 0 auto;
+    }
 }
 .r-content { // 屏幕右侧主内容区
     width: 100%;
@@ -43,6 +48,18 @@
     }
 
     // 正文内容
+    // 图片格式
+    .r-prose {
+        line-height: @layout-line-height;
+        img {
+            display: block;
+            border-radius: @layout-border-radius;
+            margin: 16px auto 24px;
+            max-width: @layout-img-max-width;
+            max-height: @layout-img-max-height;
+        }
+    }
+
     // 代码块复制按钮
     .r-code-scroll {
         overflow-x: auto;

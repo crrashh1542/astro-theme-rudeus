@@ -75,10 +75,12 @@ const { title, description } = Astro.props
     }
 
     .r-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: @layout-content-spacing;
         position: sticky;
         top: (64px + @layout-content-spacing);
         align-self: flex-start;
-        height: fit-content;
     }
 
     .r-main-wrapper {

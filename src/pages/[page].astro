@@ -75,7 +75,9 @@ const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
 
         {pageType == 'friends' ? <FriendsList /> : ''}
 
-        <Content />
+        <div class="r-prose">
+            <Content />
+        </div>
     </div>
 
     <Comment />
