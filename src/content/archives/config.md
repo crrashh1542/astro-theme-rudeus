@@ -6,3 +6,4 @@ tags: [欢迎, Astro, 博客]
 ---
 
 # Hello, world!
+To be done at `feat/cust` stage.

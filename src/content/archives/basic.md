@@ -14,25 +14,40 @@ tags: [主题, 预览]
 
 回到[文档主页](/)
 
+（注：站内链接为当前标签内打开，站外链接为新标签内打开）
+
 ## 列表
-1. 前端框架
-    - Astro
-    - TypeScript
-2. 样式处理
-    - Less
+1. 中央大陆
+    - 阿斯拉王国
+    - 西隆王国
+    - 王龙王国
+    - 剑之圣地
+2. 米里斯大陆
+    - 米里斯圣国
+    - 德路迪亚村
+3. 魔大陆
+    - 米格路德族聚落
+    - 利卡里斯城
+    - 涅克罗斯要塞
 
 ## 图片
 ![Pixiv ID 121853651](https://i.cdn.crrashh.com/2026/0114/7b9b647c-80ee-40e1-a382-d8c1e23496da.jpg)
 作品 Pixiv ID：121853651
 
 ## 引用
-> 天青色等烟雨  而我在等你
+> 所以，该结束了。
 >
-> 炊烟袅袅升起  晕开了结局
+> 这个会令我想一直沉浸在其中的梦。开朗又温柔的，塞妮丝的梦。
 >
-> 如传世的的青花瓷自顾自美丽
+> 我举手朝向塞妮丝，碰了她的头。
 >
-> 你眼带笑意
+> 「妈妈，一直以来谢谢你。」
+>
+> 然后将灌注全力的岩砲弹，击向塞妮丝。
+>
+> ……
+>
+> 总觉得做了非常悲伤的梦。
 
 ## 表格
 |  名字       | 代表色  | 寿命 |
@@ -53,10 +68,10 @@ export default function(){
 ## 任务列表
 - [x] 和七星交谈
 - [ ] 给艾莉丝写信
-- [ ] 怀疑人神但不要与人神为敌
+- [x] 怀疑人神但不要与人神为敌
 
 ## 自定义 HTML
-**注：以下内容搜集自网络资源站，仅用于测试样式，若侵权请联系删除。**
+**注：以下内容搜集自网络资源站，仅用于测试自定义 HTML 功能，若侵权请联系删除。**
 
 ### 音频播放（APlayer）
 
@@ -72,11 +87,11 @@ export default function(){
             loop: 'none',
             audio: [
                 {
-                    name: '不为谁而作的歌',
-                    artist: '林俊杰',
-                    cover: 'https://i.cdn.crrashh.com/2026/0114/4c503439-f228-4df5-8196-3ef0dd558f9b.webp',
-                    url: 'https://s3plus.meituan.net/opapisdk/op_ticket_1_5673241091_1767601449151_qdqqd_j22khu.mp3',
-                    lrc: 'https://s3plus.meituan.net/opapisdk/op_ticket_1_5677168484_1767601309022_qdqqd_pu1zfr.lrc'
+                    name: 'spiral',
+                    artist: 'LONGMAN',
+                    cover: 'https://i.cdn.crrashh.com/2026/0114/ac47231d-4fe6-4829-ba32-9cca36bad0d4.jpg',
+                    url: 'https://nos.netease.com/ysf/f4ec70e402ef149dd606d1a068dfa464.mp3',
+                    lrc: 'https://nos.netease.com/ysf/475a9271c275162b06e98de8e3afb653.lrc'
                 },
                 {
                     name: '夜的第七章',
@@ -115,8 +130,8 @@ export default function(){
             container: document.getElementById('dp-0'),
             screenshot: true,
             video: {
-                url: 'https://printidea-img.oss-cn-hangzhou.aliyuncs.com/reference/pc/2025/09/23/4910920//695b7eafd3ef3/c27e263b66a1631df3b00d8eccaac8db.mp4',
-                pic: 'https://i.cdn.crrashh.com/2026/0114/80c073a9-eb77-4395-8b13-625e5f7d2cb6.webp',
+                url: 'https://printidea-img.oss-cn-hangzhou.aliyuncs.com/reference/pc/2025/09/23/4910920//697b2ce742884/a8f07d9fcf8f782d2b4ad2c017b0819b.mp4',
+                pic: 'https://i.cdn.crrashh.com/2026/0114/0248c9af-49e3-47ac-ae31-befd4b95ad14.webp',
             }
         })
     }
