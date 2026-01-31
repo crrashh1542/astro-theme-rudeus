@@ -2,17 +2,33 @@
 ---
 
 <div class="r-comment">
-    尚未支持评论功能，敬请期待
+    <p>尚未支持评论功能，敬请期待</p>
 </div>
+
+<!-- 评论系统 -->
+<link rel="stylesheet" href="https://s.cdn.crrashh.com/libs/artalk/2.9.1/Artalk.css">
+<script type="module">
+    import Artalk from 'https://s.cdn.crrashh.com/libs/artalk/2.9.1/Artalk.mjs'
+
+    Artalk.init({
+        el: '.r-comment',
+        server: 'https://p0-artalk.api.crrashh.com',
+        site: 'Rudeus 文档'
+    })
+</script>
 
 <style lang="less">
     @import url('@/styles/variables.less');
 
     .r-comment {
         margin: @layout-content-spacing 0 0;
-        padding: 60px;
+        padding: @layout-content-padding;
         background-color: #fff;
         border-radius: @layout-content-border-radius;
         text-align: center;
+
+        p { margin: @layout-content-padding 0; }
+
+        --at-color-main: @color-theme;
     }
 </style>
