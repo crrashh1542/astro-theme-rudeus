@@ -2,19 +2,25 @@
 ---
 
 <div class="r-comment">
-    <p>尚未支持评论功能，敬请期待</p>
+    <p class="r-empty">尚未开启评论功能，敬请期待</p>
 </div>
 
 <!-- 评论系统 -->
-<link rel="stylesheet" href="https://s.cdn.crrashh.com/libs/artalk/2.9.1/Artalk.css">
-<script type="module">
-    import Artalk from 'https://s.cdn.crrashh.com/libs/artalk/2.9.1/Artalk.mjs'
+<link rel="stylesheet" href="https://p0-artalk.api.crrashh.com/dist/Artalk.css">
+<script is:inline src="https://p0-artalk.api.crrashh.com/dist/Artalk.js"></script>
+<script is:inline>
+    const initArtalk = () => {
+        Artalk.init({
+            el: '.r-comment',
+            server: 'https://p0-artalk.api.crrashh.com',
+            site: 'Rudeus 文档'
+        })
+    }
+    initArtalk()
 
-    Artalk.init({
-        el: '.r-comment',
-        server: 'https://p0-artalk.api.crrashh.com',
-        site: 'Rudeus 文档'
-    })
+    // 注：Astro 视图切换后需重新初始化
+    document.addEventListener('astro:page-load', initArtalk)
+    document.addEventListener('astro:after-swap', initArtalk)
 </script>
 
 <style lang="less">
@@ -25,9 +31,11 @@
         padding: @layout-content-padding;
         background-color: #fff;
         border-radius: @layout-content-border-radius;
-        text-align: center;
 
-        p { margin: @layout-content-padding 0; }
+        p.r-empty {
+            text-align: center;
+            margin: @layout-content-padding 0;
+        }
 
         --at-color-main: @color-theme;
     }
