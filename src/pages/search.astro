@@ -22,29 +22,28 @@ const items = posts.map((post) => {
 <MainLayout title="搜索 - 云萧的咕咕屋" description="搜索博客文章">
     <div class="r-content">
         <div class="r-header">
-            <div class="r-title">搜索</div>
-            <div class="r-subtitle" id="search-subtitle"></div>
+            <div class="r-header-wrapper">
+                <div class="r-title">搜索</div>
+                <div class="r-subtitle" id="search-subtitle"></div>
+            </div>
         </div>
 
         <div class="r-search-list">
             {
                 items.map(({ post, stats, description }) => (
-                    <div
-                        class="r-search-item"
+                    <CardArticle
+                        title={post.data.title}
+                        description={description}
+                        published={post.data.published}
+                        url={`/archives/${post.slug}.html`}
+                        tags={post.data.tags}
+                        readingTime={stats.minutes}
+                        readingChars={stats.estimatedChars}
+                        image={post.data.image}
                         data-title={post.data.title}
                         data-tags={(post.data.tags ?? []).join(' ')}
                         data-desc={description}
-                    >
-                        <CardArticle
-                            title={post.data.title}
-                            description={description}
-                            published={post.data.published}
-                            url={`/archives/${post.slug}.html`}
-                            tags={post.data.tags}
-                            readingTime={stats.minutes}
-                            readingChars={stats.estimatedChars}
-                        />
-                    </div>
+                    />
                 ))
             }
         </div>
@@ -59,7 +58,7 @@ const items = posts.map((post) => {
     const normalize = (value: String) => value.toLowerCase().trim()
     const subtitle = document.getElementById('search-subtitle') as HTMLElement | null
     const emptyState = document.getElementById('search-empty') as HTMLElement | null
-    const items = Array.from(document.querySelectorAll('.r-search-item'))
+    const items = Array.from(document.querySelectorAll('a.r-card'))
 
     const applyFilter = (query: String) => {
         const keyword = normalize(query || '')
@@ -106,17 +105,18 @@ const items = posts.map((post) => {
 <style lang="less">
     @import url('@/styles/variables.less');
 
+    .r-content {
+        padding: 0;
+    }
+
+    .r-header-wrapper {
+        margin: 0 @layout-content-padding !important;
+        padding: 24px 0;
+    }
+
     .r-search-list {
         display: flex;
         flex-direction: column;
-    }
-
-    .r-search-item {
-        display: block;
-        border-bottom: 1px solid @color-border;
-        &:last-child {
-            border-bottom: none;
-        }
     }
 
     .r-empty {

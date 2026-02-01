@@ -26,9 +26,17 @@ const posts = (await getCollection('archives')).sort(
                         tags={post.data.tags}
                         readingTime={stats.minutes}
                         readingChars={stats.estimatedChars}
+                        image={post.data.image}
+                        data-index
                     />
                 )
             })
         }
     </div>
 </MainLayout>
+
+<style lang="less">
+    .r-content {
+        padding: 0;
+    }
+</style>

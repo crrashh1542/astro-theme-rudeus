@@ -18,6 +18,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props
 const { Content } = await post.render()
 
+// 处理导航
 const ordered = (await getCollection('archives')).sort(
     (a, b) => a.data.published.valueOf() - b.data.published.valueOf()
 )
@@ -25,69 +26,78 @@ const index = ordered.findIndex((p) => p.slug == post.slug)
 const prev = index > 0 ? ordered[index - 1] : null
 const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : null
 
-const { title, published, tags } = post.data
+// 处理页头数据
+const { title, published, tags, image } = post.data
 const description = post.data.description?.trim() || genDescription(post.body)
-
 const stats = analyzeReading(post.body)
 const url = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href
 
 const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString('zh-CN', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    })
+    const value = new Date(date)
+    const year = value.getFullYear()
+    const month = String(value.getMonth() + 1).padStart(2, '0')
+    const day = String(value.getDate()).padStart(2, '0')
+    return year + '-' + month + '-' + day
 }
 ---
+
 <MainLayout title={title + ' - 云萧的咕咕屋'} description={description}>
     <div class="r-content">
         <!-- 内容页头 -->
         <div class="r-header">
-            <div class="r-title">{title}</div>
-            <div class="r-info">
-                <span>
-                    <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
-                    {formatDate(published)}
-                </span>
-                <span>
-                    <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
-                    {stats.minutes} 分钟
-                </span>
-                <span>
-                    <Icon name="mdi:pencil-outline" width={20} height={20} />
-                    {stats.estimatedChars} 字
-                </span>
+            <!-- 封面 -->
+            {image && <img class="r-cover" src={image} alt={title} />}
+
+            <!-- 页头内容 -->
+            <div class="r-header-wrapper">
+                <div class="r-title">{title}</div>
+                <div class="r-info">
+                    <span>
+                        <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
+                        {formatDate(published)}
+                    </span>
+                    <span>
+                        <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
+                        {stats.minutes} 分钟
+                    </span>
+                    <span>
+                        <Icon name="mdi:pencil-outline" width={20} height={20} />
+                        {stats.estimatedChars} 字
+                    </span>
+                </div>
+                {
+                    tags && tags.length > 0 && (
+                        <div class="r-tags">
+                            {tags.map((tag) => (
+                                <span class="r-tag">#{tag}</span>
+                            ))}
+                        </div>
+                    )
+                }
             </div>
-            {
-                tags && tags.length > 0 && (
-                    <div class="r-tags">
-                        {tags.map((tag) => (
-                            <span class="r-tag">#{tag}</span>
-                        ))}
-                    </div>
-                )
-            }
         </div>
 
         <!-- 内容正文 -->
         <div class="r-prose">
             <Content />
+
+            <!-- 协议声明 -->
+            <div class="r-license">
+                <p class="r-title"><b>{title}</b></p>
+                <p class="r-url">
+                    <a href={url}>{url}</a>
+                </p>
+                <p>
+                    除特殊声明转载之外，本文由博主云萧原创且非 AI 生成内容，依据
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+                        CC BY-NC-SA 4.0
+                    </a>
+                    许可协议授权，若需转载请注明出处及本声明。
+                </p>
+            </div>
         </div>
 
-        <!-- 协议声明 -->
-        <div class="r-license">
-            <p class="r-title"><b>{title}</b></p>
-            <p class="r-url">
-                <a href={url}>{url}</a>
-            </p>
-            <p>
-                除特殊声明转载之外，本文由博主云萧原创且非 AI 生成内容，依据
-                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                    CC BY-NC-SA 4.0
-                </a>
-                许可协议授权，若需转载请注明出处及本声明。
-            </p>
-        </div>
+        
     </div>
 
     <div class="r-nav">
@@ -174,7 +184,6 @@ const formatDate = (date: Date) => {
     }
 
     .r-license {
-        margin-bottom: 16px;
         padding: 18px 24px;
         border-radius: @layout-border-radius;
         background-color: lighten(@color-bg, 2.5%);

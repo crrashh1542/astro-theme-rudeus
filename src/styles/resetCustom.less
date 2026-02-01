@@ -10,17 +10,26 @@
         margin: 0 auto;
     }
 }
+.r-grow {
+    flex-grow: 1;
+}
 .r-content { // 屏幕右侧主内容区
     width: 100%;
     min-height: 50vh;
-    background-color: #fff;
+    background-color: @color-content-bg;
     border-radius: @layout-content-border-radius;
-    padding: 8px @layout-content-padding;
+    padding: 8px @layout-content-padding @layout-content-padding;
+    position: relative;
+    z-index: -1;
 
     .r-header { // 内容区标题
-        margin: 24px 0 16px;
-        padding-bottom: 24px;
-        border-bottom: 2px solid @color-theme;
+        position: relative;
+
+        .r-header-wrapper { // 页头内容的内层包装器，通过修改 wrapper 以兼容封面
+            margin: 24px 0 16px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid @color-theme;
+        }
 
         .r-title { // 黑色大标题
             font-size: 36px;
@@ -44,6 +53,27 @@
                 align-items: center;
                 gap: 6px;
             }
+        }
+    }
+    // 如果页头有封面图
+    &:has(.r-header .r-cover) {
+        padding: 0 0 @layout-content-padding; // 去掉整个页面内边距，防止封面左右白边
+        .r-header-wrapper { // 通过设置内层 wrapper 的 margin，防止封面上面白边
+            margin: 0 @layout-content-padding;
+            padding-top: (3 / 4 * @layout-content-cover-height);
+            padding-bottom: 24px;
+        }
+        .r-prose {
+            padding: 8px @layout-content-padding 0;
+        }
+        .r-cover {
+            position: absolute;
+            z-index: -1;
+            border-radius: @layout-content-border-radius;
+            width: 100%;
+            height: @layout-content-cover-height;
+            object-fit: cover;
+            mask-image: linear-gradient(to bottom, #000, transparent)
         }
     }
 

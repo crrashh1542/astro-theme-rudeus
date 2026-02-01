@@ -59,17 +59,19 @@ const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
 <MainLayout title={`${frontmatter.title} - 云萧的咕咕屋`} description={description}>
     <div class="r-content">
         <div class="r-header">
-            <div class="r-title">{frontmatter.title}</div>
-            { description && <div class="r-subtitle">{description}</div> }
-            <div class="r-info">
-                <span>
-                    <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
-                    {stats.minutes} 分钟
-                </span>
-                <span>
-                    <Icon name="mdi:pencil-outline" width={20} height={20} />
-                    {stats.estimatedChars} 字
-                </span>
+            <div class="r-header-wrapper">
+                <div class="r-title">{frontmatter.title}</div>
+                { description && <div class="r-subtitle">{description}</div> }
+                <div class="r-info">
+                    <span>
+                        <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
+                        {stats.minutes} 分钟
+                    </span>
+                    <span>
+                        <Icon name="mdi:pencil-outline" width={20} height={20} />
+                        {stats.estimatedChars} 字
+                    </span>
+                </div>
             </div>
         </div>
 
