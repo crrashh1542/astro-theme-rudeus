@@ -3,6 +3,7 @@ import { resolve } from 'path'
 
 import { defineConfig } from 'astro/config'
 import icon from 'astro-icon'
+import sitemap from '@astrojs/sitemap'
 import remarkDirective from 'remark-directive'
 
 import admonitions from './src/plugins/admonitions'
@@ -17,7 +18,7 @@ export default defineConfig({
     build: {
         format: 'file',
     },
-    integrations: [icon()],
+    integrations: [icon(), sitemap()],
     markdown: {
         remarkPlugins: [remarkDirective, admonitions.remark],
         rehypePlugins: [admonitions.rehype, links(SITE)],
