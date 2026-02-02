@@ -30,7 +30,11 @@ const title = '本页内容'
     }
 
     // 生成目录结构并绑定锚点
+    let disposePageNav: (() => void) | null = null
     const buildPageNav = () => {
+        disposePageNav?.()
+        disposePageNav = null
+
         const container = document.querySelector('.r-page-nav')
         if (!container) return
 
@@ -39,78 +43,91 @@ const title = '本页内容'
             document.querySelector('.r-prose') || document.querySelector('.r-content')
         if (!contentRoot) return
 
-        // 收集标题
-        const headings = Array.from(contentRoot.querySelectorAll('h1, h2, h3'))
         const list = container.querySelector('.r-nav')
         if (!list) return
 
         // 重建列表，避免重复
         list.innerHTML = ''
-
-        // 先清理空状态
         container.classList.remove('r-empty')
-
-        // 没有标题时隐藏组件
-        if (headings.length === 0) {
-            container.classList.add('r-empty')
-            return
-        }
 
         // 逐条生成目录项
         const usedIds = new Set()
-        const items: { id: string; element: HTMLElement }[] = []
-        headings.forEach((heading) => {
+        const items: { id: string; element: HTMLElement; heading: HTMLElement }[] = []
+        contentRoot.querySelectorAll('h1, h2, h3').forEach((headingElement) => {
+            const heading = headingElement as HTMLElement
             const text = heading.textContent?.trim() || ''
             if (!text) return
 
-            // 为标题设置唯一锚点
             const baseId = heading.id || slugify(text)
             heading.id = ensureUniqueId(baseId, usedIds)
 
-            // 目录链接
             const link = document.createElement('a')
             link.href = `#${heading.id}`
             link.textContent = text
             link.className = `r-item ${heading.tagName.toLowerCase()}`
             list.appendChild(link)
-            items.push({ id: heading.id, element: link })
+            items.push({ id: heading.id, element: link, heading })
         })
 
-        // 初始化当前高亮
+        if (items.length === 0) {
+            container.classList.add('r-empty')
+            return
+        }
+
         const setActive = (activeId: string) => {
             items.forEach(({ id, element }) => {
                 element.classList.toggle('active', id === activeId)
             })
         }
 
-        // 使用 IntersectionObserver 监听当前标题
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visible = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort(
-                        (a, b) =>
-                            (a.target as HTMLElement).offsetTop -
-                            (b.target as HTMLElement).offsetTop
-                    )
-
-                if (visible.length > 0) {
-                    const currentId = (visible[0].target as HTMLElement).id
-                    setActive(currentId)
-                }
-            },
-            {
-                root: null,
-                rootMargin: '-20% 0px -70% 0px',
-                threshold: 0.1,
-            }
+        const activeOffset = 80
+        let headingTops = items.map(
+            ({ heading }) => heading.getBoundingClientRect().top + window.scrollY
         )
 
-        // 开始观察标题
-        items.forEach(({ id }) => {
-            const target = document.getElementById(id)
-            if (target) observer.observe(target)
-        })
+        // 获取当前所在位置，侧栏加高亮
+        const getActiveId = () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+            const viewportTop = scrollTop + activeOffset
+            const scrollHeight = document.documentElement.scrollHeight
+            const windowBottom = scrollTop + window.innerHeight
+
+            if (windowBottom >= scrollHeight - 2) return items[items.length - 1].id
+
+            let activeIndex = 0
+            for (let i = 0; i < headingTops.length; i += 1) {
+                if (headingTops[i] <= viewportTop) activeIndex = i
+                else break
+            }
+            return items[activeIndex]?.id || items[0].id
+        }
+
+        let ticking = false
+        const refresh = () => {
+            headingTops = items.map(
+                ({ heading }) => heading.getBoundingClientRect().top + window.scrollY
+            )
+            const activeId = getActiveId()
+            if (activeId) setActive(activeId)
+        }
+
+        const onScroll = () => {
+            if (ticking) return
+            ticking = true
+            window.requestAnimationFrame(() => {
+                ticking = false
+                refresh()
+            })
+        }
+
+        refresh()
+        document.addEventListener('scroll', onScroll, { passive: true })
+        window.addEventListener('resize', refresh)
+
+        disposePageNav = () => {
+            document.removeEventListener('scroll', onScroll)
+            window.removeEventListener('resize', refresh)
+        }
     }
 
     // 首次加载时初始化
