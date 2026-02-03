@@ -54,15 +54,33 @@ if (!frontmatter.title) {
 const description = frontmatter.description || ''
 const stats = analyzeReading(raw as string)
 const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
+const image = frontmatter.image ?? ''
+const published = frontmatter.published ?? frontmatter.date ?? ''
+
+const formatDate = (date: Date) => {
+    const value = new Date(date)
+    const year = value.getFullYear()
+    const month = String(value.getMonth() + 1).padStart(2, '0')
+    const day = String(value.getDate()).padStart(2, '0')
+    return year + '-' + month + '-' + day
+}
 ---
 
 <MainLayout title={`${frontmatter.title} - 云萧的咕咕屋`} description={description}>
     <div class="r-content">
         <div class="r-header">
+            {image && <img class="r-cover" src={image} alt={frontmatter.title} />}
             <div class="r-header-wrapper">
                 <div class="r-title">{frontmatter.title}</div>
                 { description && <div class="r-subtitle">{description}</div> }
                 <div class="r-info">
+                    { published && (
+                        <span>
+                            <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
+                            {formatDate(published)}
+                        </span>
+                    )
+                    }
                     <span>
                         <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
                         {stats.minutes} 分钟

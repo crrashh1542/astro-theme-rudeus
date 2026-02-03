@@ -1,6 +1,7 @@
 ---
 type: page
 title: 关于 Rudeus 主题
+published: 2026-02-05
 ---
 
 ## 关于主题
