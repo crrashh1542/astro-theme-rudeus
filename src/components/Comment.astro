@@ -5,11 +5,10 @@
     <p class="r-empty">尚未开启评论功能，敬请期待</p>
 </div>
 
-<!-- 评论系统 -->
-<link rel="stylesheet" href="https://p0-artalk.api.crrashh.com/dist/Artalk.css">
-<script is:inline src="https://p0-artalk.api.crrashh.com/dist/Artalk.js"></script>
 <script is:inline>
     const initArtalk = () => {
+        const commentEl = document.querySelector('.r-comment')
+        if (!commentEl) return
         Artalk.init({
             el: '.r-comment',
             server: 'https://p0-artalk.api.crrashh.com',
@@ -37,6 +36,13 @@
             margin: @layout-content-padding 0;
         }
 
-        --at-color-main: @color-theme;
+        :global(img[atk-emoticon], .atk-item img) {
+            max-height: 36px !important;
+        }
+
+        --at-color-main: @color-theme-dark;
+        --waline-theme-color: @color-theme-dark;
+        --waline-active-color: @color-theme;
+        --waline-badge-color: @color-theme;
     }
 </style>
