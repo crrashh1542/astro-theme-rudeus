@@ -1,7 +1,7 @@
 {
     "extends": "astro/tsconfigs/strict",
     "compilerOptions": {
-      "target": "ESNext",
+        "target": "ESNext",
         "useDefineForClassFields": true,
         "jsx": "preserve",
         "module": "ESNext",
@@ -14,7 +14,7 @@
         "baseUrl": ".",
 
         "paths": {
-            "@/*": ["src/*"],
+            "@/*": ["src/*"]
         }
     },
     "include": [".astro/types.d.ts", "**/*"],

@@ -1,17 +1,7 @@
 ---
-interface Props {
-    title: string
-    description: string
-    published: Date
-    url: string
-    image?: string
-    tags?: string[]
-    readingTime?: number
-    readingChars?: number
-}
-const { title, description, published, url, image, tags = [], readingTime, readingChars, ...rest } = Astro.props
-
 import { Icon } from 'astro-icon/components'
+
+const { title, description, published, url, image, tags = [], readingTime, readingChars, ...rest } = Astro.props
 
 const formatDate = (date: Date) => {
     const value = new Date(date)
@@ -57,7 +47,7 @@ const formatDate = (date: Date) => {
             {
                 tags.length > 0 && (
                     <div class="r-tags">
-                        {tags.map((tag) => (
+                        {tags.map((tag: string) => (
                             <span class="r-tag">#{tag}</span>
                         ))}
                     </div>

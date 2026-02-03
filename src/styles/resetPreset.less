@@ -18,7 +18,6 @@ body {
     display: flex;
     flex-direction: column;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-
 }
 ::selection {
     background-color: @color-theme-light;
@@ -108,7 +107,8 @@ blockquote {
         color: @color-theme-dark;
         border-bottom: 1px dotted @color-border;
     }
-    a::before { // 悬停a标签的背景效果
+    a::before {
+        // 悬停a标签的背景效果
         content: '';
         position: absolute;
         background-color: @color-theme-light;
@@ -131,7 +131,8 @@ blockquote {
 ul {
     list-style-type: disc;
 }
-li::marker { // 列表标记符颜色
+li::marker {
+    // 列表标记符颜色
     color: @color-theme-dark;
 }
 // 引用
@@ -156,7 +157,8 @@ table {
     tbody tr {
         border-bottom: 1px solid @color-border;
     }
-    th, td {
+    th,
+    td {
         padding: 8px 1em;
         text-align: left;
         vertical-align: middle;
@@ -169,9 +171,9 @@ table {
     list-style: none;
     padding-left: 10px;
     input {
-        margin-right: .25em;
+        margin-right: 0.25em;
     }
-    input[type="checkbox"]:checked {
+    input[type='checkbox']:checked {
         background-color: @color-theme;
     }
 }
@@ -192,14 +194,15 @@ pre {
         max-width: 0;
     }
     ::selection {
-        background-color: rgba(255, 255, 255, .25);
+        background-color: rgba(255, 255, 255, 0.25);
     }
 }
 code {
     font-family: @font-code;
     font-size: 14px;
 }
-p code, li code {
+p code,
+li code {
     background-color: @color-theme-light;
     color: @color-theme-dark;
     padding: 2px 4px;

@@ -3,19 +3,28 @@
  * 注：由 GPT-5.2 生成
  */
 
-import type { Paragraph, Root, Text } from 'mdast'
-import type { ContainerDirective } from 'mdast-util-directive'
 import { visit } from 'unist-util-visit'
 
-const DEFAULT_TITLES: Record<string, string> = {
+type Root = { type: 'root'; children: unknown[]; data?: Record<string, unknown> }
+type Paragraph = { type: 'paragraph'; children: unknown[]; data?: Record<string, unknown> }
+type Text = { type: 'text'; value: string }
+type ContainerDirective = {
+    type: 'containerDirective'
+    name?: string
+    children?: unknown[]
+    data?: Record<string, unknown>
+    label?: unknown
+    attributes?: Record<string, unknown>
+}
+
+const defaultTitles: Record<string, string> = {
     note: 'Note',
     tip: 'Tip',
     important: 'Important',
     warning: 'Warning',
     caution: 'Caution',
 }
-
-const DEFAULT_TITLE_SET = new Set(Object.values(DEFAULT_TITLES))
+const defaultTitleSet = new Set(Object.values(defaultTitles))
 
 const createTitleParagraph = (title: string): Paragraph => {
     const text: Text = { type: 'text', value: title }
@@ -40,7 +49,10 @@ const toPlainText = (node: unknown): string => {
     return ''
 }
 
-const pickCustomTitle = (directive: { label?: unknown; attributes?: Record<string, unknown> }): string | undefined => {
+const pickCustomTitle = (directive: {
+    label?: unknown
+    attributes?: Record<string, unknown>
+}): string | undefined => {
     // `:::note[title]` may be stored in `label` depending on directive parser.
     const label = directive.label
     const labelText = toPlainText(label).trim()
@@ -55,8 +67,6 @@ const pickCustomTitle = (directive: { label?: unknown; attributes?: Record<strin
 function remarkAdmonition() {
     return (tree: Root) => {
         visit(tree, (node) => {
-            if (node.type !== 'containerDirective') return
-
             const directive = node as unknown as ContainerDirective & {
                 data?: Record<string, unknown>
                 label?: unknown
@@ -64,13 +74,15 @@ function remarkAdmonition() {
             }
 
             const name = directive.name
-            if (!name || !(name in DEFAULT_TITLES)) return
+            if (!name || !(name in defaultTitles)) return
 
-            const type = name as keyof typeof DEFAULT_TITLES
-            const title = pickCustomTitle(directive) || DEFAULT_TITLES[type]
+            const type = name as keyof typeof defaultTitles
+            const title = pickCustomTitle(directive) || defaultTitles[type]
 
             // Prevent downstream renderers from emitting the label as standalone content.
-            if ((directive as any).label != null) (directive as any).label = undefined
+            if (directive.label != null) {
+                directive.label = undefined
+            }
 
             directive.data ||= {}
             directive.data.hName = 'aside'
@@ -92,7 +104,12 @@ function remarkAdmonition() {
 type HastElement = { type: 'element'; tagName: string; properties?: any; children?: any[] }
 
 const isElement = (node: any): node is HastElement =>
-    Boolean(node && typeof node === 'object' && node.type === 'element' && typeof node.tagName === 'string')
+    Boolean(
+        node &&
+        typeof node === 'object' &&
+        node.type === 'element' &&
+        typeof node.tagName === 'string'
+    )
 
 const getText = (node: any): string => {
     if (!node || typeof node !== 'object') return ''
@@ -121,11 +138,16 @@ function rehypeAdmonitionTitle() {
             const first = node.children[0]
             const second = node.children[1]
 
-            if (!isElement(first) || first.tagName !== 'p' || !hasClass(first, 'r-admonition-title')) return
+            if (
+                !isElement(first) ||
+                first.tagName !== 'p' ||
+                !hasClass(first, 'r-admonition-title')
+            )
+                return
             if (!isElement(second) || second.tagName !== 'p') return
 
             const currentTitle = getText(first).trim()
-            if (!DEFAULT_TITLE_SET.has(currentTitle)) return
+            if (!defaultTitleSet.has(currentTitle)) return
 
             const candidateTitle = getText(second).trim()
             if (!candidateTitle) return
@@ -137,9 +159,4 @@ function rehypeAdmonitionTitle() {
     }
 }
 
-const admonitions = {
-    remark: remarkAdmonition,
-    rehype: rehypeAdmonitionTitle,
-} as const
-
-export default admonitions
+export { remarkAdmonition, rehypeAdmonitionTitle }

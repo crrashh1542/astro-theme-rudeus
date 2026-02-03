@@ -6,9 +6,11 @@ tags: [主题, 预览, 教学]
 ---
 
 ## 提醒
+
 类似 GitHub，这系列的代码块包含 Note、Tip、Important、Warning、Caution 五种代码块。
 
 ### 基本语法
+
 :::note
 不管怎么样，我希望可以不要因为自己选择错误而导致某人死去。
 :::
@@ -36,11 +38,13 @@ tags: [主题, 预览, 教学]
 ```
 
 ### 自定义标题
+
 :::note[《无职转生》第13卷 卷首语]
 把认定为多余并舍弃的事物再度捡回时，就会明白其价值。
 
 The person who abandoned his family has got the family who isn't deserted.
 :::
+
 ```
 :::note[《无职转生》第13卷 卷首语]
 把认定为多余并舍弃的事物再度捡回时，就会明白其价值。

@@ -6,12 +6,13 @@ tags: [主题, 预览]
 image: https://i.cdn.crrashh.com/2026/0114/9cb723db-6df4-4d75-b3d4-48c81db2b222.webp
 ---
 
-（封面图 Pixiv ID：123999588）
+> 封面图 Pixiv ID：123999588
 
 # Hello, world!
 
 ## 段落及行内样式
-这是使用 **Astro** 构建的博客框架。这是使用 *Astro* 构建的博客框架。这是使用 ***Astro*** 构建的博客框架。这是使用 ~~Astro~~ 构建的博客框架。这是使用 `Astro` 构建的博客框架。
+
+这是使用 **Astro** 构建的博客框架。这是使用 _Astro_ 构建的博客框架。这是使用 **_Astro_** 构建的博客框架。这是使用 ~~Astro~~ 构建的博客框架。这是使用 `Astro` 构建的博客框架。
 
 本项目的开源地址：[crrashh1542/astro-theme-rudeus](https://github.com/crrashh1542/astro-theme-rudeus)
 
@@ -20,6 +21,7 @@ image: https://i.cdn.crrashh.com/2026/0114/9cb723db-6df4-4d75-b3d4-48c81db2b222.
 （注：站内链接为当前标签内打开，站外链接为新标签内打开）
 
 ## 列表
+
 1. 中央大陆
     - 阿斯拉王国
     - 西隆王国
@@ -34,10 +36,12 @@ image: https://i.cdn.crrashh.com/2026/0114/9cb723db-6df4-4d75-b3d4-48c81db2b222.
     - 涅克罗斯要塞
 
 ## 图片
+
 ![Pixiv ID 121853651](https://i.cdn.crrashh.com/2026/0114/7b9b647c-80ee-40e1-a382-d8c1e23496da.jpg)
 作品 Pixiv ID：121853651
 
 ## 引用
+
 > 所以，该结束了。
 >
 > 这个会令我想一直沉浸在其中的梦。开朗又温柔的，塞妮丝的梦。
@@ -53,8 +57,9 @@ image: https://i.cdn.crrashh.com/2026/0114/9cb723db-6df4-4d75-b3d4-48c81db2b222.
 > 总觉得做了非常悲伤的梦。
 
 ## 表格
-|  名字       | 代表色  | 寿命 |
-|------------|--------|------|
+
+| 名字       | 代表色  | 寿命 |
+| ---------- | ------- | ---- |
 | Rudeus     | 橙黄色  | 74   |
 | Sylphiette | 绿/白色 | 150+ |
 | Eris       | 红色    | 74   |
@@ -62,18 +67,21 @@ image: https://i.cdn.crrashh.com/2026/0114/9cb723db-6df4-4d75-b3d4-48c81db2b222.
 | Orsterd    | 白色    | ?    |
 
 ## 代码块
+
 ```javascript
-export default function(){
+export default function () {
     console.log('Hello, world!')
 }
 ```
 
 ## 任务列表
+
 - [x] 和七星交谈
 - [ ] 给艾莉丝写信
 - [x] 怀疑人神但不要与人神为敌
 
 ## 自定义 HTML
+
 **注：以下内容搜集自网络资源站，仅用于测试自定义 HTML 功能，若侵权请联系删除。**
 
 ### 音频播放（APlayer）
@@ -124,6 +132,7 @@ export default function(){
 </script>
 
 ### 视频播放（DPlayer）
+
 <div id="dp-0"></div>
 <script>
     let scriptD = document.createElement('script')
@@ -142,13 +151,16 @@ export default function(){
 </script>
 
 注：由于路由的加载情况特殊，如果需要从外部引入 JS 脚本，请不要使用以下方式：
+
 ```html
 <script src="path/to/foo.js"></script>
 <script>
     console.log(foo)
 </script>
 ```
+
 因为这会导致每次重载页面的时候，下方的 `<script>` 同时加载，导致其中部分来自 `src` 中的变量无法读取。以下是正确姿势：
+
 ```html
 <script>
     // 通过 JS 动态创建 script 标签
