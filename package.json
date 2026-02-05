@@ -8,7 +8,8 @@
         "preview": "astro preview",
         "astro": "astro",
         "p:check": "prettier --check src/",
-        "p:write": "prettier --write src/"
+        "p:write": "prettier --write src/",
+        "prepare": "husky install"
     },
     "dependencies": {
         "@astrojs/rss": "^4.0.15",
@@ -20,9 +21,14 @@
     "devDependencies": {
         "@iconify-json/mdi": "^1.2.3",
         "astro-icon": "^1.1.5",
+        "husky": "^8.0.0",
         "less": "^4.5.1",
+        "lint-staged": "^16.2.7",
         "prettier": "^3.8.1",
         "remark-directive": "^4.0.0",
         "unist-util-visit": "^5.1.0"
+    },
+    "lint-staged": {
+        "*.{js,ts,css,less,md}": "prettier --write"
     }
 }
