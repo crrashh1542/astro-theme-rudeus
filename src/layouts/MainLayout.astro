@@ -75,6 +75,7 @@ const { title, description } = Astro.props
     }
 
     .r-sidebar {
+        width: var(--layout-sidebar-width);
         display: flex;
         flex-direction: column;
         gap: @layout-content-spacing;
@@ -85,7 +86,7 @@ const { title, description } = Astro.props
 
     .r-main-wrapper {
         display: flex;
-        flex-direction: row;
+        flex-direction: var(--layout-content-flex);
         gap: @layout-content-spacing;
         margin-bottom: 2em;
 

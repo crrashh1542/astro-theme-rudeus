@@ -13,6 +13,7 @@ main.r-container {
     margin: 0 var(--layout-content-margin);
 }
 @media screen and (min-width: calc(@layout-container-max-width + 30%)) {
+    // 屏幕宽度超出最大宽度就居中
     .r-container {
         margin: 0 auto;
     }
@@ -23,6 +24,7 @@ main.r-container {
 .r-content {
     // 屏幕右侧主内容区
     width: 100%;
+    // min-width: 700px;
     min-height: 50vh;
     background-color: @color-content-bg;
     border-radius: @layout-content-border-radius;

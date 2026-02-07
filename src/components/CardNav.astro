@@ -2,7 +2,7 @@
 const title = '本页内容'
 ---
 
-<div class="r-page-nav" aria-label={title}>
+<div class="r-page-nav r-not-mob" aria-label={title}>
     <div class="r-title">{title}</div>
     <div class="r-nav" aria-label={title}></div>
 </div>
@@ -149,7 +149,6 @@ const title = '本页内容'
     @import url('@/styles/variableConst.less');
 
     .r-page-nav {
-        width: 240px;
         background-color: #fff;
         border-radius: @layout-content-border-radius;
         padding: (@layout-content-padding / 1.4) 12px;
