@@ -4,17 +4,32 @@ import { Icon } from 'astro-icon/components'
 
 <header>
     <div class="r-container">
+        <!-- 左半部分 网站目录 -->
         <div class="r-menu">
             <a href="/" class="r-index">Rudeus Theme Docs</a>
-            <span></span>
-            <a href="/friends">友人帐</a>
-            <a href="/about">关于</a>
-            <a href="/archives">归档</a>
+            <span class="r-not-mob"></span>
+            <a class="r-not-mob" href="/friends">友人帐</a>
+            <a class="r-not-mob" href="/about">关于</a>
+            <a class="r-not-mob" href="/archives">归档</a>
         </div>
-        <span class="r-search" data-open="false">
-            <Icon name="mdi:search" width={24} height={24} class="r-search-btn" />
-            <input class="r-search-input" type="text" placeholder="搜索...">
-        </span>
+        <!-- 右半部分 功能按钮 -->
+        <div class="r-function">
+            <span class="r-search" data-open="false">
+                <Icon name="mdi:search" width={24} height={24} class="r-search-btn" />
+                <input class="r-search-input" type="text" placeholder="搜索...">
+            </span>
+            <span class="r-dropdown r-not-pc" data-open="false">
+                <span class="r-dropdown-btn">
+                    <Icon name="mdi:menu" width={24} height={24} />
+                </span>
+                <div class="r-dropdown-panel">
+                    <a href="/friends">友人帐</a>
+                    <a href="/about">关于</a>
+                    <a href="/archives">归档</a>
+                </div>
+            </span>
+        </div>
+        
     </div>
 </header>
 
@@ -43,6 +58,7 @@ import { Icon } from 'astro-icon/components'
         justify-content: space-between;
         align-items: center;
 
+        // 左侧目录
         .r-menu {
             display: flex;
             flex-direction: row;
@@ -56,12 +72,69 @@ import { Icon } from 'astro-icon/components'
                 font-weight: 600;
             }
         }
+        
+        // 右侧功能按钮
+        .r-function {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: baseline;
+            cursor: pointer;
+        }
+        // 下拉菜单
+        .r-dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+
+            .r-dropdown-btn {
+                background: transparent;
+                border: 0;
+                padding: 4px;
+                cursor: pointer;
+            }
+            .r-dropdown-panel {
+                position: absolute;
+                right: 0;
+                top: calc(100% + 8px);
+                min-width: 140px;
+                background: rgba(255, 255, 255, .8);
+                border: 1px solid #eee;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                opacity: 0;
+                transform: translateY(-6px);
+                pointer-events: none;
+                transition: all @anim-duration ease;
+                z-index: 2;
+
+                a {
+                    padding: 6px 10px;
+                    border-radius: 6px;
+                    font-size: 14px;
+                }
+                a:hover {
+                    background: @color-theme-light;
+                    color: @color-theme-dark;
+                }
+            }
+        }
+        .r-dropdown[data-open='true'] {
+            .r-dropdown-panel {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+        }
 
         // 初始搜索框
         .r-search {
             display: flex;
             align-items: center;
-            gap: 8px;
             padding: 4px 8px;
             position: relative;
             transition: all @anim-duration ease;
@@ -95,9 +168,12 @@ import { Icon } from 'astro-icon/components'
 </style>
 
 <script>
+    // 注：此处需要先声明，再在初始化的时候绑定，不然会在跨页场景找不到元素
     let searchWrap: HTMLElement | null = null
     let searchBtn: HTMLElement | null = null
     let searchInput: HTMLInputElement | null = null
+    let dropdownWrap: HTMLElement | null = null
+    let dropdownBtn: HTMLElement | null = null
 
     const setOpen = (open: boolean) => {
         if (!searchWrap) return
@@ -121,6 +197,17 @@ import { Icon } from 'astro-icon/components'
         event.stopPropagation()
         const isOpen = searchWrap?.getAttribute('data-open') == 'true'
         setOpen(!isOpen)
+    }
+
+    const setDropdownOpen = (open: boolean) => {
+        if (!dropdownWrap || !dropdownBtn) return
+        dropdownWrap.setAttribute('data-open', open ? 'true' : 'false')
+    }
+
+    const onDropdownClick = (event: Event) => {
+        event.stopPropagation()
+        const isOpen = dropdownWrap?.getAttribute('data-open') == 'true'
+        setDropdownOpen(!isOpen)
     }
 
     const onInput = (event: Event) => {
@@ -148,12 +235,14 @@ import { Icon } from 'astro-icon/components'
         }
     }
 
-    const initSearch = () => {
+    const initHeader = () => {
         searchWrap = document.querySelector('.r-search')
         searchBtn = document.querySelector('.r-search-btn')
         searchInput = document.querySelector('.r-search-input')
+        dropdownWrap = document.querySelector('.r-dropdown')
+        dropdownBtn = document.querySelector('.r-dropdown-btn')
 
-        if (!searchWrap || !searchBtn || !searchInput) return
+        if (!searchWrap || !searchBtn || !searchInput || !dropdownWrap || !dropdownBtn) return
 
         if (!searchBtn.dataset.bound) {
             searchBtn.addEventListener('click', onBtnClick)
@@ -166,6 +255,11 @@ import { Icon } from 'astro-icon/components'
             searchInput.dataset.bound = 'true'
         }
 
+        if (!dropdownBtn.dataset.bound) {
+            dropdownBtn.addEventListener('click', onDropdownClick)
+            dropdownBtn.dataset.bound = 'true'
+        }
+
         syncQueryFromUrl()
     }
 
@@ -174,11 +268,13 @@ import { Icon } from 'astro-icon/components'
             if (!searchWrap) return
             if (searchWrap.contains(event.target as Node)) return
             setOpen(false)
+            if (dropdownWrap && dropdownWrap.contains(event.target as Node)) return
+            setDropdownOpen(false)
         })
         ;(window as any).__rSearchDocBound = true
     }
 
     // 处理跨页后搜索框打不开
-    document.addEventListener('astro:page-load', initSearch)
-    document.addEventListener('astro:after-swap', initSearch)
+    document.addEventListener('astro:page-load', initHeader)
+    document.addEventListener('astro:after-swap', initHeader)
 </script>
