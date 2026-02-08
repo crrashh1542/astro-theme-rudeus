@@ -6,7 +6,7 @@ import { Icon } from 'astro-icon/components'
     <div class="r-container">
         <!-- 左半部分 网站目录 -->
         <div class="r-menu">
-            <a href="/" class="r-index">Rudeus Theme Docs</a>
+            <a href="/" class="r-index">Rudeus 主题文档</a>
             <span class="r-not-mob"></span>
             <a class="r-not-mob" href="/friends">友人帐</a>
             <a class="r-not-mob" href="/about">关于</a>
@@ -41,7 +41,7 @@ import { Icon } from 'astro-icon/components'
     header {
         background-color: rgba(255, 255, 255, .8);
         backdrop-filter: blur(5px);
-        padding: calc(18px - @layout-search-spacing) 0;
+        padding: var(--header-padding);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -62,13 +62,13 @@ import { Icon } from 'astro-icon/components'
         .r-menu {
             display: flex;
             flex-direction: row;
+            font-size: 15px;
             gap: 2.5em;
             font-weight: 500;
-            font-size: 15px;
             align-items: center;
 
             .r-index {
-                font-size: 20px;
+                font-size: var(--header-font);
                 font-weight: 600;
             }
         }
@@ -151,7 +151,6 @@ import { Icon } from 'astro-icon/components'
                 background: transparent;
                 outline: none;
                 transition: all @anim-duration ease;
-                font-size: 14px;
             }
         }
         // 展开的搜索框

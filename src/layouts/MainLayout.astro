@@ -20,8 +20,8 @@ const { title, description } = Astro.props
     <main class="r-container">
         <!-- banner -->
         <div class="r-banner" transition:persist>
-            <p class="r-title">云萧的咕咕屋</p>
-            <p class="r-subtitle">以万象之不息，致不息之万象</p>
+            <p class="r-title">Rudeus 主题文档</p>
+            <p class="r-subtitle">Reference text here</p>
         </div>
 
         <div class="r-main-wrapper">
@@ -59,7 +59,7 @@ const { title, description } = Astro.props
         margin-bottom: 1rem;
 
         .r-title {
-            font-size: 42px;
+            font-size: var(--banner-title-font);
             font-weight: 600;
             margin-bottom: 10px;
             background: linear-gradient(135deg, @color-theme, @color-hover);

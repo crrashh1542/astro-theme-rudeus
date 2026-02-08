@@ -61,20 +61,21 @@ const formatDate = (date: Date) => {
     @import url('@/styles/variableConst.less');
     .r-card {
         display: block;
-        margin: 0 @layout-content-padding;
-        padding: 20px 0;
+        margin: 0 var(--index-card-margin);
+        padding: 16px 0;
+        font-size: var(--index-card-font);
         min-height: @layout-index-card-min-height;
         border-bottom: 1px solid @color-border;
         position: relative;
 
         &[data-index]:first-child {
-            padding-top: (20px + 8px); // 8px 见 resetCustom 的垂直 padding
+            padding-top: (16px + 8px); // 8px 见 resetCustom 的垂直 padding
             .r-cover {
                 border-top-right-radius: @layout-content-border-radius;
             }
         }
         &:last-child {
-            padding-bottom: (20px + 8px);
+            padding-bottom: (16px + 8px);
             border-bottom: none;
             .r-cover {
                 border-bottom-right-radius: @layout-content-border-radius;
@@ -96,13 +97,6 @@ const formatDate = (date: Date) => {
         &:has(.r-cover) {
             margin-right: 0;
             padding-right: @layout-content-padding;
-            // .r-footer {
-            //     flex-direction: column;
-            //     align-items: flex-start;
-            // }
-            // .r-tags {
-            //     gap: 6px;
-            // }
         }
     }
 
@@ -121,7 +115,7 @@ const formatDate = (date: Date) => {
     .r-item {
         display: flex;
         flex-direction: column;
-        min-height: (@layout-index-card-min-height - 20px * 2);
+        min-height: (@layout-index-card-min-height - 16px * 2);
     }
 
     // 标题
@@ -129,7 +123,7 @@ const formatDate = (date: Date) => {
         display: flex;
         align-items: center;
         font-weight: 600;
-        font-size: 24px;
+        font-size: var(--index-card-catalog-font);
         transition: all @anim-duration ease;
 
         .r-icon {
@@ -150,13 +144,14 @@ const formatDate = (date: Date) => {
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 12px;
-        font-size: 0.9rem;
+        gap: var(--index-card-footer-spacing);
+        font-size: var(--index-card-font);
         color: @color-secondary;
-
+        // 文章信息
         .r-info {
             display: flex;
             flex-direction: row;
+            font-size: var(--index-card-info-font);
             gap: 1.5em;
 
             span {
@@ -165,19 +160,19 @@ const formatDate = (date: Date) => {
                 gap: 4px;
             }
         }
-    }
+        // 文章标签
+        .r-tags {
+            display: flex;
+            gap: var(--index-card-tag-gap);
+            flex-wrap: wrap;
 
-    .r-tags {
-        display: flex;
-        gap: 0.75em;
-        flex-wrap: wrap;
-
-        .r-tag {
-            background-color: @color-theme-light;
-            color: @color-theme-dark;
-            padding: 3px 9px;
-            border-radius: 4px;
-            font-size: 14px;
+            .r-tag {
+                background-color: @color-theme-light;
+                color: @color-theme-dark;
+                padding: 3px 9px;
+                border-radius: 4px;
+                font-size: var(--index-card-tag-font);
+            }
         }
     }
 </style>
