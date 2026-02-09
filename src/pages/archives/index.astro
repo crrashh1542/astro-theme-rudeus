@@ -32,8 +32,10 @@ const formatDate = (date: Date | string) => {
 <MainLayout title="咕咕归档 - 云萧的咕咕屋" description="浏览所有博客文章">
     <div class="r-content">
         <div class="r-header">
-            <div class="r-title">咕咕归档</div>
-            <div class="r-subtitle">共 {posts.length} 篇文章</div>
+            <div class="r-header-wrapper">
+                <div class="r-title">咕咕归档</div>
+                <div class="r-subtitle">共 {posts.length} 篇文章</div>
+            </div>
         </div>
 
         <div class="r-timeline">
@@ -91,6 +93,7 @@ const formatDate = (date: Date | string) => {
 
             .r-date {
                 width: 56px;
+                font-size: var(--content-font);
                 flex: 0 0 auto;
                 text-align: right;
                 color: @color-secondary;
@@ -99,7 +102,7 @@ const formatDate = (date: Date | string) => {
             .r-article {
                 flex: 1;
                 padding-left: 24px;
-                font-size: 18px;
+                font-size: calc(var(--content-font) + 1px);
                 color: @color-text;
                 text-decoration: none;
                 transition: color @anim-duration ease;
