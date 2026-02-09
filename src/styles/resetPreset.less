@@ -149,7 +149,7 @@ svg {
 
 /* 表格 ------ BEGIN */
 table {
-    width: 90%;
+    width: var(--content-img-max-width);
     border-collapse: collapse;
     thead {
         border-bottom: 2px solid @color-border;
@@ -165,6 +165,20 @@ table {
     }
 }
 /* 表格 ------ END */
+
+/* 图片 ------ BEGIN */
+.r-prose {
+    line-height: @layout-line-height;
+    font-size: var(--content-font);
+    img {
+        display: block;
+        border-radius: @layout-border-radius;
+        margin: 16px auto 24px;
+        max-width: var(--content-img-max-width);
+        max-height: var(--content-img-max-height);
+    }
+}
+/* 图片 ------ END */
 
 /* 任务列表样式 ------ BEGIN */
 .contains-task-list {

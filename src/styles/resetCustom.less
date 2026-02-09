@@ -28,7 +28,7 @@ main.r-container {
     min-height: 50vh;
     background-color: @color-content-bg;
     border-radius: @layout-content-border-radius;
-    padding: 8px @layout-content-padding @layout-content-padding;
+    padding: 8px var(--content-padding) @layout-content-padding;
     position: relative;
     z-index: -1;
 
@@ -45,7 +45,7 @@ main.r-container {
 
         .r-title {
             // 黑色大标题
-            font-size: 36px;
+            font-size: var(--content-title-font);
             font-weight: 700;
             margin-bottom: 0;
         }
@@ -59,28 +59,29 @@ main.r-container {
             // 小标题下面的信息栏
             display: flex;
             flex-direction: row;
-            gap: 3.5em;
-            margin: 6px 0 0;
+            font-size: var(--content-info-font);
+            gap: var(--content-info-gap);
+            margin-top: 6px;
             color: @color-secondary;
 
             span {
                 display: flex;
                 align-items: center;
-                gap: 6px;
+                gap: 4px;
             }
         }
     }
     // 如果页头有封面图
     &:has(.r-header .r-cover) {
-        padding: 0 0 @layout-content-padding; // 去掉整个页面内边距，防止封面左右白边
+        padding: 0 0 var(--content-padding); // 去掉整个页面内边距，防止封面左右白边
         .r-header-wrapper {
             // 通过设置内层 wrapper 的 margin，防止封面上面白边
-            margin: 0 @layout-content-padding;
+            margin: 0 var(--content-padding);
             padding-top: (3 / 4 * @layout-content-cover-height);
             padding-bottom: 24px;
         }
         .r-prose {
-            padding: 8px @layout-content-padding 0;
+            padding: 8px var(--content-padding) 0;
         }
         .r-cover {
             position: absolute;
@@ -90,19 +91,6 @@ main.r-container {
             height: @layout-content-cover-height;
             object-fit: cover;
             mask-image: linear-gradient(to bottom, #000, transparent);
-        }
-    }
-
-    // 正文内容
-    // 图片格式
-    .r-prose {
-        line-height: @layout-line-height;
-        img {
-            display: block;
-            border-radius: @layout-border-radius;
-            margin: 16px auto 24px;
-            max-width: @layout-img-max-width;
-            max-height: @layout-img-max-height;
         }
     }
 

@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components'
 ---
 
 <div id="back-to-top" class="r-back-to-top">
-    <Icon name="mdi:arrow-up" width={32} height={32} />
+    <Icon name="mdi:arrow-up" />
 </div>
 
 <script>
@@ -43,14 +43,14 @@ import { Icon } from 'astro-icon/components'
 
     .r-back-to-top {
         position: fixed;
-        right: var(--layout-back-to-top-right);
-        bottom: var(--layout-back-to-top-bottom);
+        right: var(--back-to-top-right);
+        bottom: var(--back-to-top-bottom);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        width: 64px;
-        height: 64px;
+        width: var(--back-to-top-size);
+        height: var(--back-to-top-size);
         border-radius: 50%;
         background-color: #fff;
         box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
@@ -59,6 +59,11 @@ import { Icon } from 'astro-icon/components'
         transform: translateY(8px);
         transition: all @anim-duration ease;
         z-index: 200;
+
+        svg {
+            width: 50%;
+            height: 50%;
+        }
     }
     .r-back-to-top.active {
         opacity: 1;

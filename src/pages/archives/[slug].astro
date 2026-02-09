@@ -106,7 +106,7 @@ const formatDate = (date: Date) => {
                 <a class="r-nav-item prev" href={`/archives/${prev.slug}.html`}>
                     <Icon name="mdi:arrow-left" width={28} height={28} class="r-icon" />
                     <div>
-                        <div class="label">上一篇</div>
+                        <div class="label r-not-mob">上一篇</div>
                         <div class="text">{prev.data.title}</div>
                     </div>
                 </a>
@@ -116,7 +116,7 @@ const formatDate = (date: Date) => {
             next && (
                 <a class="r-nav-item next" href={`/archives/${next.slug}.html`}>
                     <div>
-                        <div class="label">下一篇</div>
+                        <div class="label r-not-mob">下一篇</div>
                         <div class="text">{next.data.title}</div>
                     </div>
                     <Icon name="mdi:arrow-right" width={28} height={28} class="r-icon" />
@@ -142,13 +142,14 @@ const formatDate = (date: Date) => {
             color: @color-theme-dark;
             padding: 3px 9px;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: var(--content-tag-font);
         }
     }
 
     .r-nav {
         margin-top: @layout-content-spacing;
         display: flex;
+        flex-direction: var(--content-nav-flex);
         gap: 12px;
 
         .r-nav-item {
