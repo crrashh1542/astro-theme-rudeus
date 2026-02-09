@@ -69,6 +69,7 @@ const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
             flex-direction: column;
             align-items: center;
             min-width: 80px;
+            transition: all @anim-duration ease;
         }
         a.r-stat-item:hover {
             color: @color-theme;

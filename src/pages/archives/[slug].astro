@@ -188,15 +188,17 @@ const formatDate = (date: Date) => {
         padding: 18px 24px;
         border-radius: @layout-border-radius;
         background-color: lighten(@color-bg, 2.5%);
-        font-size: 16px;
-        // background-color: #f6f6f6;
+        font-size: calc(var(--content-font) - 1px);
+        .r-title {
+            font-size: var(--content-font)
+        }
+        .r-url {
+            margin-bottom: 12px;
+        }
         p {
             margin: 0;
             line-height: 1.6;
         }
-        .r-url {
-            font-size: 15px;
-            margin-bottom: 12px;
-        }
+        
     }
 </style>

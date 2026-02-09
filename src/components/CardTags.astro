@@ -42,7 +42,6 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => {
         background-color: #fff;
         border-radius: @layout-content-border-radius;
         padding: (@layout-content-padding / 1.4) 12px;
-        font-size: 14px;
 
         &.empty {
             display: flex;
@@ -70,7 +69,7 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => {
                 border-radius: @layout-border-radius;
                 background-color: @color-theme-light;
                 color: @color-theme-dark;
-                font-size: 14px;
+                font-size: var(--content-tag-font);
                 white-space: nowrap;
             }
 
