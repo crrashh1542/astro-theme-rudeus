@@ -77,7 +77,7 @@ main.r-container {
         .r-header-wrapper {
             // 通过设置内层 wrapper 的 margin，防止封面上面白边
             margin: 0 var(--content-padding);
-            padding-top: (3 / 4 * @layout-content-cover-height);
+            padding-top: calc((3 / 4) * var(--content-cover-height));
             padding-bottom: 24px;
         }
         .r-prose {
@@ -88,7 +88,7 @@ main.r-container {
             z-index: -1;
             border-radius: @layout-content-border-radius;
             width: 100%;
-            height: @layout-content-cover-height;
+            height: var(--content-cover-height);
             object-fit: cover;
             mask-image: linear-gradient(to bottom, #000, transparent);
         }
