@@ -1,12 +1,19 @@
-@import url('./variables.less');
+@import url('./variableConst.less');
+@import url('./variableMob.less');
+@import url('./variablePc.less');
 
 // 自定义类，需以r-开头，防止冲突
 .r-container {
     // 需要左右间距的容器
     max-width: @layout-container-max-width;
-    margin: 0 15%;
+    margin: 0 var(--layout-container-margin);
+}
+main.r-container {
+    max-width: @layout-container-max-width;
+    margin: 0 var(--layout-content-margin);
 }
 @media screen and (min-width: calc(@layout-container-max-width + 30%)) {
+    // 屏幕宽度超出最大宽度就居中
     .r-container {
         margin: 0 auto;
     }
@@ -17,6 +24,7 @@
 .r-content {
     // 屏幕右侧主内容区
     width: 100%;
+    // min-width: 700px;
     min-height: 50vh;
     background-color: @color-content-bg;
     border-radius: @layout-content-border-radius;

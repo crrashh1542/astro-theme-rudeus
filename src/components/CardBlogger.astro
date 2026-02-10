@@ -25,14 +25,13 @@ const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
 </div>
 
 <style lang="less">
-    @import url('@/styles/variables.less');
+    @import url('@/styles/variableConst.less');
     .r-card {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
         height: auto;
-        width: 240px;
         background-color: #fff;
         border-radius: @layout-content-border-radius;
         padding: (@layout-content-padding / 1.4);
