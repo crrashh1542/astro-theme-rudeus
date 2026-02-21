@@ -55,13 +55,13 @@ const { title, description } = Astro.props
 
     .r-banner {
         text-align: center;
-        padding: 5rem 0;
+        padding: var(--banner-padding);
         margin-bottom: 1rem;
 
         .r-title {
             font-size: var(--banner-title-font);
             font-weight: 600;
-            margin-bottom: 10px;
+            margin: var(--banner-title-margin);
             background: linear-gradient(135deg, @color-theme, @color-hover);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -70,6 +70,7 @@ const { title, description } = Astro.props
 
         .r-subtitle {
             font-size: 20px;
+            margin: var(--banner-subtitle-margin);
             color: @color-secondary;
         }
     }
