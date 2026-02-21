@@ -12,7 +12,7 @@ const posts = (await getCollection('archives')).sort(
 ---
 
 <MainLayout title="云萧的咕咕屋 - 可能有好东西哦 (*σ´∀`)σ" description="以万象之不息，致不息之万象">
-    <div class="r-content">
+    <div class="r-content r-index-content">
         {
             posts.map((post) => {
                 const stats = analyzeReading(post.body)

@@ -32,6 +32,14 @@ main.r-container {
     position: relative;
     z-index: -1;
 
+    // 主页 content 显示卡片需要背景透明
+    &.r-index-content {
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        gap: @layout-content-spacing;
+    }
+
     .r-header {
         // 内容区标题
         position: relative;

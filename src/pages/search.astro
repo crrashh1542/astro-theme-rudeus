@@ -20,33 +20,30 @@ const items = posts.map((post) => {
 ---
 
 <MainLayout title="搜索 - 云萧的咕咕屋" description="搜索博客文章">
-    <div class="r-content">
+    <div class="r-content r-index-content">
         <div class="r-header">
             <div class="r-header-wrapper">
                 <div class="r-title">搜索</div>
                 <div class="r-subtitle" id="search-subtitle"></div>
             </div>
         </div>
-
-        <div class="r-search-list">
-            {
-                items.map(({ post, stats, description }) => (
-                    <CardArticle
-                        title={post.data.title}
-                        description={description}
-                        published={post.data.published}
-                        url={`/archives/${post.slug}.html`}
-                        tags={post.data.tags}
-                        readingTime={stats.minutes}
-                        readingChars={stats.estimatedChars}
-                        image={post.data.image}
-                        data-title={post.data.title}
-                        data-tags={(post.data.tags ?? []).join(' ')}
-                        data-desc={description}
-                    />
-                ))
-            }
-        </div>
+        {
+            items.map(({ post, stats, description }) => (
+                <CardArticle
+                    title={post.data.title}
+                    description={description}
+                    published={post.data.published}
+                    url={`/archives/${post.slug}.html`}
+                    tags={post.data.tags}
+                    readingTime={stats.minutes}
+                    readingChars={stats.estimatedChars}
+                    image={post.data.image}
+                    data-title={post.data.title}
+                    data-tags={(post.data.tags ?? []).join(' ')}
+                    data-desc={description}
+                />
+            ))
+        }
         <div class="r-empty" id="search-empty">
             <br>
             <NotFound />
@@ -112,11 +109,6 @@ const items = posts.map((post) => {
     .r-header-wrapper {
         margin: 0 @layout-content-padding !important;
         padding: 24px 0;
-    }
-
-    .r-search-list {
-        display: flex;
-        flex-direction: column;
     }
 
     .r-empty {
