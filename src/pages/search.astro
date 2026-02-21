@@ -21,12 +21,6 @@ const items = posts.map((post) => {
 
 <MainLayout title="搜索 - 云萧的咕咕屋" description="搜索博客文章">
     <div class="r-content r-index-content">
-        <div class="r-header">
-            <div class="r-header-wrapper">
-                <div class="r-title">搜索</div>
-                <div class="r-subtitle" id="search-subtitle"></div>
-            </div>
-        </div>
         {
             items.map(({ post, stats, description }) => (
                 <CardArticle
@@ -53,7 +47,7 @@ const items = posts.map((post) => {
 
 <script>
     const normalize = (value: String) => value.toLowerCase().trim()
-    const subtitle = document.getElementById('search-subtitle') as HTMLElement | null
+    const content = document.querySelector('.r-content') as HTMLElement | null
     const emptyState = document.getElementById('search-empty') as HTMLElement | null
     const items = Array.from(document.querySelectorAll('a.r-card'))
 
@@ -75,14 +69,15 @@ const items = posts.map((post) => {
             if (match) visibleCount += 1
         })
 
-        if (subtitle) {
-            subtitle.textContent = keyword
-                ? `搜索“${query}”，共 ${visibleCount} 篇文章`
-                : `共 ${visibleCount} 篇文章`
-        }
-
-        if (emptyState) {
-            emptyState.style.display = visibleCount === 0 ? 'flex' : 'none'
+        if (emptyState && content) {
+            if (visibleCount === 0) {
+                emptyState.style.display = 'flex'
+                content.classList.remove('r-index-content')
+            } else {
+                emptyState.style.display = 'none'
+                content.classList.add('r-index-content')
+            }
+            
         }
     }
 
@@ -106,13 +101,8 @@ const items = posts.map((post) => {
         padding: 0;
     }
 
-    .r-header-wrapper {
-        margin: 0 @layout-content-padding !important;
-        padding: 24px 0;
-    }
-
     .r-empty {
-        display: flex;
+        padding-top: 10%;
         flex-direction: column;
         align-items: center;
         justify-content: center;
