@@ -7,6 +7,7 @@
     :root {
         // 布局
         --layout-container-margin: 15%;
+        --layout-main-margin: 0 0 2em;
         --layout-content-margin: 15%;
         --layout-content-flex: row;
         --layout-sidebar-width: 240px;
@@ -27,9 +28,16 @@
         --back-to-top-size: 64px;
 
         // 主页卡片
-        --index-card-margin: @layout-content-padding;
+        --index-card-cover-width: 55%;
+        --index-card-cover-height: 100%;
+        --index-card-cover-direction: to left;
+        --index-card-cover-catalog-space: 0;
+        --index-card-padding: calc(0.7 * @layout-content-padding)
+            calc(0.9 * @layout-content-padding);
         --index-card-font: 16px;
+        --index-card-icon-size: 18px;
         --index-card-catalog-font: 24px;
+        --index-card-description-margin: 8px 0;
         --index-card-footer-spacing: 12px;
         --index-card-tag-gap: 0.75em;
 

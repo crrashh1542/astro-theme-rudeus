@@ -36,11 +36,11 @@ const formatDate = (date: Date) => {
                     {formatDate(published)}
                 </span>
                 <span>
-                    <Icon name="mdi:clock-outline" width={18} height={18} />
+                    <Icon name="mdi:clock-outline" />
                     {readingTime} 分钟
                 </span>
                 <span>
-                    <Icon name="mdi:pencil-outline" width={18} height={18} />
+                    <Icon name="mdi:pencil-outline" />
                     {readingChars} 字
                 </span>
             </div>
@@ -62,7 +62,8 @@ const formatDate = (date: Date) => {
     .r-card {
         display: block;
         background-color: #fff;
-        padding: (0.7 * @layout-content-padding) @layout-content-padding;
+        line-height: 1.5;
+        padding: var(--index-card-padding);
         border-radius: @layout-content-border-radius;
         font-size: var(--index-card-font);
         min-height: @layout-index-card-min-height;
@@ -74,13 +75,19 @@ const formatDate = (date: Date) => {
 
         // 整个 .card 都被 hover 时都可以触发
         &:hover {
-            background-color: lighten(@color-theme-light, 5%);
+            background-color: lighten(@color-theme-light, 4%);
             .r-catalog {
                 color: @color-theme;
             }
             .r-icon {
                 opacity: 1;
                 transform: translateX(4px);
+            }
+        }
+
+        &:has(.r-cover) {
+            .r-catalog {
+                margin-top: var(--index-card-cover-catalog-space);
             }
         }
     }
@@ -91,10 +98,10 @@ const formatDate = (date: Date) => {
         top: 0;
         right: 0;
         z-index: 0;
-        width: @layout-index-card-cover-width;
-        height: 100%;
+        width: var(--index-card-cover-width);
+        height: var(--index-card-cover-height);
         object-fit: cover;
-        mask-image: linear-gradient(to right, transparent, #000);
+        mask-image: linear-gradient(var(--index-card-cover-direction), #000, transparent);
         border-radius: @layout-content-border-radius;
     }
 
@@ -121,7 +128,7 @@ const formatDate = (date: Date) => {
 
     // 描述
     .r-description {
-        margin: 8px 0;
+        margin: var(--index-card-description-margin);
     }
 
     .r-footer {
@@ -131,19 +138,22 @@ const formatDate = (date: Date) => {
         align-items: center;
         flex-wrap: wrap;
         gap: var(--index-card-footer-spacing);
-        font-size: var(--index-card-font);
+        font-size: calc(var(--index-card-font) - 0.5px);
         color: @color-secondary;
         // 文章信息
         .r-info {
             display: flex;
             flex-direction: row;
-            font-size: var(--content-info-font);
             gap: 1.5em;
 
             span {
                 display: flex;
                 align-items: center;
                 gap: 4px;
+            }
+            svg {
+                width: var(--index-card-icon-size);
+                height: var(--index-card-icon-size);
             }
         }
         // 文章标签
