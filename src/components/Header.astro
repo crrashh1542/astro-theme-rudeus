@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components'
+import SearchBox from '@/components/SearchBox.astro'
 ---
 
 <header>
@@ -14,12 +15,9 @@ import { Icon } from 'astro-icon/components'
         </div>
         <!-- 右半部分 功能按钮 -->
         <div class="r-function">
-            <span class="r-search" data-open="false">
-                <Icon name="mdi:search" width={24} height={24} class="r-search-btn" />
-                <input class="r-search-input" type="text" placeholder="搜索...">
-            </span>
+            <SearchBox />
             <span class="r-dropdown r-not-pc" data-open="false">
-                <span class="r-dropdown-btn">
+                <span class="r-btn" id="header-dropdown-btn">
                     <Icon name="mdi:menu" width={24} height={24} />
                 </span>
                 <div class="r-dropdown-panel">
@@ -34,9 +32,6 @@ import { Icon } from 'astro-icon/components'
 </header>
 
 <style lang="less">
-    @layout-search-spacing: 6px;
-    @layout-search-width: 200px;
-
     @import url('@/styles/variableConst.less');
     header {
         background-color: rgba(255, 255, 255, .8);
@@ -57,6 +52,7 @@ import { Icon } from 'astro-icon/components'
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
 
         // 左侧目录
         .r-menu {
@@ -78,8 +74,8 @@ import { Icon } from 'astro-icon/components'
             display: flex;
             flex-direction: row;
             gap: 8px;
-            align-items: baseline;
             cursor: pointer;
+            
         }
         // 下拉菜单
         .r-dropdown {
@@ -87,12 +83,6 @@ import { Icon } from 'astro-icon/components'
             display: inline-flex;
             align-items: center;
 
-            .r-dropdown-btn {
-                background: transparent;
-                border: 0;
-                padding: 4px;
-                cursor: pointer;
-            }
             .r-dropdown-panel {
                 position: absolute;
                 right: 0;
@@ -130,76 +120,15 @@ import { Icon } from 'astro-icon/components'
                 pointer-events: auto;
             }
         }
-
-        // 初始搜索框
-        .r-search {
-            display: flex;
-            align-items: center;
-            padding: 4px 8px;
-            position: relative;
-            transition: all @anim-duration ease;
-            .r-search-btn {
-                background: transparent;
-                border: 0;
-                margin: @layout-search-spacing 0;
-                cursor: pointer;
-            }
-            .r-search-input {
-                width: 0;
-                opacity: 0;
-                border: 0;
-                background: transparent;
-                outline: none;
-                transition: all @anim-duration ease;
-            }
-        }
-        // 展开的搜索框
-        .r-search[data-open='true'] {
-            background-color: #eee;
-            border-radius: 8px;
-            .r-search-input {
-                width: @layout-search-width;
-                opacity: 1;
-                padding: @layout-search-spacing;
-            }
-        }
     }
 </style>
 
 <script>
-    // 注：此处需要先声明，再在初始化的时候绑定，不然会在跨页场景找不到元素
-    let searchWrap: HTMLElement | null = null
-    let searchBtn: HTMLElement | null = null
-    let searchInput: HTMLInputElement | null = null
     let dropdownWrap: HTMLElement | null = null
     let dropdownBtn: HTMLElement | null = null
 
-    const setOpen = (open: boolean) => {
-        if (!searchWrap) return
-        searchWrap.setAttribute('data-open', open ? 'true' : 'false')
-        if (open && searchInput) searchInput.focus()
-        if (!open && searchInput) searchInput.blur()
-    }
-
-    const emitSearch = (query: string) => {
-        window.dispatchEvent(new CustomEvent('r-search', { detail: { query } }))
-    }
-
-    const syncQueryFromUrl = () => {
-        const params = new URLSearchParams(window.location.search)
-        const query = params.get('q') || ''
-        if (searchInput) searchInput.value = query
-        if (query) setOpen(true)
-    }
-
-    const onBtnClick = (event: Event) => {
-        event.stopPropagation()
-        const isOpen = searchWrap?.getAttribute('data-open') == 'true'
-        setOpen(!isOpen)
-    }
-
     const setDropdownOpen = (open: boolean) => {
-        if (!dropdownWrap || !dropdownBtn) return
+        if (!dropdownWrap) return
         dropdownWrap.setAttribute('data-open', open ? 'true' : 'false')
     }
 
@@ -209,68 +138,22 @@ import { Icon } from 'astro-icon/components'
         setDropdownOpen(!isOpen)
     }
 
-    const onInput = (event: Event) => {
-        const target = event.target as HTMLInputElement | null
-        const query = target?.value?.trim() ?? ''
-        emitSearch(query)
-
-        if (window.location.pathname.startsWith('/search')) {
-            const url = new URL(window.location.href)
-            if (query) {
-                url.searchParams.set('q', query)
-            } else {
-                url.searchParams.delete('q')
-            }
-            window.history.replaceState({}, '', url.toString())
-        }
-    }
-
-    const onKeydown = (event: KeyboardEvent) => {
-        if (event.key !== 'Enter') return
-        const query = (event.target as HTMLInputElement | null)?.value?.trim() ?? ''
-        if (!query) return
-        if (!window.location.pathname.startsWith('/search')) {
-            window.location.href = `/search?q=${encodeURIComponent(query)}`
-        }
-    }
-
     const initHeader = () => {
-        searchWrap = document.querySelector('.r-search')
-        searchBtn = document.querySelector('.r-search-btn')
-        searchInput = document.querySelector('.r-search-input')
         dropdownWrap = document.querySelector('.r-dropdown')
-        dropdownBtn = document.querySelector('.r-dropdown-btn')
+        dropdownBtn = document.getElementById('header-dropdown-btn')
 
-        if (!searchWrap || !searchBtn || !searchInput || !dropdownWrap || !dropdownBtn) return
-
-        if (!searchBtn.dataset.bound) {
-            searchBtn.addEventListener('click', onBtnClick)
-            searchBtn.dataset.bound = 'true'
-        }
-
-        if (!searchInput.dataset.bound) {
-            searchInput.addEventListener('input', onInput)
-            searchInput.addEventListener('keydown', onKeydown)
-            searchInput.dataset.bound = 'true'
-        }
-
-        if (!dropdownBtn.dataset.bound) {
+        if (dropdownBtn && !dropdownBtn.dataset.bound) {
             dropdownBtn.addEventListener('click', onDropdownClick)
             dropdownBtn.dataset.bound = 'true'
         }
-
-        syncQueryFromUrl()
     }
 
-    if (!(window as any).__rSearchDocBound) {
+    if (!(window as any).__rDropdownDocBound) {
         document.addEventListener('click', (event) => {
-            if (!searchWrap) return
-            if (searchWrap.contains(event.target as Node)) return
-            setOpen(false)
-            if (dropdownWrap && dropdownWrap.contains(event.target as Node)) return
-            setDropdownOpen(false)
+            const target = event.target as Node
+            if (dropdownWrap && !dropdownWrap.contains(target)) setDropdownOpen(false)
         })
-        ;(window as any).__rSearchDocBound = true
+        ;(window as any).__rDropdownDocBound = true
     }
 
     // 处理跨页后搜索框打不开
