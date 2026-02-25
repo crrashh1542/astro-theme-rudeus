@@ -28,7 +28,7 @@ const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : nul
 
 // 处理页头数据
 const { title, published, tags, image } = post.data
-const description = post.data.description?.trim() || genDescription(post.body)
+const description = post.data.description?.trim()
 const stats = analyzeReading(post.body)
 const url = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href
 
@@ -41,7 +41,7 @@ const formatDate = (date: Date) => {
 }
 ---
 
-<MainLayout title={title + ' - 云萧的咕咕屋'} description={description}>
+<MainLayout title={title + ' - 云萧的咕咕屋'} description={description || genDescription(post.body)}>
     <div class="r-content">
         <!-- 内容页头 -->
         <div class="r-header">
@@ -51,6 +51,7 @@ const formatDate = (date: Date) => {
             <!-- 页头内容 -->
             <div class="r-header-wrapper">
                 <div class="r-title">{title}</div>
+                {description && <div class="r-description">{description}</div>}
                 <div class="r-info">
                     <span>
                         <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
