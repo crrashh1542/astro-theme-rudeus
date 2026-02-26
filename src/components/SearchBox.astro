@@ -3,11 +3,14 @@ import { Icon } from 'astro-icon/components'
 ---
 
 <span class="r-search r-not-mob" data-open="false">
-    <Icon name="mdi:search" width={24} height={24} class="r-search-btn" />
+    <!-- <Icon name="mdi:search" width={24} height={24} class="r-search-btn" /> -->
+    <span class="r-btn r-search-btn" id="header-search-btn-pc">
+        <Icon name="mdi:search" width={24} height={24} />
+    </span>
     <input class="r-search-input" type="text" placeholder="搜索...">
 </span>
 <span class="r-search-mobile r-not-pc" data-open="false">
-    <span class="r-btn" id="header-search-btn">
+    <span class="r-btn" id="header-search-btn-mob">
         <Icon name="mdi:search" width={24} height={24} />
     </span>
     <div class="r-search-mobile-panel">
@@ -172,10 +175,10 @@ import { Icon } from 'astro-icon/components'
 
     const initSearchBox = () => {
         searchWrap = document.querySelector('.r-search')
-        searchBtn = document.querySelector('.r-search-btn')
+        searchBtn = document.getElementById('header-search-btn-pc')
         searchInput = document.querySelector('.r-search-input')
         mobileSearchWrap = document.querySelector('.r-search-mobile')
-        mobileSearchBtn = document.getElementById('header-search-btn')
+        mobileSearchBtn = document.getElementById('header-search-btn-mob')
         mobileSearchInput = document.querySelector('.r-search-mobile-input')
 
         if (searchBtn && !searchBtn.dataset.bound) {
