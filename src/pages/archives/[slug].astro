@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 import { Icon } from 'astro-icon/components'
 
 import MainLayout from '@/layouts/MainLayout.astro'
@@ -7,29 +7,32 @@ import Comment from '@/components/Comment.astro'
 import { analyzeReading } from '@/utils/readingStat'
 import { genDescription } from '@/utils/genDescription'
 
+const resolvePostSlug = (post: any) => post.slug || post.id.replace(/\.mdx?$/, '')
+
 export async function getStaticPaths() {
     const posts = await getCollection('archives')
+    const resolveSlug = (post: any) => post.slug || post.id.replace(/\.mdx?$/, '')
     return posts.map((post) => ({
-        params: { slug: post.slug },
+        params: { slug: resolveSlug(post) },
         props: { post },
     }))
 }
 
 const { post } = Astro.props
-const { Content } = await post.render()
+const { Content } = await render(post)
 
 // 处理导航
 const ordered = (await getCollection('archives')).sort(
     (a, b) => a.data.published.valueOf() - b.data.published.valueOf()
 )
-const index = ordered.findIndex((p) => p.slug == post.slug)
+const index = ordered.findIndex((p) => resolvePostSlug(p) === resolvePostSlug(post))
 const prev = index > 0 ? ordered[index - 1] : null
 const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : null
 
 // 处理页头数据
 const { title, published, tags, image } = post.data
-const description = post.data.description?.trim()
-const stats = analyzeReading(post.body)
+const description = post.data.description?.trim() ?? genDescription(post.body)
+const stats = analyzeReading(post.body ?? '')
 const url = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href
 
 const formatDate = (date: Date) => {
@@ -41,7 +44,7 @@ const formatDate = (date: Date) => {
 }
 ---
 
-<MainLayout title={title + ' - 云萧的咕咕屋'} description={description || genDescription(post.body)}>
+<MainLayout title={title + ' - 云萧的咕咕屋'} description={description}>
     <div class="r-content">
         <!-- 内容页头 -->
         <div class="r-header">
@@ -104,7 +107,7 @@ const formatDate = (date: Date) => {
     <div class="r-nav">
         {
             prev && (
-                <a class="r-nav-item prev" href={`/archives/${prev.slug}.html`}>
+                <a class="r-nav-item prev" href={`/archives/${resolvePostSlug(prev)}.html`}>
                     <Icon name="mdi:arrow-left" width={28} height={28} class="r-icon" />
                     <div>
                         <div class="label r-not-mob">上一篇</div>
@@ -115,7 +118,7 @@ const formatDate = (date: Date) => {
         }
         {
             next && (
-                <a class="r-nav-item next" href={`/archives/${next.slug}.html`}>
+                <a class="r-nav-item next" href={`/archives/${resolvePostSlug(next)}.html`}>
                     <div>
                         <div class="label r-not-mob">下一篇</div>
                         <div class="text">{next.data.title}</div>

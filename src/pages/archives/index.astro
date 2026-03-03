@@ -7,6 +7,9 @@ const posts = (await getCollection('archives')).sort(
     (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
 )
 
+const resolveSlug = (post: (typeof posts)[number]) =>
+    (post as any).slug || post.id.replace(/\.mdx?$/, '')
+
 // 按年份分组
 const groups = posts.reduce(
     (acc: Record<string, typeof posts>, post) => {
@@ -49,7 +52,7 @@ const formatDate = (date: Date | string) => {
                                     <div class="r-date">
                                         {formatDate(post.data.published)}
                                     </div>
-                                    <a class="r-article" href={`/archives/${post.slug}.html`}>
+                                    <a class="r-article" href={`/archives/${resolveSlug(post)}.html`}>
                                         {post.data.title}
                                     </a>
                                 </div>

@@ -9,20 +9,23 @@ import CardArticle from '@/components/CardArticle.astro'
 const posts = (await getCollection('archives')).sort(
     (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
 )
+
+const resolveSlug = (post: (typeof posts)[number]) =>
+    (post as any).slug || post.id.replace(/\.mdx?$/, '')
 ---
 
 <MainLayout title="云萧的咕咕屋 - 可能有好东西哦 (*σ´∀`)σ" description="以万象之不息，致不息之万象">
     <div class="r-content r-index-content">
         {
             posts.map((post) => {
-                const stats = analyzeReading(post.body)
-                const description = post.data.description?.trim() || genDescription(post.body)
+                const stats = analyzeReading(post.body ?? '')
+                const description = post.data.description?.trim() ?? genDescription(post.body)
                 return (
                     <CardArticle
                         title={post.data.title}
                         description={description}
                         published={post.data.published}
-                        url={`/archives/${post.slug}.html`}
+                        url={`/archives/${resolveSlug(post)}.html`}
                         tags={post.data.tags}
                         readingTime={stats.minutes}
                         readingChars={stats.estimatedChars}
