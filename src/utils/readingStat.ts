@@ -25,7 +25,16 @@ function stripMarkdown(src: string): string {
     )
 }
 
-export function analyzeReading(raw: string): ReadingStats {
+export function analyzeReading(raw: string | undefined): ReadingStats {
+    if (!raw) {
+        return {
+            wordsEN: 0,
+            charsCJK: 0,
+            estimatedChars: 0,
+            minutes: 1,
+        }
+    }
+
     const text = stripMarkdown(raw || '')
 
     const enWords = text.match(/[A-Za-z]+/g) ?? []

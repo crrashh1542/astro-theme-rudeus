@@ -14,7 +14,7 @@ const resolveSlug = (post: (typeof posts)[number]) =>
     (post as any).slug || post.id.replace(/\.mdx?$/, '')
 
 const items = posts.map((post) => {
-    const stats = analyzeReading(post.body ?? '')
+    const stats = analyzeReading(post.body)
     const description = post.data.description?.trim() ?? genDescription(post.body)
     return { post, stats, description }
 })

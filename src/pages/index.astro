@@ -18,7 +18,7 @@ const resolveSlug = (post: (typeof posts)[number]) =>
     <div class="r-content r-index-content">
         {
             posts.map((post) => {
-                const stats = analyzeReading(post.body ?? '')
+                const stats = analyzeReading(post.body)
                 const description = post.data.description?.trim() ?? genDescription(post.body)
                 return (
                     <CardArticle
