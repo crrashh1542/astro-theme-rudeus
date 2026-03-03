@@ -10,7 +10,7 @@ const archives = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string().optional(),
-        published: z.coerce.date(),
+        pubDate: z.coerce.date(),
         updatedDate: z.coerce.date().optional(),
         author: z.string().default('博主'),
         tags: z.array(z.string()).default([]),

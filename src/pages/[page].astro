@@ -55,7 +55,7 @@ const description = frontmatter.description || ''
 const stats = analyzeReading(raw as string)
 const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
 const image = frontmatter.image ?? ''
-const published = frontmatter.published ?? frontmatter.date ?? ''
+const pubDate = frontmatter.pubDate
 
 const formatDate = (date: Date) => {
     const value = new Date(date)
@@ -74,10 +74,10 @@ const formatDate = (date: Date) => {
                 <div class="r-title">{frontmatter.title}</div>
                 { description && <div class="r-description">{description}</div> }
                 <div class="r-info">
-                    { published && (
+                    { pubDate && (
                         <span>
                             <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
-                            {formatDate(published)}
+                            {formatDate(pubDate)}
                         </span>
                     )
                     }

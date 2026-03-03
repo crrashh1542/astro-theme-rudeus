@@ -1,7 +1,7 @@
 ---
 title: Rudeus 主题样式预览
 description: 本页用于展示 Rudeus 主题的基本 Markdown 样式
-published: 2026-01-07
+pubDate: 2026-01-07
 tags: [主题, 预览]
 image: https://i.cdn.crrashh.com/2026/0114/9cb723db-6df4-4d75-b3d4-48c81db2b222.webp
 ---

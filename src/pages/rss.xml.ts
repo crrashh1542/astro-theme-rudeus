@@ -4,7 +4,7 @@ import { genDescription } from '@/utils/genDescription'
 
 export async function GET(context: any) {
     const posts = (await getCollection('archives')).sort(
-        (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
+        (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
     )
     const resolveSlug = (post: (typeof posts)[number]) =>
         (post as any).slug || post.id.replace(/\.mdx?$/, '')
@@ -18,7 +18,7 @@ export async function GET(context: any) {
             return {
                 title: post.data.title,
                 description,
-                pubDate: post.data.published,
+                pubDate: post.data.pubDate,
                 link: `/archives/${resolveSlug(post)}.html`,
             }
         }),

@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
 
-const { title, description, published, url, image, tags = [], readingTime, readingChars, ...rest } = Astro.props
+const { title, description, pubDate, url, image, tags = [], readingTime, readingChars, ...rest } = Astro.props
 
 const formatDate = (date: Date) => {
     const value = new Date(date)
@@ -33,7 +33,7 @@ const formatDate = (date: Date) => {
             <div class="r-info">
                 <span>
                     <Icon name="mdi:calendar-blank-outline" width={18} height={18} />
-                    {formatDate(published)}
+                    {formatDate(pubDate)}
                 </span>
                 <span>
                     <Icon name="mdi:clock-outline" />
