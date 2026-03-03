@@ -9,9 +9,6 @@ import CardArticle from '@/components/CardArticle.astro'
 const posts = (await getCollection('archives')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
-
-const resolveSlug = (post: (typeof posts)[number]) =>
-    (post as any).slug || post.id.replace(/\.mdx?$/, '')
 ---
 
 <MainLayout title="云萧的咕咕屋 - 可能有好东西哦 (*σ´∀`)σ" description="以万象之不息，致不息之万象">
@@ -25,7 +22,7 @@ const resolveSlug = (post: (typeof posts)[number]) =>
                         title={post.data.title}
                         description={description}
                         pubDate={post.data.pubDate}
-                        url={`/archives/${resolveSlug(post)}.html`}
+                        url={`/archives/${post.id}.html`}
                         tags={post.data.tags}
                         readingTime={stats.minutes}
                         readingChars={stats.estimatedChars}

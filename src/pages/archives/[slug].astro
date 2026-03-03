@@ -7,13 +7,10 @@ import Comment from '@/components/Comment.astro'
 import { analyzeReading } from '@/utils/readingStat'
 import { genDescription } from '@/utils/genDescription'
 
-const resolvePostSlug = (post: any) => post.slug || post.id.replace(/\.mdx?$/, '')
-
 export async function getStaticPaths() {
     const posts = await getCollection('archives')
-    const resolveSlug = (post: any) => post.slug || post.id.replace(/\.mdx?$/, '')
     return posts.map((post) => ({
-        params: { slug: resolveSlug(post) },
+        params: { slug: post.id },
         props: { post },
     }))
 }
@@ -25,7 +22,7 @@ const { Content } = await render(post)
 const ordered = (await getCollection('archives')).sort(
     (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 )
-const index = ordered.findIndex((p) => resolvePostSlug(p) === resolvePostSlug(post))
+const index = ordered.findIndex((p) => p.id === post.id)
 const prev = index > 0 ? ordered[index - 1] : null
 const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : null
 
@@ -107,7 +104,7 @@ const formatDate = (date: Date) => {
     <div class="r-nav">
         {
             prev && (
-                <a class="r-nav-item prev" href={`/archives/${resolvePostSlug(prev)}.html`}>
+                <a class="r-nav-item prev" href={`/archives/${prev.id}.html`}>
                     <Icon name="mdi:arrow-left" width={28} height={28} class="r-icon" />
                     <div>
                         <div class="label r-not-mob">上一篇</div>
@@ -118,7 +115,7 @@ const formatDate = (date: Date) => {
         }
         {
             next && (
-                <a class="r-nav-item next" href={`/archives/${resolvePostSlug(next)}.html`}>
+                <a class="r-nav-item next" href={`/archives/${next.id}.html`}>
                     <div>
                         <div class="label r-not-mob">下一篇</div>
                         <div class="text">{next.data.title}</div>

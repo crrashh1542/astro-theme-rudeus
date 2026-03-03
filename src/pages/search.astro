@@ -10,8 +10,6 @@ import CardArticle from '@/components/CardArticle.astro'
 const posts = (await getCollection('archives')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
-const resolveSlug = (post: (typeof posts)[number]) =>
-    (post as any).slug || post.id.replace(/\.mdx?$/, '')
 
 const items = posts.map((post) => {
     const stats = analyzeReading(post.body)
@@ -29,7 +27,7 @@ const items = posts.map((post) => {
                     title={post.data.title}
                     description={description}
                     pubDate={post.data.pubDate}
-                        url={`/archives/${resolveSlug(post)}.html`}
+                    url={`/archives/${post.id}.html`}
                     tags={post.data.tags}
                     readingTime={stats.minutes}
                     readingChars={stats.estimatedChars}

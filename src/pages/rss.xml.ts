@@ -6,8 +6,6 @@ export async function GET(context: any) {
     const posts = (await getCollection('archives')).sort(
         (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
     )
-    const resolveSlug = (post: (typeof posts)[number]) =>
-        (post as any).slug || post.id.replace(/\.mdx?$/, '')
 
     return rss({
         title: '云萧的咕咕屋 - RSS',
@@ -19,7 +17,7 @@ export async function GET(context: any) {
                 title: post.data.title,
                 description,
                 pubDate: post.data.pubDate,
-                link: `/archives/${resolveSlug(post)}.html`,
+                link: `/archives/${post.id}.html`,
             }
         }),
     })
