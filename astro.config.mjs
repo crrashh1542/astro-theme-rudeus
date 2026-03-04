@@ -16,6 +16,7 @@ export default defineConfig({
     trailingSlash: 'never',
     build: {
         format: 'file',
+        assets: '_rudeus',
     },
     integrations: [icon(), sitemap()],
     markdown: {
@@ -28,9 +29,8 @@ export default defineConfig({
             rollupOptions: {
                 output: {
                     hashCharacters: 'hex',
-                    assetFileNames: '_rudeus/[name]-[hash].[ext]',
-                    entryFileNames(chunkInfo) {
-                        return `_rudeus/${chunkInfo.name.split('.')[0]}-[hash].js`
+                    assetFileNames(chunkInfo) {
+                        return `_rudeus/${chunkInfo.name.split('.')[0].split('@')[0]}-[hash].[ext]`
                     },
                     minifyInternalExports: true,
                 },
