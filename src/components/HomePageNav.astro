@@ -1,0 +1,42 @@
+---
+interface Props {
+    prevHref?: string | null
+    nextHref?: string | null
+}
+
+const { prevHref = null, nextHref = null } = Astro.props
+const hasLinks = Boolean(prevHref || nextHref)
+---
+
+{
+    hasLinks && (
+        <div class="r-pagination">
+            {prevHref && <a class="r-page-link" href={prevHref}>上一页</a>}
+            {nextHref && <a class="r-page-link" href={nextHref}>下一页</a>}
+        </div>
+    )
+}
+
+<style lang="less">
+    @import url('@/styles/variableConst.less');
+
+    .r-pagination {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin: 12px 0 28px;
+    }
+
+    .r-page-link {
+        color: @color-theme;
+        text-decoration: none;
+        border: 1px solid @color-border;
+        border-radius: 8px;
+        padding: 8px 14px;
+        transition: all @anim-duration ease;
+    }
+
+    .r-page-link:hover {
+        border-color: @color-theme;
+    }
+</style>

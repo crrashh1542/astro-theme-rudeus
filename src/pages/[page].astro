@@ -1,13 +1,26 @@
 ---
+import { getCollection } from 'astro:content'
 import { Icon } from 'astro-icon/components'
 
 import MainLayout from '@/layouts/MainLayout.astro'
 import Comment from '@/components/Comment.astro'
 import FriendsList from '@/components/FriendsList.astro'
+import CardArticle from '@/components/CardArticle.astro'
+import HomePageNav from '@/components/HomePageNav.astro'
 
 import { analyzeReading } from '@/utils/readingStat'
+import { genDescription } from '@/utils/genDescription'
+import {
+    getHomeIndexPages,
+    getHomePageItems,
+    getHomePaginationLinks,
+    getHomeTotalPages
+} from '@/utils/homePagination'
 
 export async function getStaticPaths() {
+    const posts = (await getCollection('archives')).sort(
+        (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    )
     const pageModules = import.meta.glob('../content/*.md')
     const explicitPages = import.meta.glob('./*.astro')
 
@@ -25,10 +38,29 @@ export async function getStaticPaths() {
         .map((name) => name!.replace(/\.md$/, ''))
         .filter((page) => !excluded.has(page))
 
-    return pages.map((page) => ({ params: { page } }))
+    const indexPages = getHomeIndexPages(posts.length)
+
+    return [
+        ...pages.filter((item) => !indexPages.includes(item)).map((item) => ({ params: { page: item } })),
+        ...indexPages.map((item) => ({ params: { page: item } }))
+    ]
 }
 
 const { page } = Astro.params
+const currentPage = Number(page)
+const isIndexPage = Number.isInteger(currentPage) && currentPage >= 2
+
+let listPosts: Awaited<ReturnType<typeof getCollection>> = []
+let totalPages = 1
+if (isIndexPage) {
+    listPosts = (await getCollection('archives')).sort(
+        (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    )
+    totalPages = getHomeTotalPages(listPosts.length)
+    if (currentPage > totalPages) {
+        return new Response('Not found', { status: 404 })
+    }
+}
 
 const pageModules = import.meta.glob('../content/*.md')
 const rawModules = import.meta.glob('../content/*.md', { query: '?raw', import: 'default' })
@@ -37,25 +69,41 @@ const key = `../content/${page}.md`
 const importMd = pageModules[key]
 const importRaw = rawModules[key]
 
-if (!importMd || !importRaw) {
+if (!isIndexPage && (!importMd || !importRaw)) {
     return new Response('Not found', { status: 404 })
 }
 
-const [md, raw] = await Promise.all([importMd(), importRaw()])
-const Content = (md as any).default
-const frontmatter = (md as any).frontmatter ?? {}
+let Content: any = null
+let frontmatter: any = {}
+let raw = ''
+if (!isIndexPage) {
+    const [md, rawContent] = await Promise.all([importMd!(), importRaw!()])
+    Content = (md as any).default
+    frontmatter = (md as any).frontmatter ?? {}
+    raw = rawContent as string
+}
 
-if (!frontmatter.title) {
+if (!isIndexPage && !frontmatter.title) {
     throw new Error(
         `页面 ${page}.md 必须在 frontmatter 中提供 title`
     )
 }
 
-const description = frontmatter.description || ''
-const stats = analyzeReading(raw as string)
-const pageType = (frontmatter.type ?? frontmatter.layout ?? '').toString()
-const image = frontmatter.image ?? ''
-const pubDate = frontmatter.pubDate
+const description = isIndexPage
+    ? '以万象之不息，致不息之万象'
+    : frontmatter.description || ''
+const stats = isIndexPage ? null : analyzeReading(raw)
+const pageType = isIndexPage ? '' : (frontmatter.type ?? frontmatter.layout ?? '').toString()
+const image = isIndexPage ? '' : frontmatter.image ?? ''
+const pubDate = isIndexPage ? null : frontmatter.pubDate
+const pageTitle = isIndexPage
+    ? `云萧的咕咕屋 - 第 ${currentPage} 页`
+    : `${frontmatter.title} - 云萧的咕咕屋`
+
+const pagePosts = isIndexPage ? getHomePageItems(listPosts, currentPage) : []
+const { prevHref, nextHref } = isIndexPage
+    ? getHomePaginationLinks(currentPage, totalPages)
+    : { prevHref: null, nextHref: null }
 
 const formatDate = (date: Date) => {
     const value = new Date(date)
@@ -66,8 +114,34 @@ const formatDate = (date: Date) => {
 }
 ---
 
-<MainLayout title={`${frontmatter.title} - 云萧的咕咕屋`} description={description}>
-    <div class="r-content">
+<MainLayout title={pageTitle} description={description}>
+    {
+        isIndexPage ? (
+            <div class="r-content r-index-content">
+                {
+                    pagePosts.map((post) => {
+                        const postStats = analyzeReading(post.body)
+                        const postDescription = post.data.description?.trim() ?? genDescription(post.body)
+                        return (
+                            <CardArticle
+                                title={post.data.title}
+                                description={postDescription}
+                                pubDate={post.data.pubDate}
+                                url={`/archives/${post.id}.html`}
+                                tags={post.data.tags}
+                                readingTime={postStats.minutes}
+                                readingChars={postStats.estimatedChars}
+                                image={post.data.image}
+                                data-index
+                            />
+                        )
+                    })
+                }
+
+                <HomePageNav prevHref={prevHref} nextHref={nextHref} />
+            </div>
+        ) : (
+            <div class="r-content">
         <div class="r-header">
             {image && <img class="r-cover" src={image} alt={frontmatter.title} />}
             <div class="r-header-wrapper">
@@ -83,11 +157,11 @@ const formatDate = (date: Date) => {
                     }
                     <span>
                         <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
-                        {stats.minutes} 分钟
+                        {stats!.minutes} 分钟
                     </span>
                     <span>
                         <Icon name="mdi:pencil-outline" width={20} height={20} />
-                        {stats.estimatedChars} 字
+                        {stats!.estimatedChars} 字
                     </span>
                 </div>
             </div>
@@ -100,5 +174,14 @@ const formatDate = (date: Date) => {
         </div>
     </div>
 
-    <Comment />
+        )
+    }
+
+    {!isIndexPage && <Comment />}
 </MainLayout>
+
+<style>
+    .r-content.r-index-content {
+        padding: 0;
+    }
+</style>

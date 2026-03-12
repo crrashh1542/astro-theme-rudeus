@@ -2,19 +2,28 @@
 import { getCollection } from 'astro:content'
 import { analyzeReading } from '@/utils/readingStat'
 import { genDescription } from '@/utils/genDescription'
+import {
+    getHomePageItems,
+    getHomePaginationLinks,
+    getHomeTotalPages
+} from '@/utils/homePagination'
 
 import MainLayout from '@/layouts/MainLayout.astro'
 import CardArticle from '@/components/CardArticle.astro'
+import HomePageNav from '@/components/HomePageNav.astro'
 
 const posts = (await getCollection('archives')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
+const totalPages = getHomeTotalPages(posts.length)
+const pagePosts = getHomePageItems(posts, 1)
+const { nextHref } = getHomePaginationLinks(1, totalPages)
 ---
 
 <MainLayout title="云萧的咕咕屋 - 可能有好东西哦 (*σ´∀`)σ" description="以万象之不息，致不息之万象">
     <div class="r-content r-index-content">
         {
-            posts.map((post) => {
+            pagePosts.map((post) => {
                 const stats = analyzeReading(post.body)
                 const description = post.data.description?.trim() ?? genDescription(post.body)
                 return (
@@ -32,10 +41,12 @@ const posts = (await getCollection('archives')).sort(
                 )
             })
         }
+
+        <HomePageNav nextHref={nextHref} />
     </div>
 </MainLayout>
 
-<style lang="less">
+<style>
     .r-content {
         padding: 0;
     }
