@@ -21,6 +21,9 @@ const items = posts.map((post) => {
 
 <MainLayout title="搜索 - 云萧的咕咕屋" description="搜索博客文章">
     <div class="r-content r-index-content">
+        <div class="r-result">
+            搜索 “<span id="search-keyword"></span>”，共得到 <span id="search-count"></span> 条结果。
+        </div>
         {
             items.map(({ post, stats, description }) => (
                 <CardArticle
@@ -48,11 +51,14 @@ const items = posts.map((post) => {
 <script>
     const normalize = (value: String) => value.toLowerCase().trim()
     const content = document.querySelector('.r-content') as HTMLElement | null
-    const emptyState = document.getElementById('search-empty') as HTMLElement | null
+    const elEmpty = document.getElementById('search-empty') as HTMLElement | null
+    const elKeyword = document.getElementById('search-keyword') as HTMLElement | null
+    const elCount = document.getElementById('search-count') as HTMLElement | null
     const items = Array.from(document.querySelectorAll('a.r-card'))
 
     const applyFilter = (query: String) => {
-        const keyword = normalize(query || '')
+        const rawQuery = String(query || '').trim()
+        const keyword = normalize(rawQuery)
         let visibleCount = 0
 
         items.forEach((item: any) => {
@@ -69,12 +75,17 @@ const items = posts.map((post) => {
             if (match) visibleCount += 1
         })
 
-        if (emptyState && content) {
+        if (elKeyword && elCount) {
+            elKeyword.textContent = rawQuery || '全部'
+            elCount.textContent = String(visibleCount)
+        }
+
+        if (elEmpty && content) {
             if (visibleCount === 0) {
-                emptyState.style.display = 'flex'
+                elEmpty.style.display = 'flex'
                 content.classList.remove('r-index-content')
             } else {
-                emptyState.style.display = 'none'
+                elEmpty.style.display = 'none'
                 content.classList.add('r-index-content')
             }
             
@@ -96,6 +107,12 @@ const items = posts.map((post) => {
 
 <style lang="less">
     @import url('@/styles/variableConst.less');
+
+    .r-result {
+        background-color: #fff;
+        border-radius: @layout-content-border-radius;
+        padding: var(--index-card-padding);
+    }
 
     .r-content {
         padding: 0;
