@@ -13,10 +13,11 @@ import { genDescription } from '@/utils/genDescription'
 import {
     getHomeIndexPages,
     getHomePageItems,
-    getHomePaginationLinks,
+    getHomePageNavItems,
     getHomeTotalPages
 } from '@/utils/homePagination'
 
+// 处理一般页面
 export async function getStaticPaths() {
     const posts = (await getCollection('archives')).sort(
         (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -47,6 +48,26 @@ export async function getStaticPaths() {
 }
 
 const { page } = Astro.params
+const pageModules = import.meta.glob('../content/*.md')
+const rawModules = import.meta.glob('../content/*.md', { query: '?raw', import: 'default' })
+
+const key = `../content/${page}.md`
+const importMd = pageModules[key]
+const importRaw = rawModules[key]
+
+let Content: any = null
+let frontmatter: any = {}
+let raw = ''
+
+const formatDate = (date: Date) => {
+    const value = new Date(date)
+    const year = value.getFullYear()
+    const month = String(value.getMonth() + 1).padStart(2, '0')
+    const day = String(value.getDate()).padStart(2, '0')
+    return year + '-' + month + '-' + day
+}
+
+// 处理首页的分页
 const currentPage = Number(page)
 const isIndexPage = Number.isInteger(currentPage) && currentPage >= 2
 
@@ -62,20 +83,11 @@ if (isIndexPage) {
     }
 }
 
-const pageModules = import.meta.glob('../content/*.md')
-const rawModules = import.meta.glob('../content/*.md', { query: '?raw', import: 'default' })
-
-const key = `../content/${page}.md`
-const importMd = pageModules[key]
-const importRaw = rawModules[key]
-
 if (!isIndexPage && (!importMd || !importRaw)) {
     return new Response('Not found', { status: 404 })
 }
 
-let Content: any = null
-let frontmatter: any = {}
-let raw = ''
+
 if (!isIndexPage) {
     const [md, rawContent] = await Promise.all([importMd!(), importRaw!()])
     Content = (md as any).default
@@ -101,17 +113,9 @@ const pageTitle = isIndexPage
     : `${frontmatter.title} - 云萧的咕咕屋`
 
 const pagePosts = isIndexPage ? getHomePageItems(listPosts, currentPage) : []
-const { prevHref, nextHref } = isIndexPage
-    ? getHomePaginationLinks(currentPage, totalPages)
-    : { prevHref: null, nextHref: null }
+const navItems = isIndexPage ? getHomePageNavItems(currentPage, totalPages) : []
 
-const formatDate = (date: Date) => {
-    const value = new Date(date)
-    const year = value.getFullYear()
-    const month = String(value.getMonth() + 1).padStart(2, '0')
-    const day = String(value.getDate()).padStart(2, '0')
-    return year + '-' + month + '-' + day
-}
+
 ---
 
 <MainLayout title={pageTitle} description={description}>
@@ -138,7 +142,7 @@ const formatDate = (date: Date) => {
                     })
                 }
 
-                <HomePageNav prevHref={prevHref} nextHref={nextHref} />
+                <HomePageNav items={navItems} />
             </div>
         ) : (
             <div class="r-content">

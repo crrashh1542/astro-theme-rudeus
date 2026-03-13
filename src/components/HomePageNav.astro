@@ -1,18 +1,33 @@
 ---
+import type { NavItem } from '@/utils/homePagination'
+
 interface Props {
-    prevHref?: string | null
-    nextHref?: string | null
+    items?: NavItem[]
 }
 
-const { prevHref = null, nextHref = null } = Astro.props
-const hasLinks = Boolean(prevHref || nextHref)
+const { items = [] } = Astro.props
 ---
 
 {
-    hasLinks && (
+    items.length > 1 && (
         <div class="r-pagination">
-            {prevHref && <a class="r-page-link" href={prevHref}>上一页</a>}
-            {nextHref && <a class="r-page-link" href={nextHref}>下一页</a>}
+            {
+                items.map((item) => {
+                    if (item.type === 'ellipsis') {
+                        return <span class="r-page-ellipsis" aria-hidden="true">...</span>
+                    }
+
+                    return (
+                        <a
+                            class:list={['r-page-link', item.isCurrent && 'r-current']}
+                            href={item.href}
+                            aria-current={item.isCurrent ? 'page' : undefined}
+                        >
+                            {item.page}
+                        </a>
+                    )
+                })
+            }
         </div>
     )
 }
@@ -24,19 +39,32 @@ const hasLinks = Boolean(prevHref || nextHref)
         display: flex;
         justify-content: center;
         gap: 12px;
-        margin: 12px 0 28px;
+        margin: 14px 0;
     }
 
     .r-page-link {
+        display: inline-flex;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
         color: @color-theme;
+        background-color: #fff;
         text-decoration: none;
         border: 1px solid @color-border;
-        border-radius: 8px;
-        padding: 8px 14px;
+        border-radius: 50%;
         transition: all @anim-duration ease;
     }
 
-    .r-page-link:hover {
-        border-color: @color-theme;
+    .r-page-link.r-current {
+        color: #fff;
+        background-color: @color-theme;
+    }
+
+    .r-page-ellipsis {
+        display: inline-flex;
+        align-items: center;
+        color: @color-secondary;
+        padding: 0 4px;
     }
 </style>
