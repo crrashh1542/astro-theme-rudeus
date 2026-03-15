@@ -48,7 +48,12 @@ const formatDate = (date: Date) => {
                 tags.length > 0 && (
                     <div class="r-tags">
                         {tags.map((tag: string) => (
-                            <span class="r-tag">#{tag}</span>
+                            <span
+                                class="r-tag"
+                                onclick={`event.preventDefault();event.stopPropagation();window.location.href='/archives?tag=${encodeURIComponent(tag)}'`}
+                            >
+                                #{tag}
+                            </span>
                         ))}
                     </div>
                 )

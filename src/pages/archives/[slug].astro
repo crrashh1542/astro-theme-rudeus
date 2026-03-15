@@ -70,7 +70,7 @@ const formatDate = (date: Date) => {
                     tags && tags.length > 0 && (
                         <div class="r-tags">
                             {tags.map((tag) => (
-                                <span class="r-tag">#{tag}</span>
+                                <a class="r-tag" href={`/archives?tag=${encodeURIComponent(tag)}`}>#{tag}</a>
                             ))}
                         </div>
                     )
@@ -139,11 +139,13 @@ const formatDate = (date: Date) => {
         margin-top: 12px;
 
         .r-tag {
+            display: inline-flex;
             background-color: @color-theme-light;
             color: @color-theme-dark;
             padding: 3px 9px;
             border-radius: 4px;
             font-size: var(--content-tag-font);
+            text-decoration: none;
         }
     }
 

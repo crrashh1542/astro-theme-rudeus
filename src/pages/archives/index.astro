@@ -34,18 +34,18 @@ const formatDate = (date: Date | string) => {
         <div class="r-header">
             <div class="r-header-wrapper">
                 <div class="r-title">咕咕归档</div>
-                <div class="r-subtitle">共 {posts.length} 篇文章</div>
+                <div class="r-subtitle">共 <span id="archive-count">{posts.length}</span> 篇文章</div>
             </div>
         </div>
 
         <div class="r-timeline">
             {
-                years.map((year) => (
-                    <div id={`y-${year}`}>
+                years.map(year => (
+                    <div class="r-year" id={`y-${year}`}>
                         <h2 class="r-catalog">{year}</h2>
                         <div class="r-list">
-                            {groups[year].map((post) => (
-                                <div class="r-item">
+                            {groups[year].map(post => (
+                                <div class="r-item" data-tags={post.data.tags.join(',')}>
                                     <div class="r-date">
                                         {formatDate(post.data.pubDate)}
                                     </div>
@@ -58,6 +58,9 @@ const formatDate = (date: Date | string) => {
                     </div>
                 ))
             }
+        </div>
+        <div class="r-empty r-hidden" id="archive-empty">
+            当前标签下暂无文章
         </div>
     </div>
 </MainLayout>
@@ -112,6 +115,16 @@ const formatDate = (date: Date | string) => {
                 color: @color-theme;
             }
         }
+    }
+
+    .r-empty {
+        color: @color-secondary;
+        text-align: center;
+        padding: 16px 0 24px;
+    }
+
+    .r-hidden {
+        display: none !important;
     }
 
     // 时间轴

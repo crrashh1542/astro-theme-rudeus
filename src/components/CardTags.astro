@@ -23,10 +23,10 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => {
             <div class="r-title">标签</div>
             <div class="r-list">
                 {tags.map(([tag, count]) => (
-                    <span class="r-tag" title={`${tag}（${count}）`}>
+                    <a class="r-tag" href={`/archives?tag=${encodeURIComponent(tag)}`} title={`${tag}（${count}）`}>
                         <span class="r-tag-name">{tag}</span>
                         <span class="r-tag-count">{count}</span>
-                    </span>
+                    </a>
                 ))}
             </div>
         </div>
@@ -71,6 +71,7 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => {
                 color: @color-theme-dark;
                 font-size: var(--content-tag-font);
                 white-space: nowrap;
+                text-decoration: none;
             }
 
             .r-tag-count {
