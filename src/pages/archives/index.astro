@@ -50,7 +50,13 @@ const formatDate = (date: Date | string) => {
                                         {formatDate(post.data.pubDate)}
                                     </div>
                                     <a class="r-article" href={`/archives/${post.id}.html`}>
-                                        {post.data.title}
+                                        <span>{post.data.title}</span>
+                                        <span class="r-grow r-not-mob"></span>
+                                        <span class="r-tags r-not-mob">
+                                            {post.data.tags.map(tag => (
+                                                <span>#{tag}</span>
+                                            ))}
+                                        </span>
                                     </a>
                                 </div>
                             ))}
@@ -90,15 +96,21 @@ const formatDate = (date: Date | string) => {
                 display: flex;
                 align-items: center;
                 gap: 12px;
-                padding: 10px 0;
+                padding: 10px 16px;
                 margin: 6px 0;
+                border-radius: @layout-content-border-radius;
+                transition: all @anim-duration ease;
+                &:hover {
+                    background-color: @color-theme-light;
+                    * {
+                        color: @color-theme-dark;
+                    }
+                }
             }
 
             .r-date {
                 width: 56px;
                 font-size: var(--content-font);
-                flex: 0 0 auto;
-                text-align: right;
                 color: @color-secondary;
             }
 
@@ -131,6 +143,7 @@ const formatDate = (date: Date | string) => {
     .r-list::before {
         content: '';
         position: absolute;
+        z-index: 1;
         top: 0;
         bottom: 0;
         left: calc(56px + 18px); // 56px 日期宽度 + 18px 间距
@@ -149,5 +162,21 @@ const formatDate = (date: Date | string) => {
         background: @color-theme;
         border-radius: 50%;
         transform: translate(-50%, -50%);
+    }
+
+    // 文章
+    .r-article {
+        display: flex;
+        align-items: center;
+
+        .r-tags {
+            display: flex;
+            gap: .75em;
+
+            span {
+                font-size: var(--content-tag-font);
+                color: @color-secondary;
+            }
+        }
     }
 </style>
