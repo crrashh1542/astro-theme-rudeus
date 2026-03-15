@@ -102,15 +102,15 @@ if (!isIndexPage && !frontmatter.title) {
 }
 
 const description = isIndexPage
-    ? '以万象之不息，致不息之万象'
+    ? '首页 - Rudeus 是一个基于 Astro 的简洁博客主题'
     : frontmatter.description || ''
 const stats = isIndexPage ? null : analyzeReading(raw)
 const pageType = isIndexPage ? '' : (frontmatter.type ?? frontmatter.layout ?? '').toString()
 const image = isIndexPage ? '' : frontmatter.image ?? ''
 const pubDate = isIndexPage ? null : frontmatter.pubDate
 const pageTitle = isIndexPage
-    ? `云萧的咕咕屋 - 第 ${currentPage} 页`
-    : `${frontmatter.title} - 云萧的咕咕屋`
+    ? `首页 - Rudeus 主题文档 - 第 ${currentPage} 页`
+    : `${frontmatter.title} - Rudeus 主题文档`
 
 const pagePosts = isIndexPage ? getHomePageItems(listPosts, currentPage) : []
 const navItems = isIndexPage ? getHomePageNavItems(currentPage, totalPages) : []

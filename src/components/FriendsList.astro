@@ -3,7 +3,7 @@ import friends from '@/content/friends.json'
 ---
 
 <div class="r-grid">
-    {friends.map((f) => (
+    {friends.map(f => (
         <a class="r-friend-card" href={f.link} target="_blank" rel="noreferrer">
             <img class="r-avatar" src={f.avatar} alt={f.name} loading="lazy" />
             <div class="r-meta">
@@ -17,11 +17,6 @@ import friends from '@/content/friends.json'
 <style lang="less">
     @import url('@/styles/variableConst.less');
 
-    .r-info {
-        margin-top: 6px;
-        color: @color-secondary;
-    }
-
     .r-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -30,7 +25,6 @@ import friends from '@/content/friends.json'
 
     .r-friend-card {
         display: flex;
-        align-items: center;
         gap: 12px;
         padding: 12px 14px;
         border: 1px solid @color-border;
@@ -50,7 +44,7 @@ import friends from '@/content/friends.json'
             font-weight: 700;
             font-size: 16px;
             line-height: 1.5;
-            margin-bottom: 6px;
+            margin: 2px 0 3px;
         }
 
         .r-desc {

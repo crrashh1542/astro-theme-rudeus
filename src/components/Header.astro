@@ -1,6 +1,12 @@
 ---
 import { Icon } from 'astro-icon/components'
 import SearchBox from '@/components/SearchBox.astro'
+
+const list = [
+    { name: '友情链接', url: '/friends' },
+    { name: '关于', url: '/about' },
+    { name: '归档', url: '/archives' },
+]
 ---
 
 <header>
@@ -9,9 +15,9 @@ import SearchBox from '@/components/SearchBox.astro'
         <div class="r-menu">
             <a href="/" class="r-index">Rudeus 主题文档</a>
             <span class="r-not-mob"></span>
-            <a class="r-not-mob" href="/friends">友人帐</a>
-            <a class="r-not-mob" href="/about">关于</a>
-            <a class="r-not-mob" href="/archives">归档</a>
+            {list.map(i => (
+                <a class="r-not-mob" href={i.url}>{i.name}</a>
+            ))}
         </div>
         <!-- 右半部分 功能按钮 -->
         <div class="r-function">
@@ -21,9 +27,9 @@ import SearchBox from '@/components/SearchBox.astro'
                     <Icon name="mdi:menu" width={24} height={24} />
                 </span>
                 <div class="r-dropdown-panel">
-                    <a href="/friends">友人帐</a>
-                    <a href="/about">关于</a>
-                    <a href="/archives">归档</a>
+                    {list.map(i => (
+                        <a href={i.url}>{i.name}</a>
+                    ))}
                 </div>
             </span>
         </div>
