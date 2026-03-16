@@ -7,7 +7,7 @@
     :root {
         // 布局
         --layout-container-margin: 18px;
-        --layout-main-margin: 0 4px 2em;
+        --layout-main-margin: 0 2px 2em;
         --layout-content-margin: 0;
         --layout-content-flex: column-reverse;
         --layout-sidebar-width: 100%;
@@ -60,8 +60,8 @@
     }
 }
 
-@media screen and (max-width: calc(@layout-mobile-breakpoint + @layout-mobile-buffer)) {
+@media screen and (min-width: @layout-mobile-breakpoint) and (max-width: calc(@layout-mobile-breakpoint + @layout-mobile-buffer)) {
     :root {
-        --layout-content-margin: 5% !important;
+        --layout-content-margin: 5%;
     }
 }
