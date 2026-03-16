@@ -54,12 +54,16 @@ import friends from '@/content/friends.json'
             overflow: hidden;
             text-overflow: ellipsis;
         }
-    }
-    .r-friend-card:hover {
-        background-color: @color-theme-light;
-        transform: translateY(-1px);
-        * {
-            color: @color-theme-dark;
+
+        &:hover {
+            background-color: @color-theme-light;
+            * {
+                color: @color-theme-dark;
+            }
+        }
+        &:active {
+            background-color: @color-card-active;
+            transform: scale(.99);
         }
     }
 

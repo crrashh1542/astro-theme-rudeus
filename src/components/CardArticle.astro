@@ -80,7 +80,7 @@ const formatDate = (date: Date) => {
 
         // 整个 .card 都被 hover 时都可以触发
         &:hover {
-            background-color: lighten(@color-theme-light, 4%);
+            background-color: @color-card-hover;
             .r-catalog {
                 color: @color-theme;
             }
@@ -88,6 +88,11 @@ const formatDate = (date: Date) => {
                 opacity: 1;
                 transform: translateX(4px);
             }
+        }
+        &:active {
+            transform: scale(.995);
+            transition: all @anim-duration ease;
+            background-color: @color-card-active;
         }
 
         &:has(.r-cover) {

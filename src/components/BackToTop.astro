@@ -70,12 +70,11 @@ import { Icon } from 'astro-icon/components'
         transform: translateY(0);
     }
     .r-back-to-top:hover {
-        background-color: lighten(@color-theme-light, 3%);
-        // background-color: @color-theme;
+        background-color: @color-card-hover;
     }
     .r-back-to-top:active {
         transform: scale(.9);
-        background-color: darken(@color-bg, 10%);
+        background-color: @color-card-active;
     }
 
     @media (prefers-reduced-motion: reduce) {
