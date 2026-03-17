@@ -6,6 +6,7 @@ import avatar from '@/assets/avatar.jpg'
 const articles = await getCollection('archives')
 const articleTotal = articles.length
 const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
+const categoryTotal = new Set(articles.map((item) => item.data.category).filter(Boolean)).size
 ---
 
 <div class="r-card">
@@ -17,6 +18,10 @@ const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
             <div class="r-stat-value">{articleTotal}</div>
             <div class="r-stat-label">文章</div>
         </a>
+        <div class="r-stat-item">
+            <div class="r-stat-value">{categoryTotal}</div>
+            <div class="r-stat-label">分类</div>
+        </div>
         <div class="r-stat-item">
             <div class="r-stat-value">{tagTotal}</div>
             <div class="r-stat-label">标签</div>
@@ -58,7 +63,6 @@ const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
             align-items: center;
             justify-content: center;
             flex-direction: row;
-            gap: 12px;
             width: 100%;
             font-size: 14px;
             margin-top: 14px;
@@ -68,7 +72,7 @@ const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 80px;
+            min-width: 60px;
             transition: all @anim-duration ease;
         }
         a.r-stat-item:hover {

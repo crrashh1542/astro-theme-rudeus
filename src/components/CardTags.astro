@@ -24,8 +24,8 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => {
             <div class="r-list">
                 {tags.map(([tag, count]) => (
                     <a class="r-tag" href={`/archives?tag=${encodeURIComponent(tag)}`} title={`${tag}（${count}）`}>
-                        <span class="r-tag-name">{tag}</span>
-                        <span class="r-tag-count">{count}</span>
+                        <span class="r-name">{tag}</span>
+                        <span class="r-count">{count}</span>
                     </a>
                 ))}
             </div>
@@ -72,9 +72,15 @@ const tags = Array.from(tagMap.entries()).sort((a, b) => {
                 font-size: var(--content-tag-font);
                 white-space: nowrap;
                 text-decoration: none;
+                transition: all @anim-duration ease;
+
+                &:active {
+                    background-color: @color-card-active;
+                    transform: scale(.9);
+                }
             }
 
-            .r-tag-count {
+            .r-count {
                 font-size: 12px;
                 color: @color-secondary;
             }
