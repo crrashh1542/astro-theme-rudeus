@@ -32,6 +32,7 @@ const { title, description } = Astro.props
                 <CardNav transition:name="main" />
                 <CardCategory transition:persist />
                 <CardTags transition:persist />
+                <br>
             </div>
 
             <!-- 右侧内容区 -->
@@ -85,7 +86,15 @@ const { title, description } = Astro.props
         gap: @layout-content-spacing;
         position: sticky;
         top: (64px + @layout-content-spacing);
-        align-self: flex-start;
+        max-height: calc(100vh - (64px + @layout-content-spacing));
+        overflow-y: hidden;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        &:hover {
+            overflow-y: auto;
+        }
     }
 
     .r-main-wrapper {
