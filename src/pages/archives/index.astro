@@ -45,7 +45,7 @@ const formatDate = (date: Date | string) => {
                         <h2 class="r-catalog">{year}</h2>
                         <div class="r-list">
                             {groups[year].map(post => (
-                                <div class="r-item" data-tags={post.data.tags.join(',')}>
+                                <div class="r-item" data-tags={post.data.tags.join(',')} data-category={post.data.category || ''}>
                                     <div class="r-date">
                                         {formatDate(post.data.pubDate)}
                                     </div>
@@ -66,7 +66,7 @@ const formatDate = (date: Date | string) => {
             }
         </div>
         <div class="r-empty r-hidden" id="archive-empty">
-            当前标签下暂无文章
+            当前筛选条件下暂无文章
         </div>
     </div>
 </MainLayout>

@@ -11,10 +11,12 @@ const applyArchiveTagFilter = () => {
     const years = Array.from(document.querySelectorAll<HTMLElement>('.r-year'))
     const count = document.querySelector<HTMLElement>('#archive-count')
     const empty = document.querySelector<HTMLElement>('#archive-empty')
+    const params = new URLSearchParams(window.location.search)
     // 从 URL 参数获取当前标签
-    const currentTag = new URLSearchParams(window.location.search).get('tag')?.trim().toLowerCase()
-    // 如果没有 tag 参数，显示全部
-    if (!currentTag) {
+    const currentTag = params.get('tag')?.trim().toLowerCase()
+    const currentCategory = params.get('category')?.trim().toLowerCase()
+    // 如果没有筛选参数，显示全部
+    if (!currentTag && !currentCategory) {
         items.forEach((i) => i.classList.remove('r-hidden'))
         years.forEach((y) => y.classList.remove('r-hidden'))
         if (count) count.textContent = String(items.length)
@@ -29,8 +31,11 @@ const applyArchiveTagFilter = () => {
             .split(',')
             .map((tag) => tag.trim().toLowerCase())
             .filter(Boolean)
+        const category = (item.getAttribute('data-category') || '').trim().toLowerCase()
 
-        const matched = tags.includes(currentTag)
+        const matchedTag = !currentTag || tags.includes(currentTag)
+        const matchedCategory = !currentCategory || category === currentCategory
+        const matched = matchedTag && matchedCategory
         item.classList.toggle('r-hidden', !matched)
         if (matched) visibleCount += 1
     }
