@@ -2,6 +2,7 @@
 title: 部署主题
 description: 如何使用并部署 Rudeus 主题？
 pubDate: 2026-01-05
+category: 基础使用
 tags: [主题, 部署, 教学]
 ---
 

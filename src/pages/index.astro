@@ -32,6 +32,7 @@ const navItems = getHomePageNavItems(1, totalPages)
                         description={description}
                         pubDate={post.data.pubDate}
                         url={`/archives/${post.id}.html`}
+                        category={post.data.category}
                         tags={post.data.tags}
                         readingTime={stats.minutes}
                         readingChars={stats.estimatedChars}

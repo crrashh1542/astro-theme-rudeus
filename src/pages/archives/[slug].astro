@@ -27,7 +27,7 @@ const prev = index > 0 ? ordered[index - 1] : null
 const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : null
 
 // 处理页头数据
-const { title, pubDate, tags, image } = post.data
+const { title, pubDate, category, tags, image } = post.data
 const description = post.data.description?.trim() ?? genDescription(post.body)
 const stats = analyzeReading(post.body)
 const url = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href
@@ -54,19 +54,29 @@ const formatDate = (date: Date) => {
                 {description && <div class="r-description">{description}</div>}
                 <div class="r-info">
                     <span>
+                        <!-- 发布日期 -->
                         <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
                         {formatDate(pubDate)}
                     </span>
                     <span>
+                        <!-- 阅读时间 -->
                         <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
                         {stats.minutes} 分钟
                     </span>
                     <span>
+                        <!-- 字数统计 -->
                         <Icon name="mdi:pencil-outline" width={20} height={20} />
                         {stats.estimatedChars} 字
                     </span>
+                    <span>
+                        <!-- 分类 -->
+                        <Icon name="mdi:archive-outline" width={20} height={20} />
+                        {category ? (
+                            <a href={`/archives?category=${encodeURIComponent(category)}`}>{category}</a>
+                        ) : '未分类'}
+                    </span>
                 </div>
-                {
+                { // 文章标签
                     tags && tags.length > 0 && (
                         <div class="r-tags">
                             {tags.map((tag) => (
@@ -131,6 +141,8 @@ const formatDate = (date: Date) => {
 
 <style lang="less">
     @import url('@/styles/variableConst.less');
+
+    // 注：由于 header 相关内容和普通页面通用，单独放在 resetCustom
 
     .r-tags {
         display: flex;
