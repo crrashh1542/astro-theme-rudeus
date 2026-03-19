@@ -20,6 +20,7 @@
     },
     "devDependencies": {
         "@iconify-json/mdi": "^1.2.3",
+        "@rollup/plugin-yaml": "^4.1.2",
         "astro-icon": "^1.1.5",
         "husky": "^9.1.7",
         "less": "^4.6.4",

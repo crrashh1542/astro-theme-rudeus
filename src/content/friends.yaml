@@ -1,0 +1,14 @@
+- name: 云萧的咕咕屋
+  description: Rudeus 主题作者的博客！
+  link: https://blog.crrashh.com
+  avatar: https://i.cdn.crrashh.com/avatar.jpg
+
+- name: GitHub
+  description: Rudeus 主题的源代码
+  link: https://github.com/crrashh1542/astro-theme-rudeus
+  avatar: https://i.cdn.crrashh.com/2026/0315/66855d41-1690-4e94-b0fd-654a1c160275.svg
+
+- name: 哔哩哔哩
+  description: Rudeus 主题作者的哔哩哔哩账号
+  link: https://space.bilibili.com/40683339
+  avatar: https://i.cdn.crrashh.com/2026/0315/03e3470c-9656-4579-9f00-f33b96565a84.svg

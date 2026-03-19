@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import sitemap from '@astrojs/sitemap'
 import icon from 'astro-icon'
 import { defineConfig } from 'astro/config'
+import yaml from '@rollup/plugin-yaml'
 import remarkDirective from 'remark-directive'
 
 import { remarkAdmonition, rehypeAdmonitionTitle } from './src/plugins/admonitions'
@@ -24,6 +25,7 @@ export default defineConfig({
         rehypePlugins: [rehypeAdmonitionTitle, links(site)],
     },
     vite: {
+        plugins: [yaml()],
         build: {
             assetsInlineLimit: 1024,
             rollupOptions: {
