@@ -7,6 +7,8 @@ import NotFound from '@/components/NotFound.astro'
 import MainLayout from '@/layouts/MainLayout.astro'
 import CardArticle from '@/components/CardArticle.astro'
 
+import { siteConfig } from '@/config'
+
 const posts = (await getCollection('archives')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
@@ -19,7 +21,7 @@ const items = posts.map((post) => {
 
 ---
 
-<MainLayout title="搜索 - 云萧的咕咕屋" description="搜索博客文章">
+<MainLayout title={'搜索 - ' + siteConfig.title} description="搜索博客文章">
     <div class="r-content r-index-content">
         <div class="r-result">
             搜索 “<span id="search-keyword"></span>”，共得到 <span id="search-count"></span> 条结果。

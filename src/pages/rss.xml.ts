@@ -2,14 +2,16 @@ import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
 import { genDescription } from '@/utils/genDescription'
 
+import { siteConfig } from '@/config'
+
 export async function GET(context: any) {
     const posts = (await getCollection('archives')).sort(
         (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
     )
 
     return rss({
-        title: '云萧的咕咕屋 - RSS',
-        description: '以万象之不息，致不息之万象',
+        title: siteConfig.title + ' - RSS',
+        description: siteConfig.description,
         site: context.site,
         items: posts.map((post) => {
             const description = post.data.description?.trim() ?? genDescription(post.body)

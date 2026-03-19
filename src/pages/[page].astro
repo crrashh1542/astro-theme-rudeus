@@ -17,6 +17,8 @@ import {
     getHomeTotalPages
 } from '@/utils/homePagination'
 
+import { siteConfig } from '@/config'
+
 // 处理一般页面
 export async function getStaticPaths() {
     const posts = (await getCollection('archives')).sort(
@@ -101,16 +103,14 @@ if (!isIndexPage && !frontmatter.title) {
     )
 }
 
-const description = isIndexPage
-    ? '首页 - Rudeus 是一个基于 Astro 的简洁博客主题'
-    : frontmatter.description || ''
+const description = isIndexPage ? '首页 - ' + siteConfig.title : frontmatter.description || ''
 const stats = isIndexPage ? null : analyzeReading(raw)
 const pageType = isIndexPage ? '' : (frontmatter.type ?? frontmatter.layout ?? '').toString()
 const image = isIndexPage ? '' : frontmatter.image ?? ''
 const pubDate = isIndexPage ? null : frontmatter.pubDate
 const pageTitle = isIndexPage
-    ? `首页 - Rudeus 主题文档 - 第 ${currentPage} 页`
-    : `${frontmatter.title} - Rudeus 主题文档`
+    ? `首页 - ${siteConfig.title} - 第 ${currentPage} 页`
+    : `${frontmatter.title} - ${siteConfig.title}`
 
 const pagePosts = isIndexPage ? getHomePageItems(listPosts, currentPage) : []
 const navItems = isIndexPage ? getHomePageNavItems(currentPage, totalPages) : []

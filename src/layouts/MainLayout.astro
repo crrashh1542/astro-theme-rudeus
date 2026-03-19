@@ -8,6 +8,8 @@ import CardNav from '@/components/CardNav.astro'
 import CardCategory from '@/components/CardCategory.astro'
 import CardTags from '@/components/CardTags.astro'
 
+import { siteConfig } from '@/config'
+
 interface Props {
     title: string
     description: string
@@ -21,8 +23,8 @@ const { title, description } = Astro.props
     <main class="r-container">
         <!-- banner -->
         <div class="r-banner" transition:persist>
-            <p class="r-title">Rudeus 主题文档</p>
-            <p class="r-subtitle">一个基于 Astro 的简洁博客主题</p>
+            <p class="r-title">{siteConfig.title}</p>
+            <p class="r-subtitle">{siteConfig.subtitle}</p>
         </div>
 
         <div class="r-main-wrapper">

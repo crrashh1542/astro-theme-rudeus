@@ -7,6 +7,8 @@ import Comment from '@/components/Comment.astro'
 import { analyzeReading } from '@/utils/readingStat'
 import { genDescription } from '@/utils/genDescription'
 
+import { siteConfig } from '@/config'
+
 export async function getStaticPaths() {
     const posts = await getCollection('archives')
     return posts.map((post) => ({
@@ -41,7 +43,7 @@ const formatDate = (date: Date) => {
 }
 ---
 
-<MainLayout title={title + ' - Rudeus 主题文档'} description={description}>
+<MainLayout title={`${title} - ${siteConfig.title}`} description={description}>
     <div class="r-content">
         <!-- 内容页头 -->
         <div class="r-header">

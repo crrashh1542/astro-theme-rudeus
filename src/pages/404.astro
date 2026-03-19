@@ -1,9 +1,11 @@
 ---
 import NotFound from "@/components/NotFound.astro"
 import MainLayout from "@/layouts/MainLayout.astro"
+
+import { siteConfig } from '@/config'
 ---
 
-<MainLayout title="404 - Rudeus 主题文档" description="页面不见了！">
+<MainLayout title={'404 - ' + siteConfig.title} description="页面不见了！">
     <div class="r-content">
         <NotFound />
     </div>

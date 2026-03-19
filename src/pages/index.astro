@@ -12,6 +12,8 @@ import MainLayout from '@/layouts/MainLayout.astro'
 import CardArticle from '@/components/CardArticle.astro'
 import HomePageNav from '@/components/HomePageNav.astro'
 
+import { siteConfig } from '@/config'
+
 const posts = (await getCollection('archives')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
@@ -20,7 +22,7 @@ const pagePosts = getHomePageItems(posts, 1)
 const navItems = getHomePageNavItems(1, totalPages)
 ---
 
-<MainLayout title="首页 - Rudeus 主题文档" description="首页 - Rudeus 是一个基于 Astro 的简洁博客主题">
+<MainLayout title={'首页 - ' + siteConfig.title} description={siteConfig.description}>
     <div class="r-content r-index-content">
         {
             pagePosts.map((post) => {
