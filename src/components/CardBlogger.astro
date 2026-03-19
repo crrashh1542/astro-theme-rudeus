@@ -1,18 +1,18 @@
 ---
-import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
-import avatar from '@/assets/avatar.jpg'
 
 const articles = await getCollection('archives')
 const articleTotal = articles.length
 const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
 const categoryTotal = new Set(articles.map((item) => item.data.category).filter(Boolean)).size
+
+import { profileConfig } from '@/config'
 ---
 
 <div class="r-card">
-    <Image src={avatar} alt="博主头像" />
-    <div class="r-title">云萧是个咕咕怪</div>
-    <div class="r-description">大一狗，在前端路上奋斗的废物一个</div>
+    <img src={profileConfig.avatar} alt="博主头像" />
+    <div class="r-title">{profileConfig.name}</div>
+    <div class="r-description">{profileConfig.description}</div>
     <div class="r-stats">
         <a class="r-stat-item" href="/archives">
             <div class="r-stat-value">{articleTotal}</div>

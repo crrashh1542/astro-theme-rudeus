@@ -1,14 +1,13 @@
 ---
 import { version } from '../../package.json'
+
+import { footerConfig } from '@/config'
 ---
 
 <footer>
     <div class="r-container">
-        <p>&copy; 2025-2026 crrashh1542.</p>
-        <p>
-            <a href="https://beian.miit.gov.cn" target="_blank">蜀ICP备2022029657号-2</a> |
-            <a href="https://icp.gov.moe/?keyword=20220551">萌ICP备20220551号</a>
-        </p>
+        <p>{footerConfig.copyright}</p>
+        <p set:html={footerConfig.message}></p>
         <p>
             Powered by Astro &
             <a href="https://github.com/crrashh1542/astro-theme-rudeus" target="_blank" class="theme">
@@ -18,29 +17,29 @@ import { version } from '../../package.json'
     </div>
 </footer>
 
-<style lang="less">
-    @import url('@/styles/variableConst.less');
-    footer {
-        margin-top: auto;
-        padding: 1rem 0;
-        text-align: center;
-        font-size: var(--footer-font);
-        background-color: #fff;
+<style lang="less" is:global>
+@import url('@/styles/variableConst.less');
 
-        .theme {
-            color: @color-theme-dark;
-        }
+footer {
+    margin-top: auto;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: var(--footer-font);
+    background-color: #fff;
 
-        p {
-            margin: 0;
-            line-height: 2;
-        }
-
-        a {
-            color: @color-text;
-        }
-        a::before {
-            visibility: hidden;
-        }
+    .theme {
+        color: @color-theme-dark;
     }
+    p {
+        margin: 0;
+        line-height: 2;
+    }
+
+    a {
+        color: @color-text;
+    }
+    a::before {
+        visibility: hidden !important;
+    }
+}
 </style>

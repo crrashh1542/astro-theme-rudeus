@@ -95,19 +95,19 @@ const formatDate = (date: Date) => {
             <Content />
 
             <!-- 协议声明 -->
-            <div class="r-license">
-                <p class="r-title"><b>{title}</b></p>
-                <p class="r-url">
-                    <a href={url}>{url}</a>
-                </p>
-                <p>
-                    除特殊声明转载之外，本文由博主云萧原创且非 AI 生成内容，依据
-                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
-                        CC BY-NC-SA 4.0
-                    </a>
-                    许可协议授权，若需转载请注明出处及本声明。
-                </p>
-            </div>
+            { siteConfig.license.enabled && (
+                <div class="r-license">
+                    <div class="r-title"><b>{title}</b></div>
+                    <p class="r-url">
+                        <a href={url}>{url}</a>
+                    </p>
+                    <p>
+                        {siteConfig.license.prompt.split('[license]')[0]}
+                        <a class="r-url" href={siteConfig.license.url} target="_blank">{siteConfig.license.name}</a>
+                        {siteConfig.license.prompt.split('[license]')[1]}
+                    </p>
+                </div>
+            )}
         </div>
 
         
@@ -160,6 +160,12 @@ const formatDate = (date: Date) => {
             border-radius: 4px;
             font-size: var(--content-tag-font);
             text-decoration: none;
+            transition: all @anim-duration ease;
+
+            &:active {
+                background-color: @color-card-active;
+                transform: scale(.9);
+            }
         }
     }
 
