@@ -6,20 +6,14 @@
 </div>
 
 <script is:inline>
-    const initArtalk = () => {
-        const commentEl = document.querySelector('.r-comment')
-        if (!commentEl) return
-        Artalk.init({
-            el: '.r-comment',
-            server: 'https://p0-artalk.api.crrashh.com',
-            site: 'Rudeus 文档'
-        })
+    const initComment = () => {
+        // 评论系统初始化
     }
-    initArtalk()
+    initComment()
 
     // 注：Astro 视图切换后需重新初始化
-    document.addEventListener('astro:page-load', initArtalk)
-    document.addEventListener('astro:after-swap', initArtalk)
+    document.addEventListener('astro:page-load', initComment)
+    document.addEventListener('astro:after-swap', initComment)
 </script>
 
 <style lang="less">
