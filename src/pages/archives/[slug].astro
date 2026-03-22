@@ -55,38 +55,47 @@ const formatDate = (date: Date) => {
                 <div class="r-title">{title}</div>
                 {description && <div class="r-description">{description}</div>}
                 <div class="r-info">
-                    <span>
+                    <span class="r-item">
                         <!-- 发布日期 -->
                         <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
                         {formatDate(pubDate)}
                     </span>
-                    <span>
+                    <span class="r-item">
                         <!-- 阅读时间 -->
                         <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
                         {stats.minutes} 分钟
                     </span>
-                    <span>
+                    <span class="r-item">
                         <!-- 字数统计 -->
                         <Icon name="mdi:pencil-outline" width={20} height={20} />
                         {stats.estimatedChars} 字
                     </span>
-                    <span>
-                        <!-- 分类 -->
+                    <span class="r-not-mob r-item">
+                        <!-- 分类 PC -->
                         <Icon name="mdi:archive-outline" width={20} height={20} />
                         {category ? (
-                            <a href={`/archives?category=${encodeURIComponent(category)}`}>{category}</a>
+                            <a class="r-category" href={`/archives?category=${encodeURIComponent(category)}`}>{category}</a>
                         ) : '未分类'}
                     </span>
                 </div>
-                { // 文章标签
-                    tags && tags.length > 0 && (
-                        <div class="r-tags">
-                            {tags.map((tag) => (
-                                <a class="r-tag" href={`/archives?tag=${encodeURIComponent(tag)}`}>#{tag}</a>
+
+                <div class="r-tag-wrapper">
+                    <!-- 分类 移动端 -->
+                    <span class="r-not-pc r-item">
+                        <Icon name="mdi:archive-outline" width={20} height={20} />
+                        {category ? (
+                            <a class="r-category" href={`/archives?category=${encodeURIComponent(category)}`}>{category}</a>
+                        ) : '未分类'}
+                    </span>
+                    <!-- 标签 -->
+                    {tags && tags.length > 0 && (
+                        <span class="r-tags">
+                            {tags.map((i: string) => (
+                                <a class="r-tag" href={`/archives?tag=${encodeURIComponent(i)}`}>#{i}</a>
                             ))}
-                        </div>
-                    )
-                }
+                        </span>
+                    )}
+                </div>
             </div>
         </div>
 
@@ -104,7 +113,7 @@ const formatDate = (date: Date) => {
                     <p>
                         {siteConfig.license.prompt.split('[license]')[0]}
                         <a class="r-url" href={siteConfig.license.url} target="_blank">{siteConfig.license.name}</a>
-                        {siteConfig.license.prompt.split('[license]')[1]}
+                        {siteConfig.license.prompt.split('[license]')[1] || ''}
                     </p>
                 </div>
             )}
@@ -146,11 +155,18 @@ const formatDate = (date: Date) => {
 
     // 注：由于 header 相关内容和普通页面通用，单独放在 resetCustom
 
-    .r-tags {
+    .r-tag-wrapper {
         display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        margin-top: 12px;
+        margin-top: var(--content-tag-margin);
+
+        .r-category {
+            font-size: var(--content-info-font);
+        }
+
+        .r-tags {
+            display: flex;
+            gap: 6px
+        }
 
         .r-tag {
             display: inline-flex;
@@ -223,5 +239,14 @@ const formatDate = (date: Date) => {
             line-height: 1.6;
         }
         
+    }
+
+    // 适应移动端，将分类搬到标签处一起，开单独的一行
+    @media screen and (max-width: @layout-mobile-breakpoint) {
+        .r-tag-wrapper {
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
     }
 </style>

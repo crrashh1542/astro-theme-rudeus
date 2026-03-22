@@ -46,8 +46,8 @@ const formatDate = (date: Date) => {
                     <Icon name="mdi:pencil-outline" />
                     {readingChars} 字
                 </span>
-                <span>
-                    <!-- 分类 -->
+                <span class="r-not-mob">
+                    <!-- 分类 PC -->
                     <Icon name="mdi:archive-outline" />
                     {category ? (
                         <span
@@ -59,20 +59,32 @@ const formatDate = (date: Date) => {
                     ) : '未分类'}
                 </span>
             </div>
-            {
-                tags.length > 0 && (
-                    <div class="r-tags">
-                        {tags.map((tag: string) => (
-                            <span
-                                class="r-tag"
-                                onclick={`event.preventDefault();event.stopPropagation();window.location.href='/archives?tag=${encodeURIComponent(tag)}'`}
-                            >
-                                #{tag}
-                            </span>
-                        ))}
-                    </div>
-                )
-            }
+            
+            <div class="r-tag-wrapper">
+                <!-- 分类 移动端 -->
+                <span class="r-not-pc">
+                    <Icon name="mdi:archive-outline" />
+                    {category ? (
+                        <span
+                            class="r-category"
+                            onclick={`event.preventDefault();event.stopPropagation();window.location.href='/archives?category=${encodeURIComponent(category)}'`}
+                        >
+                            {category}
+                        </span>
+                    ) : '未分类'}
+                </span>
+                <!-- 标签 -->
+                <span class="r-tags">
+                    { tags && tags.length > 0 && tags.map((i: string) => (
+                        <span
+                            class="r-tag"
+                            onclick={`event.preventDefault();event.stopPropagation();window.location.href='/archives?tag=${encodeURIComponent(i)}'`}
+                        >
+                            #{i}
+                        </span>
+                    ))}
+                </span>
+            </div>
         </div>
     </div>
 </a>
@@ -180,17 +192,16 @@ const formatDate = (date: Date) => {
                 width: var(--index-card-icon-size);
                 height: var(--index-card-icon-size);
             }
-            .r-category {
-                color: @color-theme-dark;
-                border-bottom: 1px dotted @color-border;
-            }
         }
         // 文章标签
-        .r-tags {
+        .r-tag-wrapper {
             display: flex;
             z-index: 1;
-            gap: var(--index-card-tag-gap);
-            flex-wrap: wrap;
+            justify-content: space-between;
+            .r-tags {
+                display: flex;
+                gap: var(--index-card-tag-gap);
+            }
 
             .r-tag {
                 background-color: @color-theme-light;
@@ -198,6 +209,18 @@ const formatDate = (date: Date) => {
                 padding: 3px 9px;
                 border-radius: 4px;
                 font-size: var(--content-tag-font);
+            }
+        }
+    }
+
+    // 适应移动端，将分类搬到标签处一起，开单独的一行
+    @media screen and (max-width: @layout-mobile-breakpoint) {
+        .r-footer {
+            flex-direction: column;
+            align-items: start;
+            .r-tag-wrapper {
+                width: 100%;
+                align-items: center;
             }
         }
     }

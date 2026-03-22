@@ -28,10 +28,10 @@ main.r-container {
     padding: 4px;
     cursor: pointer;
 }
+
+// 屏幕右侧主内容区
 .r-content {
-    // 屏幕右侧主内容区
     width: 100%;
-    // min-width: 700px;
     min-height: 50vh;
     background-color: @color-content-bg;
     border-radius: @layout-content-border-radius;
@@ -45,6 +45,12 @@ main.r-container {
         display: flex;
         flex-direction: column;
         gap: @layout-content-spacing;
+    }
+
+    // 分类链接
+    .r-category {
+        color: @color-theme-dark;
+        border-bottom: 1px dotted @color-border;
     }
 
     .r-header {
@@ -71,6 +77,10 @@ main.r-container {
             color: @color-secondary;
             margin: 4px 0 10px;
         }
+        svg {
+            // 所有图标
+            color: @color-secondary;
+        }
         .r-info {
             // 小标题下面的信息栏
             display: flex;
@@ -79,17 +89,12 @@ main.r-container {
             gap: var(--content-info-gap);
             margin-top: 6px;
             color: @color-secondary;
-
-            span {
-                display: flex;
-                align-items: center;
-                gap: 4px;
-            }
-
-            a {
-                color: @color-theme-dark;
-                border-bottom: 1px dotted @color-border;
-            }
+        }
+        .r-item {
+            // 信息栏中的每一项
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
     }
     // 如果页头有封面图
