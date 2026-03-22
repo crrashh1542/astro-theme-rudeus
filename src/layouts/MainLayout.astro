@@ -87,8 +87,8 @@ const { title, description } = Astro.props
         flex-direction: column;
         gap: @layout-content-spacing;
         position: sticky;
-        top: (64px + @layout-content-spacing);
-        max-height: calc(100vh - (64px + @layout-content-spacing));
+        top: (72px + @layout-content-spacing);
+        max-height: var(--layout-sidebar-max-height);
         overflow-y: hidden;
         scrollbar-width: none;
         &::-webkit-scrollbar {
