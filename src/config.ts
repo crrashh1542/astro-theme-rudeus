@@ -12,6 +12,7 @@ export const siteConfig = {
         prompt: '除特殊声明转载之外，本文由博主云萧原创且非 AI 生成内容，依据 [license] 许可协议授权，若需转载请注明出处及本声明。',
         // 显示在页面的版权提示语，可使用 [license] 占位符来插入协议链接
     },
+    isWithExt: false, // 是否在链接中保留 .html 后缀，true => /xxx.html, false => /xxx
 }
 
 // 导航栏链接配置

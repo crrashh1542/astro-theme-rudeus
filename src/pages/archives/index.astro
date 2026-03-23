@@ -51,7 +51,7 @@ const formatDate = (date: Date | string) => {
                                     <div class="r-date">
                                         {formatDate(post.data.pubDate)}
                                     </div>
-                                    <a class="r-article" href={`/archives/${post.id}.html`}>
+                                    <a class="r-article" href={`/archives/${post.id + (siteConfig.isWithExt ? '.html' : '')}`}>
                                         <span>{post.data.title}</span>
                                         <span class="r-grow r-not-mob"></span>
                                         <span class="r-tags r-not-mob">

@@ -19,7 +19,7 @@ export async function GET(context: any) {
                 title: post.data.title,
                 description,
                 pubDate: post.data.pubDate,
-                link: `/archives/${post.id}.html`,
+                link: `/archives/${post.id + (siteConfig.isWithExt ? '.html' : '')}`,
             }
         }),
     })

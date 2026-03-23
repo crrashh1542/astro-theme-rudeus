@@ -6,6 +6,8 @@ import { defineConfig } from 'astro/config'
 import yaml from '@rollup/plugin-yaml'
 import remarkDirective from 'remark-directive'
 
+import { siteConfig } from './src/config'
+
 import { remarkAdmonition, rehypeAdmonitionTitle } from './src/plugins/admonitions'
 import links from './src/plugins/links'
 
@@ -16,7 +18,7 @@ export default defineConfig({
     site,
     trailingSlash: 'never',
     build: {
-        format: 'file',
+        format: siteConfig.isWithExt ? 'file' : 'directory',
         assets: '_rudeus',
     },
     integrations: [icon(), sitemap()],

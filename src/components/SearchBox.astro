@@ -101,6 +101,8 @@ import { Icon } from 'astro-icon/components'
 </style>
 
 <script>
+    import { siteConfig } from '@/config'
+
     let searchWrap: HTMLElement | null = null
     let searchBtn: HTMLElement | null = null
     let searchInput: HTMLInputElement | null = null
@@ -169,7 +171,7 @@ import { Icon } from 'astro-icon/components'
         const query = (event.target as HTMLInputElement | null)?.value?.trim() ?? ''
         if (!query) return
         if (!window.location.pathname.startsWith('/search')) {
-            window.location.href = `/search?q=${encodeURIComponent(query)}`
+            window.location.href = `/search${siteConfig.isWithExt ? '.html' : ''}?q=${encodeURIComponent(query)}`
         }
     }
 

@@ -74,7 +74,7 @@ const formatDate = (date: Date) => {
                         <!-- 分类 PC -->
                         <Icon name="mdi:archive-outline" width={20} height={20} />
                         {category ? (
-                            <a class="r-category" href={`/archives?category=${encodeURIComponent(category)}`}>{category}</a>
+                            <a class="r-category" href={`/archives${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(category)}`}>{category}</a>
                         ) : '未分类'}
                     </span>
                 </div>
@@ -84,14 +84,14 @@ const formatDate = (date: Date) => {
                     <span class="r-not-pc r-item">
                         <Icon name="mdi:archive-outline" width={20} height={20} />
                         {category ? (
-                            <a class="r-category" href={`/archives?category=${encodeURIComponent(category)}`}>{category}</a>
+                            <a class="r-category" href={`/archives${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(category)}`}>{category}</a>
                         ) : '未分类'}
                     </span>
                     <!-- 标签 -->
                     {tags && tags.length > 0 && (
                         <span class="r-tags">
                             {tags.map((i: string) => (
-                                <a class="r-tag" href={`/archives?tag=${encodeURIComponent(i)}`}>#{i}</a>
+                                <a class="r-tag" href={`/archives${siteConfig.isWithExt ? '.html' : ''}?tag=${encodeURIComponent(i)}`}>#{i}</a>
                             ))}
                         </span>
                     )}
@@ -125,7 +125,7 @@ const formatDate = (date: Date) => {
     <div class="r-nav">
         {
             prev && (
-                <a class="r-nav-item prev" href={`/archives/${prev.id}.html`}>
+                <a class="r-nav-item prev" href={`/archives/${prev.id + (siteConfig.isWithExt ? '.html' : '')}`}>
                     <Icon name="mdi:arrow-left" width={28} height={28} class="r-icon" />
                     <div>
                         <div class="label r-not-mob">上一篇</div>
@@ -136,7 +136,7 @@ const formatDate = (date: Date) => {
         }
         {
             next && (
-                <a class="r-nav-item next" href={`/archives/${next.id}.html`}>
+                <a class="r-nav-item next" href={`/archives/${next.id + (siteConfig.isWithExt ? '.html' : '')}`}>
                     <div>
                         <div class="label r-not-mob">下一篇</div>
                         <div class="text">{next.data.title}</div>
