@@ -13,6 +13,17 @@ export const siteConfig = {
         // 显示在页面的版权提示语，可使用 [license] 占位符来插入协议链接
     },
     isWithExt: false, // 是否在链接中保留 .html 后缀，true => /xxx.html, false => /xxx
+    background: {
+        enabled: false, // 是否启用背景图
+        url: {
+            // 背景图路径
+            light: 'https://i.cdn.crrashh.com/bg.jpg',
+            dark: 'https://i.cdn.crrashh.com/bg-dark.jpg',
+            // 如果头像在外部链接，直接填写 URL
+            // 如果在项目内，填写以 /public 为 base 的相对链接
+        },
+        opacity: 0.25, // 背景图不透明度
+    },
 }
 
 // 导航栏链接配置
@@ -25,9 +36,7 @@ export const navConfig = [
 // 个人信息配置
 export const profileConfig = {
     name: '云萧是个咕咕怪', // 昵称
-    avatar: '/avatar.jpg', // 头像路径
-    // 如果头像在外部链接，直接填写 URL
-    // 如果在项目内，填写以 /public 为 base 的相对链接
+    avatar: '/avatar.jpg', // 头像路径，规则同 background.url
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', // 简介
 }
 

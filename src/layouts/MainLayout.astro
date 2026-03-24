@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro'
 
+import Background from '@/components/Background.astro'
 import Header from '@/components/Header.astro'
 import Footer from '@/components/Footer.astro'
 import CardBlogger from '@/components/CardBlogger.astro'
@@ -19,6 +20,10 @@ const { title, description } = Astro.props
 ---
 
 <BaseLayout title={title} description={description}>
+    {siteConfig.background.enabled && (
+        <Background />
+    )}
+
     <Header transition:persist />
     <main class="r-container">
         <!-- banner -->
