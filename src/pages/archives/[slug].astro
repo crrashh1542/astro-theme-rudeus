@@ -111,9 +111,9 @@ const formatDate = (date: Date) => {
                         <a href={url}>{url}</a>
                     </p>
                     <p>
-                        {siteConfig.license.prompt.split('[license]')[0]}
+                        {(siteConfig.license.prompt ?? '').split('[license]')[0]}
                         <a class="r-url" href={siteConfig.license.url} target="_blank">{siteConfig.license.name}</a>
-                        {siteConfig.license.prompt.split('[license]')[1] || ''}
+                        {(siteConfig.license.prompt ?? '').split('[license]')[1] || ''}
                     </p>
                 </div>
             )}

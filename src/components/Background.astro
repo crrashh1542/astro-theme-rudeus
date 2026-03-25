@@ -1,11 +1,13 @@
 ---
 import { siteConfig } from '@/config'
 
-let bgLight, bgDark, bgOpacity
-if (siteConfig.background.enabled) {
-    bgLight = `url("${siteConfig.background.url.light}")`
-    bgDark = `url("${siteConfig.background.url.dark}")`
-    bgOpacity = siteConfig.background.opacity
+const { background } = siteConfig
+let [bgLight, bgDark, bgOpacity]: [string, string, number] = ['', '', 0]
+
+if (background.enabled && background.url && background.opacity !== undefined) {
+    bgLight = `url("${background.url.light}")`
+    bgDark = `url("${background.url.dark}")`
+    bgOpacity = background.opacity
 }
 ---
 

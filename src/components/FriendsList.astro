@@ -1,5 +1,8 @@
 ---
-import friends from '@/content/friends.yaml'
+import type { FriendLink } from '@/types/friendsList'
+import friendsData from '@/content/friends.yaml'
+
+const friends = friendsData as FriendLink
 ---
 
 <div class="r-grid">

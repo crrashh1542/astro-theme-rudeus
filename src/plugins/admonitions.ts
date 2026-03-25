@@ -4,18 +4,7 @@
  */
 
 import { visit } from 'unist-util-visit'
-
-type Root = { type: 'root'; children: unknown[]; data?: Record<string, unknown> }
-type Paragraph = { type: 'paragraph'; children: unknown[]; data?: Record<string, unknown> }
-type Text = { type: 'text'; value: string }
-type ContainerDirective = {
-    type: 'containerDirective'
-    name?: string
-    children?: unknown[]
-    data?: Record<string, unknown>
-    label?: unknown
-    attributes?: Record<string, unknown>
-}
+import type { Root, Paragraph, TitleText, ContainerDirective } from '@/types/admonitions'
 
 const defaultTitles: Record<string, string> = {
     note: 'Note',
@@ -27,7 +16,7 @@ const defaultTitles: Record<string, string> = {
 const defaultTitleSet = new Set(Object.values(defaultTitles))
 
 const createTitleParagraph = (title: string): Paragraph => {
-    const text: Text = { type: 'text', value: title }
+    const text: TitleText = { type: 'text', value: title }
     return {
         type: 'paragraph',
         data: {
