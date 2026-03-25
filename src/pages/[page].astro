@@ -184,17 +184,17 @@ const navItems = isIndexPage ? getHomePageNavItems(currentPage, totalPages) : []
                 { description && <div class="r-description">{description}</div> }
                 <div class="r-info">
                     { pubDate && (
-                        <span>
+                        <span class="r-item">
                             <Icon name="mdi:calendar-blank-outline" width={20} height={20} />
                             {formatDate(pubDate)}
                         </span>
                     )
                     }
-                    <span>
+                    <span class="r-item">
                         <Icon name="mdi:clock-time-four-outline" width={20} height={20} />
                         {stats!.minutes} 分钟
                     </span>
-                    <span>
+                    <span class="r-item">
                         <Icon name="mdi:pencil-outline" width={20} height={20} />
                         {stats!.estimatedChars} 字
                     </span>
