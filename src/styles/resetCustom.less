@@ -32,7 +32,7 @@ main.r-container {
 // 屏幕右侧主内容区
 .r-content {
     width: 100%;
-    min-height: 50vh;
+    min-height: 55vh;
     background-color: @color-content-bg;
     border-radius: @layout-content-border-radius;
     padding: 8px var(--content-padding) @layout-content-padding;
@@ -45,6 +45,28 @@ main.r-container {
         display: flex;
         flex-direction: column;
         gap: @layout-content-spacing;
+    }
+
+    // 说说 content
+    &.r-zone-content {
+        position: relative;
+        padding-top: 2em;
+        .r-info {
+            position: absolute;
+            top: -1.5em;
+            left: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            border-radius: 8px;
+            color: @color-theme-dark;
+            background-color: @color-card-hover;
+        }
+        .r-title {
+            font-size: calc(var(--content-title-font) * 0.75);
+            font-weight: 600;
+        }
     }
 
     // 分类链接

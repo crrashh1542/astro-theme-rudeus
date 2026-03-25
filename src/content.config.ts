@@ -19,4 +19,15 @@ const archives = defineCollection({
     }),
 })
 
-export const collections = { archives }
+const zone = defineCollection({
+    loader: glob({
+        pattern: '**/*.{md,mdx}',
+        base: './src/content/zone',
+    }),
+    schema: z.object({
+        title: z.string().optional(),
+        pubDate: z.coerce.date(),
+    }),
+})
+
+export const collections = { archives, zone }
