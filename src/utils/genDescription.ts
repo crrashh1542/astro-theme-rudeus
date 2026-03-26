@@ -7,14 +7,22 @@ export function genDescription(raw: string | undefined, maxLength = 80): string 
 
     // 干掉 frontmatter
     const prePlain = raw.replace(/^---[\s\S]*?---\s*/, '')
-    // 干掉 md 语法，合并空白字符
+    // 干掉 md 标记符号
     const plain = prePlain
-        .replace(/`{3}[\s\S]*?`{3}/g, ' ')
-        .replace(/`[^`]*`/g, ' ')
-        .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+        .replace(/```[^\n]*\n?([\s\S]*?)```/g, '$1')
+        .replace(/`([^`]*)`/g, '$1')
+        .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
         .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
         .replace(/<[^>]*>/g, ' ')
-        .replace(/[#>*_~\-]+/g, ' ')
+        .replace(/^\s{0,3}#{1,6}\s+/gm, '')
+        .replace(/^\s{0,3}>\s?/gm, '')
+        .replace(/^\s*[-+*]\s+/gm, '')
+        .replace(/^\s*\d+\.\s+/gm, '')
+        .replace(/^\s*([-*_])(?:\s*\1){2,}\s*$/gm, ' ')
+        .replace(/(\*\*|__)(.*?)\1/g, '$2')
+        .replace(/(\*|_)(.*?)\1/g, '$2')
+        .replace(/~~(.*?)~~/g, '$1')
+        .replace(/\\/g, '')
         .replace(/\s+/g, ' ')
         .trim()
 
