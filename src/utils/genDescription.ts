@@ -1,7 +1,11 @@
 // 此脚本用于在未提供 description 的 frontmatter 时，
-// 自动文章的提取前 80 字作为 description
+// 自动文章的提取前 90 字作为 description
 
-export function genDescription(raw: string | undefined, maxLength = 80): string {
+import { siteConfig } from '@/config'
+
+export function genDescription(raw: string | undefined): string {
+    const maxLength = siteConfig.articles.summaryLength || 90
+
     // 如果 undefined 直接返回 ''
     if (!raw) return ''
 

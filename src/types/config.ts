@@ -4,13 +4,18 @@ export type SiteConfig = {
     title: string
     subtitle: string
     description: string
+    url: string
+    isWithExt?: boolean
     license: {
         enabled: boolean
         name?: string
         url?: string
         prompt?: string
     }
-    isWithExt: boolean
+    articles: {
+        indexPerPage?: number
+        descriptionLength?: number
+    }
     background: {
         enabled: boolean
         url?: {

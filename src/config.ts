@@ -6,6 +6,9 @@ export const siteConfig: SiteConfig = {
     title: 'Rudeus 主题文档', // 站点标题
     subtitle: '一个基于 Astro 的简洁博客主题', // 站点副标题
     description: 'Rudeus 是一个基于 Astro 的简洁的博客主题', // SEO 站点描述
+    url: 'https://rudeus-docs.crrashh.com', // 站点 URL
+    isWithExt: false, // 是否在链接中保留 .html 后缀，true => /xxx.html, false => /xxx
+
     license: {
         enabled: true, // 是否启用版权声明
         name: 'CC BY-SA 4.0', // 版权类型
@@ -13,7 +16,12 @@ export const siteConfig: SiteConfig = {
         prompt: '除特殊声明转载之外，本文由博主云萧原创且非 AI 生成内容，依据 [license] 许可协议授权，若需转载请注明出处及本声明。',
         // 显示在页面的版权提示语，可使用 [license] 占位符来插入协议链接
     },
-    isWithExt: false, // 是否在链接中保留 .html 后缀，true => /xxx.html, false => /xxx
+
+    articles: {
+        indexPerPage: 8, // 首页每页显示文章/说说数量，默认为 8
+        descriptionLength: 90, // 文章自动生成简介的字数，默认为 90
+    },
+
     background: {
         enabled: false, // 是否启用背景图
         url: {

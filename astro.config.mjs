@@ -11,20 +11,18 @@ import { siteConfig } from './src/config'
 import { remarkAdmonition, rehypeAdmonitionTitle } from './src/plugins/admonitions'
 import links from './src/plugins/links'
 
-const site = 'https://rudeus-docs.crrashh.com'
-
 // https://astro.build/config
 export default defineConfig({
-    site,
+    site: siteConfig.url,
     trailingSlash: 'never',
     build: {
-        format: siteConfig.isWithExt ? 'file' : 'directory',
+        format: (siteConfig.isWithExt || false) ? 'file' : 'directory',
         assets: '_rudeus',
     },
     integrations: [icon(), sitemap()],
     markdown: {
         remarkPlugins: [remarkDirective, remarkAdmonition],
-        rehypePlugins: [rehypeAdmonitionTitle, links(site)],
+        rehypePlugins: [rehypeAdmonitionTitle, links(siteConfig.url)],
     },
     vite: {
         plugins: [yaml()],

@@ -4,8 +4,9 @@
  * @version 1.0
  */
 
+import { siteConfig } from '@/config'
 // 每页的文章数量
-const pageLimit = 8
+const pageLimit = siteConfig.articles.indexPerPage || 8
 
 interface NavPageItem {
     type: 'page'
