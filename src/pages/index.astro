@@ -21,11 +21,11 @@ const totalPages = getHomeTotalPages(homeFeed.length)
 const pageItems = getHomePageItems(homeFeed, 1)
 const pageCards = await Promise.all(
     pageItems.map(async (item) => {
-        if (item.type === 'archive') {
+        if (item.type === 'post') {
             const stats = analyzeReading(item.entry.body)
             const description = item.entry.data.description?.trim() ?? genDescription(item.entry.body)
             return {
-                type: 'archive' as const,
+                type: 'post' as const,
                 entry: item.entry,
                 stats,
                 description,
@@ -47,13 +47,13 @@ const navItems = getHomePageNavItems(1, totalPages)
     <div class="r-content r-index-content">
         {
             pageCards.map((card) => {
-                if (card.type === 'archive') {
+                if (card.type === 'post') {
                     return (
                         <CardArticle
                             title={card.entry.data.title}
                             description={card.description}
                             pubDate={card.entry.data.pubDate}
-                            url={`/archives/${card.entry.id + (siteConfig.isWithExt ? '.html' : '')}`}
+                            url={`/posts/${card.entry.id + (siteConfig.isWithExt ? '.html' : '')}`}
                             category={card.entry.data.category}
                             tags={card.entry.data.tags}
                             readingTime={card.stats.minutes}

@@ -9,7 +9,7 @@ import CardArticle from '@/components/CardArticle.astro'
 
 import { siteConfig } from '@/config'
 
-const posts = (await getCollection('archives')).sort(
+const posts = (await getCollection('posts')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
 
@@ -32,7 +32,7 @@ const items = posts.map((post) => {
                     title={post.data.title}
                     description={description}
                     pubDate={post.data.pubDate}
-                    url={`/archives/${post.id + (siteConfig.isWithExt ? '.html' : '')}`}
+                    url={`/posts/${post.id + (siteConfig.isWithExt ? '.html' : '')}`}
                     tags={post.data.tags}
                     readingTime={stats.minutes}
                     readingChars={stats.estimatedChars}

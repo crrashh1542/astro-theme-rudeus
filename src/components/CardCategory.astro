@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content'
 
 import { siteConfig } from '@/config'
 
-const articles = await getCollection('archives')
+const articles = await getCollection('posts')
 const categoryMap = new Map<string, number>()
 
 articles.forEach((article) => {
@@ -19,7 +19,7 @@ const categories = Array.from(categoryMap.entries()).map(([name, count]) => ({ n
             <div class="r-list">
                 {
                     categories.map(({ name, count }) => (
-                        <a class="r-item" href={`/archives${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(name)}`}>
+                        <a class="r-item" href={`/posts${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(name)}`}>
                             <span class="r-name">{name}</span>
                             <span class="r-count">{count}</span>
                         </a>

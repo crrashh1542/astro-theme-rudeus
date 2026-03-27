@@ -2,9 +2,9 @@
 
 import { getCollection, type CollectionEntry } from 'astro:content'
 
-export interface HomeArchiveItem {
-    type: 'archive'
-    entry: CollectionEntry<'archives'>
+export interface HomePostItem {
+    type: 'post'
+    entry: CollectionEntry<'posts'>
 }
 
 export interface HomeZoneItem {
@@ -12,13 +12,13 @@ export interface HomeZoneItem {
     entry: CollectionEntry<'zone'>
 }
 
-export type HomeFeedItem = HomeArchiveItem | HomeZoneItem
+export type HomeFeedItem = HomePostItem | HomeZoneItem
 
 export const getHomeFeed = async (): Promise<HomeFeedItem[]> => {
-    const [archives, zones] = await Promise.all([getCollection('archives'), getCollection('zone')])
+    const [posts, zones] = await Promise.all([getCollection('posts'), getCollection('zone')])
 
     return [
-        ...archives.map((entry) => ({ type: 'archive' as const, entry })),
+        ...posts.map((entry) => ({ type: 'post' as const, entry })),
         ...zones.map((entry) => ({ type: 'zone' as const, entry })),
     ].sort((a, b) => b.entry.data.pubDate.valueOf() - a.entry.data.pubDate.valueOf())
 }

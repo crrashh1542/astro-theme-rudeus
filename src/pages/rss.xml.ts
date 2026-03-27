@@ -5,7 +5,7 @@ import { genDescription } from '@/utils/genDescription'
 import { siteConfig } from '@/config'
 
 export async function GET(context: any) {
-    const posts = (await getCollection('archives')).sort(
+    const posts = (await getCollection('posts')).sort(
         (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
     )
 
@@ -19,7 +19,7 @@ export async function GET(context: any) {
                 title: post.data.title,
                 description,
                 pubDate: post.data.pubDate,
-                link: `/archives/${post.id + (siteConfig.isWithExt ? '.html' : '')}`,
+                link: `/posts/${post.id + (siteConfig.isWithExt ? '.html' : '')}`,
             }
         }),
     })

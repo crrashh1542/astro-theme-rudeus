@@ -53,7 +53,7 @@ const formatDate = (date: Date) => {
                     {category ? (
                         <span
                             class="r-category"
-                            onclick={`event.preventDefault();event.stopPropagation();window.location.href='/archives${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(category)}'`}
+                            onclick={`event.preventDefault();event.stopPropagation();window.location.href='/posts${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(category)}'`}
                         >
                             {category}
                         </span>
@@ -68,7 +68,7 @@ const formatDate = (date: Date) => {
                     {category ? (
                         <span
                             class="r-category"
-                            onclick={`event.preventDefault();event.stopPropagation();window.location.href='/archives${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(category)}'`}
+                            onclick={`event.preventDefault();event.stopPropagation();window.location.href='/posts${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(category)}'`}
                         >
                             {category}
                         </span>
@@ -79,7 +79,7 @@ const formatDate = (date: Date) => {
                     { tags && tags.length > 0 && tags.map((i: string) => (
                         <span
                             class="r-tag"
-                            onclick={`event.preventDefault();event.stopPropagation();window.location.href='/archives${siteConfig.isWithExt ? '.html' : ''}?tag=${encodeURIComponent(i)}'`}
+                            onclick={`event.preventDefault();event.stopPropagation();window.location.href='/posts${siteConfig.isWithExt ? '.html' : ''}?tag=${encodeURIComponent(i)}'`}
                         >
                             #{i}
                         </span>

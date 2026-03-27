@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 
-const articles = await getCollection('archives')
+const articles = await getCollection('posts')
 const articleTotal = articles.length
 const tagTotal = new Set(articles.flatMap((item) => item.data.tags ?? [])).size
 const categoryTotal = new Set(articles.map((item) => item.data.category).filter(Boolean)).size
@@ -14,7 +14,7 @@ import { profileConfig } from '@/config'
     <div class="r-title">{profileConfig.name}</div>
     <div class="r-description">{profileConfig.description}</div>
     <div class="r-stats">
-        <a class="r-stat-item" href="/archives">
+        <a class="r-stat-item" href="/posts">
             <div class="r-stat-value">{articleTotal}</div>
             <div class="r-stat-label">文章</div>
         </a>

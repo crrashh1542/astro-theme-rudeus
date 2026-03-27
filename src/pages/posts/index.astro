@@ -5,7 +5,7 @@ import MainLayout from '@/layouts/MainLayout.astro'
 import { siteConfig } from '@/config'
 
 // 读取博客集合，按时间倒序
-const posts = (await getCollection('archives')).sort(
+const posts = (await getCollection('posts')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )
 
@@ -36,7 +36,7 @@ const formatDate = (date: Date | string) => {
         <div class="r-header">
             <div class="r-header-wrapper">
                 <div class="r-title">归档</div>
-                <div class="r-subtitle">共 <span id="archive-count">{posts.length}</span> 篇文章</div>
+                <div class="r-subtitle">共 <span id="post-count">{posts.length}</span> 篇文章</div>
             </div>
         </div>
 
@@ -51,7 +51,7 @@ const formatDate = (date: Date | string) => {
                                     <div class="r-date">
                                         {formatDate(post.data.pubDate)}
                                     </div>
-                                    <a class="r-article" href={`/archives/${post.id + (siteConfig.isWithExt ? '.html' : '')}`}>
+                                    <a class="r-article" href={`/posts/${post.id + (siteConfig.isWithExt ? '.html' : '')}`}>
                                         <span>{post.data.title}</span>
                                         <span class="r-grow r-not-mob"></span>
                                         <span class="r-tags r-not-mob">
@@ -67,7 +67,7 @@ const formatDate = (date: Date | string) => {
                 ))
             }
         </div>
-        <div class="r-empty r-hidden" id="archive-empty">
+        <div class="r-empty r-hidden" id="post-empty">
             当前筛选条件下暂无文章
         </div>
     </div>

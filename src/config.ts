@@ -39,7 +39,7 @@ export const siteConfig: SiteConfig = {
 export const navConfig: NavConfig = [
     { name: '友情链接', url: '/friends' },
     { name: '关于', url: '/about' },
-    { name: '归档', url: '/archives' },
+    { name: '归档', url: '/posts' },
 ]
 
 // 个人信息配置
