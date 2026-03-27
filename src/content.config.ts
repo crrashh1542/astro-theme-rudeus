@@ -16,6 +16,12 @@ const posts = defineCollection({
         author: z.string().default('博主'),
         tags: z.array(z.string()).default([]),
         image: z.string().optional(),
+        alias: z
+            .preprocess((value) => {
+                if (value == null) return []
+                return Array.isArray(value) ? value : [value]
+            }, z.array(z.string()))
+            .optional(),
     }),
 })
 

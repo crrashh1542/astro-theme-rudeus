@@ -7,11 +7,11 @@ import { visit } from 'unist-util-visit'
 import type { Root, Paragraph, TitleText, ContainerDirective } from '@/types/admonitions'
 
 const defaultTitles: Record<string, string> = {
-    note: 'Note',
-    tip: 'Tip',
-    important: 'Important',
-    warning: 'Warning',
-    caution: 'Caution',
+    note: '提醒',
+    tip: '提示',
+    important: '重要',
+    warning: '注意',
+    caution: '警告',
 }
 const defaultTitleSet = new Set(Object.values(defaultTitles))
 
