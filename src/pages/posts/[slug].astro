@@ -30,7 +30,8 @@ const next = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : nul
 
 // 处理页头数据
 const { title, pubDate, category, tags, image } = post.data
-const description = post.data.description?.trim() ?? genDescription(post.body)
+const rawDescription = post.data.description?.trim()
+const description = rawDescription ?? genDescription(post.body)
 const stats = analyzeReading(post.body)
 const url = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.href
 
@@ -53,7 +54,7 @@ const formatDate = (date: Date) => {
             <!-- 页头内容 -->
             <div class="r-header-wrapper">
                 <div class="r-title">{title}</div>
-                {description && <div class="r-description">{description}</div>}
+                {rawDescription && <div class="r-description">{description}</div>}
                 <div class="r-info">
                     <span class="r-item">
                         <!-- 发布日期 -->
@@ -72,7 +73,7 @@ const formatDate = (date: Date) => {
                     </span>
                     <span class="r-not-mob r-item">
                         <!-- 分类 PC -->
-                        <Icon name="mdi:post-outline" width={20} height={20} />
+                        <Icon name="mdi:archive-outline" width={20} height={20} />
                         {category ? (
                             <a class="r-category" href={`/posts${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(category)}`}>{category}</a>
                         ) : '未分类'}
@@ -82,7 +83,7 @@ const formatDate = (date: Date) => {
                 <div class="r-tag-wrapper">
                     <!-- 分类 移动端 -->
                     <span class="r-not-pc r-item">
-                        <Icon name="mdi:post-outline" width={20} height={20} />
+                        <Icon name="mdi:archive-outline" width={20} height={20} />
                         {category ? (
                             <a class="r-category" href={`/posts${siteConfig.isWithExt ? '.html' : ''}?category=${encodeURIComponent(category)}`}>{category}</a>
                         ) : '未分类'}
