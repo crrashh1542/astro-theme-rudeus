@@ -124,6 +124,9 @@ const formatDate = (date: Date) => {
         }
 
         &:has(.r-cover) {
+            .r-description {
+                width: 75%;
+            }
             .r-catalog {
                 margin-top: var(--index-card-cover-catalog-space);
             }
@@ -154,6 +157,8 @@ const formatDate = (date: Date) => {
         display: flex;
         align-items: center;
         font-weight: 600;
+        line-height: 1.3;
+        margin-bottom: 8px;
         font-size: var(--index-card-catalog-font);
         transition: all @anim-duration ease;
 
@@ -167,12 +172,14 @@ const formatDate = (date: Date) => {
     // 描述
     .r-description {
         margin: var(--index-card-description-margin);
+        width: 90%;
     }
 
     .r-footer {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        margin-top: .5em;
         align-items: center;
         flex-wrap: wrap;
         gap: var(--index-card-footer-spacing);
@@ -216,6 +223,9 @@ const formatDate = (date: Date) => {
 
     // 适应移动端，将分类搬到标签处一起，开单独的一行
     @media screen and (max-width: @layout-mobile-breakpoint) {
+        .r-description {
+            width: 100% !important;
+        }
         .r-footer {
             flex-direction: column;
             align-items: start;

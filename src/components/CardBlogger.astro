@@ -42,13 +42,13 @@ import { profileConfig } from '@/config'
         padding: (@layout-content-padding / 1.4);
 
         img {
-            width: 96px;
-            height: 96px;
+            width: var(--side-blogger-avatar-size);
+            height: var(--side-blogger-avatar-size);
             border-radius: 50%;
         }
 
         .r-title {
-            margin: 12px 0;
+            margin: var(--side-blogger-margin) 0 calc(var(--side-blogger-margin) * 0.6);
             font-size: 20px;
             font-weight: 600;
         }
@@ -64,8 +64,7 @@ import { profileConfig } from '@/config'
             justify-content: center;
             flex-direction: row;
             width: 100%;
-            font-size: 14px;
-            margin-top: 14px;
+            margin-top: var(--side-blogger-margin);
         }
 
         .r-stat-item {
@@ -73,6 +72,7 @@ import { profileConfig } from '@/config'
             flex-direction: column;
             align-items: center;
             min-width: 60px;
+            font-size: var(--side-blogger-stat-font);
             transition: all @anim-duration ease;
         }
         a.r-stat-item:hover {
@@ -80,7 +80,7 @@ import { profileConfig } from '@/config'
         }
 
         .r-stat-value {
-            font-size: 18px;
+            font-size: calc(var(--side-blogger-stat-font) * 1.25);
             font-weight: 600;
         }
     }
