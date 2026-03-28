@@ -152,6 +152,7 @@ const navItems = isIndexPage ? getHomePageNavItems(currentPage, totalPages) : []
                                     description={card.description}
                                     pubDate={card.entry.data.pubDate}
                                     url={`/posts/${card.entry.id + (siteConfig.isWithExt ? '.html' : '')}`}
+                                    category={card.entry.data.category}
                                     tags={card.entry.data.tags}
                                     readingTime={card.stats.minutes}
                                     readingChars={card.stats.estimatedChars}
