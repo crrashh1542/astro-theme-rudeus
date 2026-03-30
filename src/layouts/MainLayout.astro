@@ -14,9 +14,10 @@ import { siteConfig } from '@/config'
 interface Props {
     title: string
     description: string
+    sideNavEnabled?: boolean
 }
 
-const { title, description } = Astro.props
+const { title, description, sideNavEnabled = false } = Astro.props
 ---
 
 <BaseLayout title={title} description={description}>
@@ -36,7 +37,7 @@ const { title, description } = Astro.props
             <!-- 左侧功能栏 -->
             <div class="r-sidebar">
                 <CardBlogger transition:persist />
-                <CardNav transition:name="main" />
+                {sideNavEnabled && <CardNav transition:name="main" />}
                 <CardCategory transition:persist />
                 <CardTags transition:persist />
                 <br>

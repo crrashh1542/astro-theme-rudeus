@@ -139,7 +139,7 @@ const navItems = isIndexPage ? getHomePageNavItems(currentPage, totalPages) : []
 
 ---
 
-<MainLayout title={pageTitle} description={description}>
+<MainLayout title={pageTitle} description={description} sideNavEnabled={isIndexPage}>
     {
         isIndexPage ? (
             <div class="r-content r-index-content">
