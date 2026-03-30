@@ -9,7 +9,7 @@ const title = '本页内容'
 
 <script>
     // 标题生成锚点的安全 ID
-    const slugify = (value: String) =>
+    const slugify = (value: string) =>
         value
             .toLowerCase()
             .trim()
@@ -18,7 +18,7 @@ const title = '本页内容'
             .replace(/-+/g, '-')
 
     // 确保同页锚点唯一
-    const ensureUniqueId = (baseId: any, used: any) => {
+    const ensureUniqueId = (baseId: string, used: Set<string>) => {
         let id = baseId || 'section'
         let index = 1
         while (used.has(id)) {
@@ -50,9 +50,25 @@ const title = '本页内容'
         list.innerHTML = ''
         container.classList.remove('r-empty')
 
-        // 逐条生成目录项
-        const usedIds = new Set()
-        const items: { id: string; element: HTMLElement; heading: HTMLElement }[] = []
+        // 逐条生成目录项并记录层级关系
+        const usedIds = new Set<string>()
+        type NavItem = {
+            id: string
+            level: number
+            parentId: string | null
+            element: HTMLAnchorElement
+            heading: HTMLElement
+        }
+        const items: NavItem[] = []
+        const levelStack: Record<number, string | null> = {
+            1: null,
+            2: null,
+            3: null,
+            4: null,
+            5: null,
+            6: null,
+        }
+
         contentRoot.querySelectorAll('h1, h2, h3').forEach((headingElement) => {
             const heading = headingElement as HTMLElement
             const text = heading.textContent?.trim() || ''
@@ -60,13 +76,20 @@ const title = '本页内容'
 
             const baseId = heading.id || slugify(text)
             heading.id = ensureUniqueId(baseId, usedIds)
+            const level = Number(heading.tagName.slice(1))
+            const parentId = level > 1 ? levelStack[level - 1] : null
+
+            levelStack[level] = heading.id
+            for (let depth = level + 1; depth <= 6; depth += 1) {
+                levelStack[depth] = null
+            }
 
             const link = document.createElement('a')
             link.href = `#${heading.id}`
             link.textContent = text
-            link.className = `r-item ${heading.tagName.toLowerCase()}`
+            link.className = `r-item h${level}`
             list.appendChild(link)
-            items.push({ id: heading.id, element: link, heading })
+            items.push({ id: heading.id, level, parentId, element: link, heading })
         })
 
         if (items.length === 0) {
@@ -74,8 +97,26 @@ const title = '本页内容'
             return
         }
 
+        const itemMap = new Map(items.map((item) => [item.id, item]))
+
+        const getActivePath = (activeId: string) => {
+            const path = new Set<string>()
+            let current = itemMap.get(activeId)
+
+            while (current) {
+                path.add(current.id)
+                current = current.parentId ? itemMap.get(current.parentId) : undefined
+            }
+
+            return path
+        }
+
         const setActive = (activeId: string) => {
-            items.forEach(({ id, element }) => {
+            const activePath = getActivePath(activeId)
+
+            items.forEach(({ id, level, parentId, element }) => {
+                const isVisible = level === 1 || (parentId ? activePath.has(parentId) : true)
+                element.classList.toggle('is-hidden', !isVisible)
                 element.classList.toggle('active', id === activeId)
             })
         }
@@ -173,8 +214,11 @@ const title = '本页内容'
             line-height: 1.6;
         }
     }
+</style>
 
-    :global(.r-page-nav .r-item) {
+<style lang="less" is:global>
+@import url('@/styles/variableConst.less');
+    .r-page-nav .r-item {
         display: block;
         position: relative;
         font-size: 15px;
@@ -182,23 +226,28 @@ const title = '本页内容'
         padding: 6px 0;
         border-radius: @layout-border-radius;
         transition: all (@anim-duration + 0.1s) ease;
-    }
-    :global(.r-page-nav .r-item:hover) {
-        background-color: @color-bg;
-        color: @color-theme-dark;
-    }
-    :global(.r-page-nav .r-item.active) {
-        background-color: @color-theme-light;
-        color: @color-theme-dark;
-        font-weight: 600;
-    }
-    :global(.r-page-nav .r-item.h1) {
-        padding-left: 10px;
-    }
-    :global(.r-page-nav .r-item.h2) {
-        padding-left: 16px;
-    }
-    :global(.r-page-nav .r-item.h3) {
-        padding-left: 22px;
+
+        &:hover {
+            background-color: @color-bg;
+            color: @color-theme-dark;
+        }
+
+        &.active {
+            // background-color: @color-theme-light;
+            color: @color-theme-dark;
+            font-weight: 600;
+        }
+        &.is-hidden {
+            display: none;
+        }
+        &.h1 {
+            padding-left: 10px;
+        }
+        &.h2 {
+            padding-left: 16px;
+        }
+        &.h3 {
+            padding-left: 22px;
+        }
     }
 </style>
