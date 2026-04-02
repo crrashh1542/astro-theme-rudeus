@@ -55,6 +55,7 @@ const title = '本页内容'
         type NavItem = {
             id: string
             level: number
+            depth: number
             parentId: string | null
             element: HTMLAnchorElement
             heading: HTMLElement
@@ -77,19 +78,32 @@ const title = '本页内容'
             const baseId = heading.id || slugify(text)
             heading.id = ensureUniqueId(baseId, usedIds)
             const level = Number(heading.tagName.slice(1))
-            const parentId = level > 1 ? levelStack[level - 1] : null
+            let parentId: string | null = null
+            for (let upperLevel = level - 1; upperLevel >= 1; upperLevel -= 1) {
+                if (levelStack[upperLevel]) {
+                    parentId = levelStack[upperLevel]
+                    break
+                }
+            }
 
             levelStack[level] = heading.id
             for (let depth = level + 1; depth <= 6; depth += 1) {
                 levelStack[depth] = null
             }
 
+            const parentDepth = parentId
+                ? items.find((item) => item.id === parentId)?.depth || 0
+                : 0
+            const navDepth = parentDepth + 1
+
             const link = document.createElement('a')
             link.href = `#${heading.id}`
             link.textContent = text
-            link.className = `r-item h${level}`
+            link.className = 'r-item'
+            link.style.setProperty('--toc-depth', String(navDepth))
+            link.style.setProperty('--toc-item-height', `${Math.ceil(heading.getBoundingClientRect().height) || 34}px`)
             list.appendChild(link)
-            items.push({ id: heading.id, level, parentId, element: link, heading })
+            items.push({ id: heading.id, level, depth: navDepth, parentId, element: link, heading })
         })
 
         if (items.length === 0) {
@@ -113,9 +127,10 @@ const title = '本页内容'
 
         const setActive = (activeId: string) => {
             const activePath = getActivePath(activeId)
+            const rootId = items[0]?.id
 
             items.forEach(({ id, level, parentId, element }) => {
-                const isVisible = level === 1 || (parentId ? activePath.has(parentId) : true)
+                const isVisible = id === rootId || (parentId ? activePath.has(parentId) : true)
                 element.classList.toggle('is-hidden', !isVisible)
                 element.classList.toggle('active', id === activeId)
             })
@@ -223,9 +238,17 @@ const title = '本页内容'
         position: relative;
         font-size: 15px;
         text-decoration: none;
-        padding: 6px 0;
+        padding: 6px 0 6px calc(12px + (var(--toc-depth, 1) - 1) * 10px);
+        max-height: calc(var(--toc-item-height, 34px) + 12px);
+        overflow: hidden;
+        opacity: 1;
         border-radius: @layout-border-radius;
-        transition: all (@anim-duration + 0.1s) ease;
+        transition:
+            max-height (@anim-duration + 0.1s) ease,
+            padding (@anim-duration + 0.1s) ease,
+            opacity (@anim-duration + 0.05s) ease,
+            background-color (@anim-duration + 0.1s) ease,
+            color (@anim-duration + 0.1s) ease;
 
         &:hover {
             background-color: @color-bg;
@@ -233,21 +256,16 @@ const title = '本页内容'
         }
 
         &.active {
-            // background-color: @color-theme-light;
+            background-color: @color-theme-light;
             color: @color-theme-dark;
             font-weight: 600;
         }
         &.is-hidden {
-            display: none;
-        }
-        &.h1 {
-            padding-left: 10px;
-        }
-        &.h2 {
-            padding-left: 16px;
-        }
-        &.h3 {
-            padding-left: 22px;
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            pointer-events: none;
         }
     }
 </style>
