@@ -101,7 +101,7 @@ const title = '本页内容'
             link.textContent = text
             link.className = 'r-item'
             link.style.setProperty('--toc-depth', String(navDepth))
-            link.style.setProperty('--toc-item-height', `${Math.ceil(heading.getBoundingClientRect().height) || 34}px`)
+            link.style.setProperty('--toc-item-height', `${Math.ceil(2 * heading.getBoundingClientRect().height) || 60}px`)
             list.appendChild(link)
             items.push({ id: heading.id, level, depth: navDepth, parentId, element: link, heading })
         })
@@ -225,7 +225,6 @@ const title = '本页内容'
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 2px;
             line-height: 1.6;
         }
     }
@@ -238,7 +237,7 @@ const title = '本页内容'
         position: relative;
         font-size: 15px;
         text-decoration: none;
-        padding: 6px 0 6px calc(12px + (var(--toc-depth, 1) - 1) * 10px);
+        padding: 6px 6px 6px calc(12px + (var(--toc-depth, 1) - 1) * 10px);
         max-height: calc(var(--toc-item-height, 34px) + 12px);
         overflow: hidden;
         opacity: 1;
@@ -256,7 +255,6 @@ const title = '本页内容'
         }
 
         &.active {
-            background-color: @color-theme-light;
             color: @color-theme-dark;
             font-weight: 600;
         }
