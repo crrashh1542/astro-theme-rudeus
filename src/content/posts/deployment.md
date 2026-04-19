@@ -40,6 +40,6 @@ pnpm build
 ## CloudFlare Pages 部署
 
 1. 登录 GitHub，打开本主题的 [GitHub 页面](https://github.com/crrashh1542/astro-theme-rudeus)，点击页面的“Use this template”按钮，选择“Create a new repository”，按照提示创建一个以本主题为模板的新项目。
-   ![从模板创建](https://i.cdn.crrashh.com/2026/0114/fded7f17-ed25-41ae-89e9-182e58a9750f.webp)
+   ![从模板创建](https://i.cdn.crrashh.com/2026/0114/4ca7598d35d03660)
 
 以下内容施工中...！

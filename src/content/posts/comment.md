@@ -51,7 +51,7 @@ const initComment = () => {
 ```
 
 如果设置正确，那么你应该可以看到评论区已经初始化完成：
-![Artalk 初始化完成](https://i.cdn.crrashh.com/2026/0315/ea0056f6-4145-4f84-b43e-4eb84433094f.png)
+![Artalk 初始化完成](https://i.cdn.crrashh.com/2026/0315/01958dddc59900b9)
 
 ### Waline
 
@@ -78,7 +78,7 @@ const initComment = () => {
 
 由于 Waline 的 JS 是通过 ES Module 方式引入的，我们需要先给标签加上 `type="module"` 属性，然后才能引入文件，再在 `// 评论系统初始化` 注释的函数内写 Waline 评论系统初始化函数。
 
-```astro
+```html
 <script is:inline type="module">
     import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js'
 
@@ -92,4 +92,4 @@ const initComment = () => {
 ```
 
 如果设置正确，那么你应该可以看到评论区已经初始化完成：
-![Waline 初始化完成](https://i.cdn.crrashh.com/2026/0315/44500410-00cf-4ce8-b5d4-54f052591ac9.png)
+![Waline 初始化完成](https://i.cdn.crrashh.com/2026/0315/c490f751b0d2c4af)
