@@ -10,11 +10,11 @@ export const siteConfig: SiteConfig = {
     isWithExt: false, // 是否在链接中保留 .html 后缀，true => /xxx.html, false => /xxx
 
     license: {
-        enabled: true, // 是否启用版权声明
-        name: 'CC BY-SA 4.0', // 版权类型
-        url: 'https://creativecommons.org/licenses/by-sa/4.0/', // 版权链接
+        enabled: true, // 是否声明内容的许可协议
+        name: 'CC BY-SA 4.0', // 许可协议名称
+        url: 'https://creativecommons.org/licenses/by-sa/4.0/', // 许可协议链接
         prompt: '除特殊声明转载之外，本文由博主云萧原创且非 AI 生成内容，依据 [license] 许可协议授权，若需转载请注明出处及本声明。',
-        // 显示在页面的版权提示语，可使用 [license] 占位符来插入协议链接
+        // 显示在页面的许可协议提示语，可使用 [license] 占位符来插入协议链接
     },
 
     articles: {
@@ -29,7 +29,7 @@ export const siteConfig: SiteConfig = {
             light: 'https://i.cdn.crrashh.com/bg.jpg',
             dark: 'https://i.cdn.crrashh.com/bg-dark.jpg',
             // 如果头像在外部链接，直接填写 URL
-            // 如果在项目内，填写以 /public 为 base 的相对链接
+            // 如果在项目内，填写以 /public 为 base 的相对路径
         },
         opacity: 0.25, // 背景图不透明度
     },
