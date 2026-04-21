@@ -77,16 +77,36 @@ body {
 
 /* 基本段落 ------ BEGIN */
 // 标题
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.r-prose h1,
+.r-prose h2,
+.r-prose h3,
+.r-prose h4,
+.r-prose h5,
+.r-prose h6 {
     margin: 16px 0;
     font-weight: 600;
     line-height: 1.5;
     scroll-margin-top: 72px;
+}
+.r-prose h1 {
+    letter-spacing: -0.02em;
+    font-size: 28px;
+    line-height: 40px;
+}
+.r-prose h2 {
+    letter-spacing: -0.02em;
+    font-size: 24px;
+    line-height: 32px;
+}
+.r-prose h3 {
+    letter-spacing: -0.01em;
+    font-size: 20px;
+    line-height: 28px;
+}
+.r-prose h4 {
+    letter-spacing: -0.01em;
+    font-size: 18px;
+    line-height: 24px;
 }
 a {
     color: @color-text;
