@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  pull_request:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build production pages
+        run: pnpm build:docs
+
+      - name: Package dist
+        id: package
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          COUNT=$(git rev-list --count HEAD)
+          HASH=$(git rev-parse --short=7 HEAD)
+          ARTIFACT_NAME="ci-v${VERSION}-${COUNT}-g${HASH}"
+          echo "name=${ARTIFACT_NAME}" >> "$GITHUB_OUTPUT"
+          zip -r "${ARTIFACT_NAME}.zip" dist
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.package.outputs.name }}
+          path: ${{ steps.package.outputs.name }}.zip
