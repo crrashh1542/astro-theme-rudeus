@@ -9,6 +9,7 @@ import remarkDirective from 'remark-directive'
 import { siteConfig } from './src/config'
 
 import { remarkAdmonition, rehypeAdmonitionTitle } from './src/plugins/admonitions'
+import { headingAnchor } from './src/plugins/headingAnchor'
 import links from './src/plugins/links'
 
 // https://astro.build/config
@@ -22,7 +23,7 @@ export default defineConfig({
     integrations: [icon(), sitemap()],
     markdown: {
         remarkPlugins: [remarkDirective, remarkAdmonition],
-        rehypePlugins: [rehypeAdmonitionTitle, links(siteConfig.url)],
+        rehypePlugins: [rehypeAdmonitionTitle, headingAnchor, links(siteConfig.url)],
     },
     vite: {
         plugins: [yaml()],

@@ -70,9 +70,15 @@ const title = '本页内容'
             6: null,
         }
 
+        const getHeadingText = (heading: HTMLElement) => {
+            const clone = heading.cloneNode(true) as HTMLElement
+            clone.querySelectorAll('.r-heading-anchor').forEach((anchor) => anchor.remove())
+            return clone.textContent?.trim() || ''
+        }
+
         contentRoot.querySelectorAll('h1, h2, h3').forEach((headingElement) => {
             const heading = headingElement as HTMLElement
-            const text = heading.textContent?.trim() || ''
+            const text = getHeadingText(heading)
             if (!text) return
 
             const baseId = heading.id || slugify(text)
