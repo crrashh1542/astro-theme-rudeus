@@ -135,7 +135,7 @@ const title = '本页内容'
             const activePath = getActivePath(activeId)
             const rootId = items[0]?.id
 
-            items.forEach(({ id, level, parentId, element }) => {
+            items.forEach(({ id, parentId, element }) => {
                 const isVisible = id === rootId || (parentId ? activePath.has(parentId) : true)
                 element.classList.toggle('is-hidden', !isVisible)
                 element.classList.toggle('active', id === activeId)
