@@ -1,0 +1,40 @@
+name: 🚀 新功能提议
+description: 想要啥新功能都可以建议！
+labels: ['Feature']
+title: '[FR] '
+body:
+    - type: dropdown
+      attributes:
+          label: 类型
+          description: 你可以在此处指出你想要的功能属于哪一类。
+          options:
+              - 构建过程细节
+              - 页内组件
+              - UI 布局
+              - 操作逻辑
+              - 其它，请在后续详细补充
+      validations:
+          required: true
+
+    - type: textarea
+      attributes:
+          label: 具体要求
+          description: 你可以在此处描述你希望增加的功能的具体信息。
+      validations:
+          required: true
+
+    - type: dropdown
+      attributes:
+          label: 该请求的优先级
+          description: 你可以在此处表述你认为该功能请求应当得到开发者注意的优先级怎么样。
+          options:
+              - 高
+              - 中
+              - 低
+
+    - type: checkboxes
+      attributes:
+          label: 提交 Issue 前须知
+          options:
+              - label: 我已经查看近期 Issues（包含 Open 和 Closed），未发现已存在此 Issue 或相似/同类型的 Issue。
+                required: true

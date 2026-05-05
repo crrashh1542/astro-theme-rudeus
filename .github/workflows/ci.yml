@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - "**"
+    paths-ignore:
+      - ".husky/**"
+      - ".vscode/**"
+      - ".github/**"
+      - "!.github/workflows/**"
 
 jobs:
   build:
