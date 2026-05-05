@@ -48,6 +48,12 @@ image: https://i.cdn.crrashh.com/2026/0114/3fe632da964f9b23
 
 如果为 `true`，则 src/content/posts/xxx.md 生成的页面为 dist/posts/xxx.html，页内 `a` 标签链接指向 path/to/xxx.html；如果为 `false`，则生成的页面为 dist/posts/xxx/index.html，页内 `a` 标签链接指向 path/to/xxx。
 
+### isWithLoadingBar
+
+- 类型：`boolean`
+
+规定是否在站内换页时，在页面顶部显示进度条。
+
 ### license.enabled
 
 - 类型：`boolean`

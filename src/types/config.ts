@@ -6,6 +6,7 @@ export type SiteConfig = {
     description: string
     url: string
     isWithExt?: boolean
+    isWithLoadingBar?: boolean
     license: {
         enabled: boolean
         name?: string

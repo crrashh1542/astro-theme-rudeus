@@ -2,7 +2,9 @@
 import { ClientRouter } from 'astro:transitions'
 import 'modern-normalize/modern-normalize.css'
 
+import { siteConfig } from '@/config'
 import BackToTop from '@/components/BackToTop.astro'
+import LoadingBar from '@/components/LoadingBar.astro'
 
 import '@/styles/resetPreset.less'
 import '@/styles/resetCustom.less'
@@ -30,6 +32,7 @@ const { title, description } = Astro.props
     </head>
     <body>
         <ClientRouter />
+        {siteConfig.isWithLoadingBar && <LoadingBar transition:persist />}
         <slot />
         <BackToTop />
     </body>

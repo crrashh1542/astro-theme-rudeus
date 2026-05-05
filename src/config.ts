@@ -8,6 +8,7 @@ export const siteConfig: SiteConfig = {
     description: 'Rudeus 是一个基于 Astro 的简洁的博客主题', // SEO 站点描述
     url: 'https://rudeus-docs.crrashh.com', // 站点 URL
     isWithExt: false, // 是否在链接中保留 .html 后缀，true => /xxx.html, false => /xxx
+    isWithLoadingBar: true, // 是否换页显示进度条，默认为 true
 
     license: {
         enabled: true, // 是否声明内容的许可协议
