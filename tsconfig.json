@@ -11,8 +11,8 @@
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "lib": ["ESNext", "DOM"],
+        "ignoreDeprecations": "6.0",
         "baseUrl": ".",
-
         "paths": {
             "@/*": ["src/*"]
         }
